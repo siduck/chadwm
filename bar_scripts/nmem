@@ -1,0 +1,3 @@
+#!/bin/bash
+ 
+printf " ^c#7797b7^^b#363c48^   ^d^%s" "^c#7797b7^^b#414753^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"

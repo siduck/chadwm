@@ -1,0 +1,5 @@
+#!/bin/bash
+
+printf "^c#2E3440^ ^b#828dd1^ 󱑆 ^d^%s %s\n" "^c#2E3440^^b#6c77bb^ $(date '+%a, %I:%M %p')" "$( )"
+
+

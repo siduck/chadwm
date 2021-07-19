@@ -1,0 +1,10 @@
+#!/bin/bash
+
+interval=0
+
+while true; do
+    [ $interval == 0 ] || [ $(($interval%3600)) == 0 ] && updates=$(xbps-updates)
+    interval=$((interval + 1))
+
+    sleep 1 && xsetroot -name "$(dwm-xbps) $updates $(nbat)$(nback)$(nmem) $(nwlan) $(nclock)"
+done
