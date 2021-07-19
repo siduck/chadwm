@@ -108,7 +108,8 @@ static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_c,      spawn,          {.v = rofi } },
-	{ MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")},
+        { MODKEY,                       XK_Return,      spawn,          {.v = termcmd } },
+//	{ MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")},
         {MODKEY | ControlMask, XK_u, spawn, SHCMD("maim | xclip -selection clipboard -t image/png")},
         {MODKEY, XK_u, spawn,   SHCMD("maim --select | xclip -selection clipboard -t image/png")},
         {0, XF86MonBrightnessDown, spawn, {.v = xd}},
