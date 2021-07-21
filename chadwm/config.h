@@ -17,7 +17,8 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails,display s
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 26;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int horizpadbar        = 10;
+static const int vertpadbar         = 10;
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:bold:size=10",
                                 	"Material Design Icons-Regular:size=10",
 };
@@ -29,6 +30,7 @@ static const char col_gray3[]       = "#abb2bf";
 static const char col_gray4[]       = "#6d8dad";
 static const char col_cyann[]       = "#81A1C1";
 static const char col_bg2[]         = "#3b414d";
+static const char col_borderbar[]   = "#2E3440";
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -108,8 +110,7 @@ static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_c,      spawn,          {.v = rofi } },
-        { MODKEY,                       XK_Return,      spawn,          {.v = termcmd } },
-//	{ MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")},
+	{ MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")},
         {MODKEY | ControlMask, XK_u, spawn, SHCMD("maim | xclip -selection clipboard -t image/png")},
         {MODKEY, XK_u, spawn,   SHCMD("maim --select | xclip -selection clipboard -t image/png")},
         {0, XF86MonBrightnessDown, spawn, {.v = xd}},
