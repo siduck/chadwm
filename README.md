@@ -1,4 +1,6 @@
-# chadwm
+# chadwm (Initial look)
+
+<img src="https://github.com/siduck76/chadwm/blob/main/screenshots/initial_look.png">
 
 # Setup 
 
