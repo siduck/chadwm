@@ -1,3 +1,0 @@
-#!/bin/bash
-
-printf "^c#81A1C1^ 󰠠 ^d^%s" "$(acpi | sed "s/,//g" | awk '{if ($3 == "Discharging"){print $4; exit} else {print $4""}}' | tr -d "\n") "

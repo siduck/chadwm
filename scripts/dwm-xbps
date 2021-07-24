@@ -1,6 +1,0 @@
-#!/bin/bash
-
-icon=""
-
-printf "^c#94af7d^ $icon ^d^%s"
-printf "^c#94af7d^"

@@ -2,9 +2,62 @@
 
 interval=0
 
-while true; do
-    [ $interval == 0 ] || [ $(($interval%3600)) == 0 ] && updates=$(xbps-updates)
-    interval=$((interval + 1))
+update_icon() {
+  icon=""
 
-    sleep 1 && xsetroot -name "$(dwm-xbps) $updates $(nbat)$(nback)$(nmem) $(nwlan) $(nclock)"
+  printf "^c#94af7d^ $icon ^d^%s"
+  printf "^c#94af7d^"
+}
+
+# only for void users!
+xbps_updates() {
+
+  updates=$(xbps-install -un | cut -d' ' -f2 | sort | uniq -c | xargs)
+
+  if [ -z "$updates" ]; then
+    echo "Fully Updated"
+  else
+    echo "$updates""s"
+  fi
+}
+
+# battery
+batt() {
+  printf "^c#81A1C1^   ^d^%s" "$(acpi | sed "s/,//g" | awk '{if ($3 == "Discharging"){print $4; exit} else {print $4""}}' | tr -d "\n")"
+}
+
+brightness() {
+
+  backlight() {
+    backlight="$(xbacklight -get)"
+    echo -e "$backlight" #| cut -c 1-2
+  }
+
+  icon="   "
+  printf "^c#BF616A^$icon"
+  printf "^c#BF616A^%.0f\n" $(backlight)
+}
+
+mem() {
+  printf "^c#7797b7^^b#363c48^   ^d^%s" "^c#7797b7^^b#414753^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
+}
+
+wlan() {
+  case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
+  up) printf "^c#3b414d^ ^b#7681c5^ 󰤨 ^d^%s" " ^c#828dd1^Connected" ;;
+  down) printf "^c#3b414d^ ^b#7681c5^ 󰤨 ^d^%s" " ^c#828dd1^Disconnected" ;;
+  esac
+}
+
+clock() {
+  printf "^c#2E3440^ ^b#828dd1^ 󱑆 ^d^%s %s\n" "^c#2E3440^^b#6c77bb^ $(date '+%a, %I:%M %p')" "$()"
+}
+
+while true; do
+
+  # remove these 2 lines if u dont use void! or adjust the xbps-updates to get n.o of updates (according your distro ofc)
+  [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && updates=$(xbps-updates)
+  interval=$((interval + 1))
+
+  sleep 1 && xsetroot -name "$(update_icon) $(xbps-updates) $(batt) $(brightness) $(mem) $(wlan) $(clock)"
 done
