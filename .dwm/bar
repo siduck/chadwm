@@ -2,6 +2,13 @@
 
 interval=0
 
+cpu() {
+  cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
+
+  printf "^c#3b414d^ ^b#A3BE8C^ CPU"
+  printf "^c#abb2bf^ ^b#414753^ $cpu_val"
+}
+
 update_icon() {
   icon=""
 
@@ -39,7 +46,8 @@ brightness() {
 }
 
 mem() {
-  printf "^c#7797b7^^b#363c48^   ^d^%s" "^c#7797b7^^b#414753^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
+  printf "^c#7797b7^^b#2E3440^  "
+  printf "^c#7797b7^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
 }
 
 wlan() {
@@ -50,7 +58,8 @@ wlan() {
 }
 
 clock() {
-  printf "^c#2E3440^ ^b#828dd1^ 󱑆 ^d^%s %s\n" "^c#2E3440^^b#6c77bb^ $(date '+%a, %I:%M %p')" "$()"
+  printf "^c#2E3440^ ^b#828dd1^ 󱑆 "
+  printf "^c#2E3440^^b#6c77bb^ $(date '+%a, %I:%M %p') "
 }
 
 while true; do
@@ -59,5 +68,5 @@ while true; do
   [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && updates=$(xbps-updates)
   interval=$((interval + 1))
 
-  sleep 1 && xsetroot -name "$(update_icon) $(xbps-updates) $(batt) $(brightness) $(mem) $(wlan) $(clock)"
+  sleep 1 && xsetroot -name "$(update_icon) $updates $(batt) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
 done

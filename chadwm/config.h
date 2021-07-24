@@ -134,12 +134,10 @@ static Key keys[] = {
         
         
         // overall gaps
-        
         { MODKEY|ControlMask,           XK_i,      incrgaps,       {.i = +1 } }, 
 	{ MODKEY|ControlMask,           XK_d,      incrgaps,       {.i = -1 } }, 
 
-
-// inner gaps
+        // inner gaps
 	{ MODKEY|ShiftMask,              XK_i,      incrigaps,      {.i = +1 } },
 	{ MODKEY|ControlMask|ShiftMask,    XK_i,      incrigaps,      {.i = -1 } },
 
@@ -158,7 +156,6 @@ static Key keys[] = {
 
 	{ MODKEY|ControlMask,           XK_t,      togglegaps,     {0} },
 	{ MODKEY|ControlMask|ShiftMask,             XK_d,      defaultgaps,    {0} },
-
 
 	{ MODKEY,                       XK_q,      killclient,     {0} },
        	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
