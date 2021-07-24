@@ -6,6 +6,8 @@
 <img src="https://github.com/siduck76/chadwm/blob/main/screenshots/occ_act_tags.png">
 (empty workspaces have their color greyed out)
 
+- NOTE: This is vanilla dwm bar (status2d patch for setting colors) not dwmblocks or polybar. 
+
 # Setup 
 
 - Put the .dwm folder in ~/
@@ -17,3 +19,23 @@
 
 - [/u/eProTaLT83](https://www.reddit.com/user/eProTaLT83) ( has modified many dwm bar patches like statuspadding , systray to work properly with status2d)
 - @fitrh helped with [colorful tag patch](https://github.com/fitrh/dwm/issues/1)
+
+# Patches
+
+- barpadding 
+- bottomstack
+- cfacts
+- dragmfact 
+- dragcfact (took from bakebby's build)
+- fibonacii
+- gaplessgrid
+- horizgrid
+- layoutmenu 
+- movestack 
+- vanity gaps
+- colorful tags
+- statuspadding 
+- status2d
+- tatami 
+- underline tags
+- notitle
