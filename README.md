@@ -26,7 +26,7 @@
 - bottomstack
 - cfacts
 - dragmfact 
-- dragcfact (took from bakebby's build)
+- dragcfact (took from bakkeby's build)
 - fibonacii
 - gaplessgrid
 - horizgrid
