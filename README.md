@@ -8,6 +8,12 @@
 
 - NOTE: This is vanilla dwm bar (status2d patch for setting colors) not dwmblocks or polybar. 
 
+# Requirements
+
+- xsetroot package ( status2d uses this to add colors on dwmbar)
+- xmenu (for layoutmenu)
+- JetbrainsMono Nerd Font and Material design icon font
+
 # Setup 
 
 - Put the .dwm folder in ~/
