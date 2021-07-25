@@ -12,6 +12,7 @@
 
 - Put the .dwm folder in ~/
 - chmod +x all scripts in .dwm folder
+- Put layoutmen.sh in your PATH 
 - cd into chadwm and sudo make install
 - autostart file must be adjusted for your liking , dont remove the while loop tho!
 
