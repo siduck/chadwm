@@ -5,6 +5,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
+static const unsigned int default_border = 0;  // to switch back to default border after dynamic border resizing via keybinds
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
@@ -28,13 +29,11 @@ static const char dmenufont[]       = "monospace:size=10";
 static const int colorfultag        = 1;  /* 0 means use SchemeSel for selected non vacant tag */
 
 
-static const char col_gray1[]       = "#2E3440";
 static const char col_black[]       = "#2E3440";
-static const char col_dark[]       = "#2E3440";
-static const char col_gray2[]       = "#444444";
+static const char col_gray2[]       = "#3B4252"; // unfocused window border
 static const char col_gray3[]       = "#606672";
 static const char col_gray4[]       = "#6d8dad";
-static const char col_cyan[]       = "#81A1C1";
+static const char col_blue[]       = "#81A1C1";  // focused window border
 static const char col_green[]        = "#89b482";
 static const char col_red[]         = "#BF616A";
 static const char col_orange[]       = "#caaa6a";
@@ -43,16 +42,16 @@ static const char col_borderbar[]   = "#2E3440"; // inner border
 
 static const char *colors[][3]      = {
     /*               fg         bg         border   */
-    [SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-    [SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+    [SchemeNorm] = { col_gray3, col_black, col_gray2 },
+    [SchemeSel]  = { col_gray4, col_blue,  col_blue  },
 
     [SchemeTag]        = { col_gray3,    col_black,  col_black },
-    [SchemeTag1]       = { col_cyan,      col_dark,  col_black },
-    [SchemeTag2]       = { col_red,       col_dark,  col_black },
-    [SchemeTag3]       = { col_orange,    col_dark,  col_black },
-    [SchemeTag4]       = { col_green,     col_dark,  col_black },
-    [SchemeTag5]       = { col_pink,     col_dark,  col_black },
-    [SchemeLayout]     = { col_green,     col_black, col_black },
+    [SchemeTag1]       = { col_blue,      col_black,  col_black },
+    [SchemeTag2]       = { col_red,       col_black,  col_black },
+    [SchemeTag3]       = { col_orange,    col_black,  col_black },
+    [SchemeTag4]       = { col_green,     col_black,  col_black },
+    [SchemeTag5]       = { col_pink,     col_black,  col_black },
+    [SchemeLayout]     = { col_green,     col_black, col_black }, 
 };
 
 /* tagging */
@@ -197,7 +196,9 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
     { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
     { MODKEY|ShiftMask,             XK_minus, 		setborderpx,    {.i = -1 } },
-    { MODKEY|ShiftMask,             XK_p, 	        	setborderpx,    {.i = +1 } },
+    { MODKEY|ShiftMask,             XK_p, 	        setborderpx,    {.i = +1 } },
+    { MODKEY|ShiftMask,             XK_w, 	        setborderpx,    {.i = default_border } },
+
     TAGKEYS(                        XK_1,                      0)
     TAGKEYS(                        XK_2,                      1)
     TAGKEYS(                        XK_3,                      2)
