@@ -509,8 +509,8 @@ void arrange(Monitor *m) {
 }
 
 void arrangemon(Monitor *m) {
-  	updatebarpos(m);
-	XMoveResizeWindow(dpy, m->tabwin, m->wx, m->ty, m->ww, th);
+  updatebarpos(m);
+  XMoveResizeWindow(dpy, m->tabwin, m->wx + sp, m->ty, m->ww - 2 * sp, th);
   strncpy(m->ltsymbol, m->lt[m->sellt]->symbol, sizeof m->ltsymbol);
   if (m->lt[m->sellt]->arrange)
     m->lt[m->sellt]->arrange(m);
@@ -1409,6 +1409,7 @@ drawtab(Monitor *m) {
 	int maxsize = bh;
 	int x = 0;
 	int w = 0;
+        int mw = m->ww - 2 * sp;
 
 	//view_info: indicate the tag which is displayed in the view
 	for(i = 0; i < LENGTH(tags); ++i){
@@ -1440,18 +1441,20 @@ drawtab(Monitor *m) {
 	  if(m->ntabs >= MAXTABS) break;
 	}
 
-	if(tot_width > m->ww){ //not enough space to display the labels, they need to be truncated
+        if(tot_width > mw){ //not enough space to display the labels, they need to be truncated
 	  memcpy(sorted_label_widths, m->tab_widths, sizeof(int) * m->ntabs);
 	  qsort(sorted_label_widths, m->ntabs, sizeof(int), cmpint);
 	  tot_width = view_info_w;
 	  for(i = 0; i < m->ntabs; ++i){
-	    if(tot_width + (m->ntabs - i) * sorted_label_widths[i] > m->ww)
+          if(tot_width + (m->ntabs - i) * sorted_label_widths[i] > mw)
 	      break;
 	    tot_width += sorted_label_widths[i];
 	  }
+          maxsize = (mw - tot_width) / (m->ntabs - i);
 	  maxsize = (m->ww - tot_width) / (m->ntabs - i);
 	} else{
-	  maxsize = m->ww;
+          maxsize = mw;
+
 	}
 	i = 0;
 	for(c = m->clients; c; c = c->next){
@@ -1468,7 +1471,7 @@ drawtab(Monitor *m) {
 	drw_setscheme(drw, scheme[SchemeNorm]);
 
 	/* cleans interspace between window names and current viewed tag label */
-	w = m->ww - view_info_w - x;
+        w = mw - view_info_w - x;
 	drw_text(drw, x, 0, w, th, 0, "", 0);
 
 	/* view info */
@@ -2080,7 +2083,7 @@ void resizebarwin(Monitor *m) {
   unsigned int w = m->ww - 2 * sp;
   if (showsystray && m == systraytomon(m))
     w -= getsystraywidth();
-  XMoveResizeWindow(dpy, m->barwin, m->wx + sp, m->by + vp, w, bh);
+  XMoveResizeWindow(dpy, m->barwin, m->wx + sp, m->by, w, bh);
 }
 
 void resizeclient(Client *c, int x, int y, int w, int h) {
@@ -2700,14 +2703,14 @@ void updatebars(void) {
     if (showsystray && m == systraytomon(m))
       w -= getsystraywidth();
     m->barwin = XCreateWindow(
-        dpy, root, m->wx + sp, m->by + vp, w - 2 * sp, bh, 0,
+        dpy, root, m->wx + sp, m->by, w - 2 * sp, bh, 0,
         DefaultDepth(dpy, screen), CopyFromParent, DefaultVisual(dpy, screen),
         CWOverrideRedirect | CWBackPixmap | CWEventMask, &wa);
     XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
     if (showsystray && m == systraytomon(m))
       XMapRaised(dpy, systray->win);
     XMapRaised(dpy, m->barwin);
-        m->tabwin = XCreateWindow(dpy, root, m->wx, m->ty, m->ww, th, 0, DefaultDepth(dpy, screen),
+    m->tabwin = XCreateWindow(dpy, root, m->wx + sp, m->ty, m->ww - 2 * sp, th, 0, DefaultDepth(dpy, screen),
 						CopyFromParent, DefaultVisual(dpy, screen),
 						CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
 	XDefineCursor(dpy, m->tabwin, cursor[CurNormal]->cursor);
@@ -2723,26 +2726,26 @@ void updatebarpos(Monitor *m) {
   m->wy = m->my;
   m->wh = m->mh;
   if (m->showbar) {
-    m->wh = m->wh - vertpad - bh;
-    m->by = m->topbar ? m->wy : m->wy + m->wh + vertpad;
-    if (m->topbar)
+  m->wh = m->wh - vertpad - bh;
+  m->by = m->topbar ? m->wy + vertpad : m->wy + m->wh;
+  if (m->topbar)
 	m->wy += bh + vp;
   } else
     m->by = -bh - vp;
   	
-    for(c = m->clients; c; c = c->next) {
+  for(c = m->clients; c; c = c->next) {
 		if(ISVISIBLE(c)) ++nvis;
 	}
 
-    if(m->showtab == showtab_always
+  if(m->showtab == showtab_always
 	   || ((m->showtab == showtab_auto) && (nvis > 1) && (m->lt[m->sellt]->arrange == monocle))) {
-		m->wh -= th;
-		m->ty = m->toptab ? m->wy : m->wy + m->wh;
+          	m->wh -= th + (topbar == toptab ? 0 : vertpad);
+		m->ty = m->toptab ? m->wy + (topbar ? 0 : vertpad) : m->wy + m->wh;
 		if ( m->toptab )
-			m->wy += th;
+                  m->wy += th + (topbar ? 0 : vertpad);
 	} else {
-		m->ty = -th;
-	}
+            m->ty = -th - vertpad;
+   }
 }
 
 void updateclientlist() {
@@ -2956,7 +2959,7 @@ void updatesystray(void) {
     /* init systray */
     if (!(systray = (Systray *)calloc(1, sizeof(Systray))))
       die("fatal: could not malloc() %u bytes\n", sizeof(Systray));
-    systray->win = XCreateSimpleWindow(dpy, root, x, m->by + vp, w, bh, 0, 0,
+    systray->win = XCreateSimpleWindow(dpy, root, x, m->by, w, bh, 0, 0,
                                        scheme[SchemeSel][ColBg].pixel);
     wa.event_mask = ButtonPressMask | ExposureMask;
     wa.override_redirect = True;
@@ -2994,9 +2997,9 @@ void updatesystray(void) {
   }
   w = w ? w + systrayspacing : 1;
   x -= w;
-  XMoveResizeWindow(dpy, systray->win, x, m->by + vp, w, bh);
+  XMoveResizeWindow(dpy, systray->win, x, m->by, w, bh);
   wc.x = x;
-  wc.y = m->by + vp;
+  wc.y = m->by;
   wc.width = w;
   wc.height = bh;
   wc.stack_mode = Above;
