@@ -95,7 +95,9 @@ enum {
   SchemeTag3,
   SchemeTag4,
   SchemeTag5,
-  SchemeLayout
+  SchemeLayout,
+  TabSel,
+  TabNorm,
 }; /* color schemes */
 enum {
   NetSupported,
@@ -554,7 +556,7 @@ void buttonpress(XEvent *e) {
       click = ClkStatusText;
     else
       click = ClkWinTitle;
-    	} // wut?
+    	} 
 	if(ev->window == selmon->tabwin) {
 		i = 0; x = 0;
 		for(c = selmon->clients; c; c = c->next){
@@ -1462,13 +1464,13 @@ drawtab(Monitor *m) {
 	  if(i >= m->ntabs) break;
 	  if(m->tab_widths[i] >  maxsize) m->tab_widths[i] = maxsize;
 	  w = m->tab_widths[i];
-	  drw_setscheme(drw, scheme[(c == m->sel) ? SchemeSel : SchemeNorm]);
+	  drw_setscheme(drw, scheme[(c == m->sel) ? TabSel : TabNorm]);
 	  drw_text(drw, x, 0, w, th, 0, c->name, 0);
 	  x += w;
 	  ++i;
 	}
 
-	drw_setscheme(drw, scheme[SchemeNorm]);
+	drw_setscheme(drw, scheme[TabNorm]);
 
 	/* cleans interspace between window names and current viewed tag label */
         w = mw - view_info_w - x;

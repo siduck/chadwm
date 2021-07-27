@@ -32,29 +32,31 @@ static const char dmenufont[]       = "monospace:size=10";
 static const int colorfultag        = 1;  /* 0 means use SchemeSel for selected non vacant tag */
 
 
-static const char col_black[]       = "#2E3440";
-static const char col_gray2[]       = "#3B4252"; // unfocused window border
-static const char col_gray3[]       = "#606672";
-static const char col_gray4[]       = "#6d8dad";
-static const char col_blue[]       = "#81A1C1";  // focused window border
-static const char col_green[]        = "#89b482";
-static const char col_red[]         = "#BF616A";
-static const char col_orange[]       = "#caaa6a";
-static const char col_pink[] =       "#B48EAD";
+static const char black[]       = "#2E3440";
+static const char gray2[]       = "#3B4252"; // unfocused window border
+static const char gray3[]       = "#606672";
+static const char gray4[]       = "#6d8dad";
+static const char blue[]        = "#81A1C1";  // focused window border
+static const char green[]       = "#89b482";
+static const char red[]         = "#BF616A";
+static const char orange[]      = "#caaa6a";
+static const char pink[]        = "#B48EAD";
 static const char col_borderbar[]   = "#2E3440"; // inner border
+static const char purpleBlue[]  = "#6C77BB";
 
 static const char *colors[][3]      = {
     /*               fg         bg         border   */
-    [SchemeNorm] = { col_gray3, col_black, col_gray2 },
-    [SchemeSel]  = { col_gray4, col_blue,  col_blue  },
-
-    [SchemeTag]        = { col_gray3,    col_black,  col_black },
-    [SchemeTag1]       = { col_blue,      col_black,  col_black },
-    [SchemeTag2]       = { col_red,       col_black,  col_black },
-    [SchemeTag3]       = { col_orange,    col_black,  col_black },
-    [SchemeTag4]       = { col_green,     col_black,  col_black },
-    [SchemeTag5]       = { col_pink,     col_black,  col_black },
-    [SchemeLayout]     = { col_green,     col_black, col_black }, 
+    [SchemeNorm]       = { gray3, black, gray2 },
+    [SchemeSel]        = { gray4, blue,  blue  },
+    [TabSel]           = { black, purpleBlue,  black  },
+    [TabNorm]          = { gray3, black, black },
+    [SchemeTag]        = { gray3, black, black },
+    [SchemeTag1]       = { blue,  black, black },
+    [SchemeTag2]       = { red,   black, black },
+    [SchemeTag3]       = { orange, black,black },
+    [SchemeTag4]       = { green, black, black },
+    [SchemeTag5]       = { pink,  black, black },
+    [SchemeLayout]     = { green, black, black }, 
 };
 
 /* tagging */
