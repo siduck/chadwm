@@ -25,6 +25,8 @@ static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
 static const int horizpadbar        = 5;
 static const int vertpadbar         = 11;
+static const int horizpadtabi       = 10;
+static const int horizpadtabo       = 6;
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:medium:size=10",
                                         "Material Design Icons-Regular:size=10",
                                       };
@@ -158,13 +160,12 @@ static Key keys[] = {
     { MODKEY,                       XK_Return, zoom,           {0} },
     { MODKEY,                       XK_Tab,    view,           {0} },
 
-
     // overall gaps
     { MODKEY|ControlMask,           XK_i,      incrgaps,       {.i = +1 } },
     { MODKEY|ControlMask,           XK_d,      incrgaps,       {.i = -1 } },
 
     // inner gaps
-    { MODKEY|ShiftMask,              XK_i,      incrigaps,      {.i = +1 } },
+    { MODKEY|ShiftMask,                XK_i,      incrigaps,      {.i = +1 } },
     { MODKEY|ControlMask|ShiftMask,    XK_i,      incrigaps,      {.i = -1 } },
 
     // outer gaps

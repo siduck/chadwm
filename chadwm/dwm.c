@@ -1429,7 +1429,7 @@ drawtab(Monitor *m) {
 	} else {
 	  strncpy(view_info, "[...]", sizeof view_info);
 	}
-	view_info[sizeof(view_info) - 1 ] = 0;
+       	view_info_w = TEXTW(view_info) - lrpad + horizpadtabi + horizpadtabo;
 	view_info_w = TEXTW(view_info);
 	tot_width = view_info_w;
 
@@ -1437,7 +1437,7 @@ drawtab(Monitor *m) {
 	m->ntabs = 0;
 	for(c = m->clients; c; c = c->next){
 	  if(!ISVISIBLE(c)) continue;
-	  m->tab_widths[m->ntabs] = TEXTW(c->name);
+          m->tab_widths[m->ntabs] = TEXTW(c->name) - lrpad + horizpadtabi + horizpadtabo;
 	  tot_width += m->tab_widths[m->ntabs];
 	  ++m->ntabs;
 	  if(m->ntabs >= MAXTABS) break;
@@ -1459,27 +1459,28 @@ drawtab(Monitor *m) {
 
 	}
 	i = 0;
+
+	/* cleans window */
+	drw_setscheme(drw, scheme[SchemeNorm]);
+	drw_rect(drw, 0, 0, mw, th, 1, 1);
+
 	for(c = m->clients; c; c = c->next){
 	  if(!ISVISIBLE(c)) continue;
 	  if(i >= m->ntabs) break;
 	  if(m->tab_widths[i] >  maxsize) m->tab_widths[i] = maxsize;
 	  w = m->tab_widths[i];
 	  drw_setscheme(drw, scheme[(c == m->sel) ? TabSel : TabNorm]);
-	  drw_text(drw, x, 0, w, th, 0, c->name, 0);
+          drw_text(drw, x + horizpadtabo / 2, vertpadbar / 2, w - horizpadtabo, th - vertpadbar, horizpadtabi / 2, c->name, 0);
 	  x += w;
 	  ++i;
 	}
 
-	drw_setscheme(drw, scheme[TabNorm]);
-
-	/* cleans interspace between window names and current viewed tag label */
-        w = mw - view_info_w - x;
-	drw_text(drw, x, 0, w, th, 0, "", 0);
-
 	/* view info */
+        w = mw - view_info_w - x;
 	x += w;
 	w = view_info_w;
-	drw_text(drw, x, 0, w, th, 0, view_info, 0);
+        drw_setscheme(drw, scheme[TabNorm]);
+	drw_text(drw, x + horizpadtabo, vertpadbar / 2, w - horizpadtabo, th - vertpadbar, horizpadtabi / 2, view_info, 0);
 
 	drw_map(drw, m->tabwin, 0, 0, m->ww, th);
 }
@@ -2427,7 +2428,7 @@ void setup(void) {
     die("no fonts could be loaded.");
   lrpad = drw->fonts->h;
   bh = drw->fonts->h + 2 + vertpadbar + borderpx * 2;
-  th = bh - vertpadbar - borderpx * 2;
+  th = bh - borderpx * 2;
   updategeom();
   sp = sidepad;
   vp = (topbar == 1) ? vertpad : -vertpad;
