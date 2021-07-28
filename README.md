@@ -20,7 +20,8 @@
 - chmod +x all scripts in .dwm folder
 - Put layoutmen.sh in your PATH 
 - cd into chadwm and sudo make install
-- autostart file must be adjusted for your liking , dont remove the while loop tho!
+- autostart file must be adjusted for your liking!
+- start dwm with exec ~/.dwm/autostart (NOT EXEC DWM) cuz autostart already runs dwm at the last , or change your dwm.desktop ( should be in /usr/share/xsessions folder ) replace the exec value from dwm to ~/.dwm/autostart.
 
 # Credits 
 
