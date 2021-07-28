@@ -1403,35 +1403,12 @@ void
 drawtab(Monitor *m) {
 	Client *c;
 	int i;
-	int itag = -1;
-	char view_info[50];
-	int view_info_w = 0;
 	int sorted_label_widths[MAXTABS];
-	int tot_width;
+	int tot_width = 0;
 	int maxsize = bh;
 	int x = 0;
 	int w = 0;
         int mw = m->ww - 2 * sp;
-
-	//view_info: indicate the tag which is displayed in the view
-	for(i = 0; i < LENGTH(tags); ++i){
-	  if((selmon->tagset[selmon->seltags] >> i) & 1) {
-	    if(itag >=0){ //more than one tag selected
-	      itag = -1;
-	      break;
-	    }
-	    itag = i;
-	  }
-	}
-
-	if(0 <= itag  && itag < LENGTH(tags)){
-	  snprintf(view_info, sizeof view_info, "[%s]", tags[itag]);
-	} else {
-	  strncpy(view_info, "[...]", sizeof view_info);
-	}
-       	view_info_w = TEXTW(view_info) - lrpad + horizpadtabi + horizpadtabo;
-	view_info_w = TEXTW(view_info);
-	tot_width = view_info_w;
 
 	/* Calculates number of labels and their width */
 	m->ntabs = 0;
@@ -1446,7 +1423,6 @@ drawtab(Monitor *m) {
         if(tot_width > mw){ //not enough space to display the labels, they need to be truncated
 	  memcpy(sorted_label_widths, m->tab_widths, sizeof(int) * m->ntabs);
 	  qsort(sorted_label_widths, m->ntabs, sizeof(int), cmpint);
-	  tot_width = view_info_w;
 	  for(i = 0; i < m->ntabs; ++i){
           if(tot_width + (m->ntabs - i) * sorted_label_widths[i] > mw)
 	      break;
@@ -1461,7 +1437,7 @@ drawtab(Monitor *m) {
 	i = 0;
 
 	/* cleans window */
-	drw_setscheme(drw, scheme[SchemeNorm]);
+	drw_setscheme(drw, scheme[TabNorm]);
 	drw_rect(drw, 0, 0, mw, th, 1, 1);
 
 	for(c = m->clients; c; c = c->next){
@@ -1475,16 +1451,8 @@ drawtab(Monitor *m) {
 	  ++i;
 	}
 
-	/* view info */
-        w = mw - view_info_w - x;
-	x += w;
-	w = view_info_w;
-        drw_setscheme(drw, scheme[TabNorm]);
-	drw_text(drw, x + horizpadtabo, vertpadbar / 2, w - horizpadtabo, th - vertpadbar, horizpadtabi / 2, view_info, 0);
-
 	drw_map(drw, m->tabwin, 0, 0, m->ww, th);
 }
-
 
 void enternotify(XEvent *e) {
   Client *c;

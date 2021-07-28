@@ -19,14 +19,14 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always };
 static const int showtab            = showtab_auto;
-static const int toptab             = False;
-static const int topbar             = 1;        /* 0 means bottom bar */
+static const int toptab             = True;
+static const int topbar             = 0;        /* 0 means bottom bar */
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
 static const int horizpadbar        = 5;
 static const int vertpadbar         = 11;
-static const int horizpadtabi       = 10;
-static const int horizpadtabo       = 6;
+static const int horizpadtabi       = 13;
+static const int horizpadtabo       = 15;
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:medium:size=10",
                                         "Material Design Icons-Regular:size=10",
                                       };
@@ -43,14 +43,14 @@ static const char green[]       = "#89b482";
 static const char red[]         = "#BF616A";
 static const char orange[]      = "#caaa6a";
 static const char pink[]        = "#B48EAD";
-static const char col_borderbar[]   = "#2E3440"; // inner border
+static const char col_borderbar[]  = "#2E3440"; // inner border
 static const char purpleBlue[]  = "#6C77BB";
 
 static const char *colors[][3]      = {
     /*               fg         bg         border   */
     [SchemeNorm]       = { gray3, black, gray2 },
     [SchemeSel]        = { gray4, blue,  blue  },
-    [TabSel]           = { black, purpleBlue,  black  },
+    [TabSel]           = { blue, gray2,  black  },
     [TabNorm]          = { gray3, black, black },
     [SchemeTag]        = { gray3, black, black },
     [SchemeTag1]       = { blue,  black, black },
