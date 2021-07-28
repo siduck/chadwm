@@ -25,7 +25,8 @@ static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
 static const int horizpadbar        = 5;
 static const int vertpadbar         = 11;
-static const int horizpadtabi       = 13;
+static const int vertpadtab         = 37;
+static const int horizpadtabi       = 15;
 static const int horizpadtabo       = 15;
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:medium:size=10",
                                         "Material Design Icons-Regular:size=10",
