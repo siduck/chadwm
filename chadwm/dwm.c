@@ -1421,7 +1421,7 @@ drawtab(Monitor *m) {
 	int i;
         char *btn_prev = "";
 	char *btn_next = "";
-	char *btn_close = "";
+	char *btn_close = " ";
 	int buttons_w = 0;
 	int sorted_label_widths[MAXTABS];
 	int tot_width = 0;
@@ -2743,9 +2743,9 @@ void updatebarpos(Monitor *m) {
   m->wh = m->wh - vertpad - bh;
   m->by = m->topbar ? m->wy + vertpad : m->wy + m->wh;
   if (m->topbar)
-	m->wy += bh + vp;
+    	m->wy += bh + vertpad;
   } else
-    m->by = -bh - vp;
+        m->by = -bh - vertpad;
   	
   for(c = m->clients; c; c = c->next) {
 		if(ISVISIBLE(c)) ++nvis;
@@ -2753,10 +2753,10 @@ void updatebarpos(Monitor *m) {
 
   if(m->showtab == showtab_always
 	   || ((m->showtab == showtab_auto) && (nvis > 1) && (m->lt[m->sellt]->arrange == monocle))) {
-          	m->wh -= th + (topbar == toptab ? 0 : vertpad);
-		m->ty = m->toptab ? m->wy + (topbar ? 0 : vertpad) : m->wy + m->wh;
+         	m->wh -= th + ((topbar == toptab && m->showbar) ? 0 : vertpad) - gappov;
+		m->ty = m->toptab ? m->wy + ((topbar && m->showbar) ? 0 : vertpad) : m->wy + m->wh - gappov;
 		if ( m->toptab )
-                  m->wy += th + (topbar ? 0 : vertpad);
+                   m->wy += th + ((topbar && m->showbar) ? 0 : vertpad) - gappov;
 	} else {
             m->ty = -th - vertpad;
    }
