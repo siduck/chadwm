@@ -577,12 +577,14 @@ void buttonpress(XEvent *e) {
 			click = ClkTabBar;
 			arg.ui = i;
 		} else {
-			for (loop = 0; loop < 3; loop++) {
-				x += selmon->tab_btn_w[loop];
-				if (ev->x <= x)
+                       x = selmon->ww - 2 * sp;
+			for (loop = 2; loop >= 0; loop--) {
+				x -= selmon->tab_btn_w[loop];
+				if (ev->x > x)
 					break;
 			}
-			click = ClkTabPrev + loop;
+                        if (ev->x >= x)
+			      click = ClkTabPrev + loop;
 		}
 	}
 	else if((c = wintoclient(ev->window))) {
@@ -1428,6 +1430,7 @@ drawtab(Monitor *m) {
 	buttons_w += TEXTW(btn_prev) - lrpad + horizpadtabo;
 	buttons_w += TEXTW(btn_next) - lrpad + horizpadtabo;
 	buttons_w += TEXTW(btn_close) - lrpad + horizpadtabo;
+        tot_width = buttons_w;
 
 	/* Calculates number of labels and their width */
 	m->ntabs = 0;
@@ -1438,8 +1441,6 @@ drawtab(Monitor *m) {
 	  ++m->ntabs;
 	  if(m->ntabs >= MAXTABS) break;
 	}
-        if (m->ntabs > 0)
-		tot_width = (mw - buttons_w) / m->ntabs;
 
         if(tot_width > mw){ //not enough space to display the labels, they need to be truncated
 	  memcpy(sorted_label_widths, m->tab_widths, sizeof(int) * m->ntabs);
