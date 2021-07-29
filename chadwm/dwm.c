@@ -98,6 +98,9 @@ enum {
   SchemeLayout,
   TabSel,
   TabNorm,
+  SchemeBtnPrev,
+  SchemeBtnNext,
+  SchemeBtnClose
 }; /* color schemes */
 enum {
   NetSupported,
@@ -1474,15 +1477,17 @@ drawtab(Monitor *m) {
 
        	w = mw - buttons_w - x;
 	x += w;
-	drw_setscheme(drw, scheme[SchemeNorm]);
+	drw_setscheme(drw, scheme[SchemeBtnPrev]);
 	w = TEXTW(btn_prev) - lrpad + horizpadtabo;
 	m->tab_btn_w[0] = w;
 	drw_text(drw, x + horizpadtabo / 2, vertpadbar / 2, w, th - vertpadbar, 0, btn_prev, 0);
 	x += w;
+        drw_setscheme(drw, scheme[SchemeBtnNext]);
 	w = TEXTW(btn_next) - lrpad + horizpadtabo;
 	m->tab_btn_w[1] = w;
 	drw_text(drw, x + horizpadtabo / 2, vertpadbar / 2, w, th - vertpadbar, 0, btn_next, 0);
 	x += w;
+        drw_setscheme(drw, scheme[SchemeBtnClose]);
 	w = TEXTW(btn_close) - lrpad + horizpadtabo;
 	m->tab_btn_w[2] = w;
 	drw_text(drw, x + horizpadtabo / 2, vertpadbar / 2, w, th - vertpadbar, 0, btn_close, 0);
