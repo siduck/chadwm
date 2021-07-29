@@ -25,7 +25,7 @@ static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
 static const int horizpadbar        = 5;
 static const int vertpadbar         = 11;
-static const int vertpadtab         = 37;
+static const int vertpadtab         = 33;
 static const int horizpadtabi       = 15;
 static const int horizpadtabo       = 15;
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:medium:size=10",
@@ -241,4 +241,8 @@ static Button buttons[] = {
     { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
     { ClkTabBar,            0,              Button1,        focuswin,       {0} },
+    { ClkTabBar,            0,              Button1,        focuswin,       {0} },
+    { ClkTabPrev,           0,              Button1,        movestack,      { .i = -1 } },
+    { ClkTabNext,           0,              Button1,        movestack,      { .i = +1 } },
+    { ClkTabClose,          0,              Button1,        killclient,     {0} },
 };

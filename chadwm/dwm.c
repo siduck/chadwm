@@ -126,6 +126,9 @@ enum {
 enum {
   ClkTagBar,
   ClkTabBar,
+  ClkTabPrev,
+  ClkTabNext,
+  ClkTabClose,
   ClkLtSymbol,
   ClkStatusText,
   ClkWinTitle,
@@ -210,6 +213,7 @@ struct Monitor {
   Window tabwin;
   int ntabs;
   int tab_widths[MAXTABS];
+  int tab_btn_w[3];
   const Layout *lt[2];
 };
 
@@ -530,6 +534,7 @@ void attachstack(Client *c) {
 
 void buttonpress(XEvent *e) {
   unsigned int i, x, click;
+  int loop;
   Arg arg = {0};
   Client *c;
   Monitor *m;
@@ -568,9 +573,16 @@ void buttonpress(XEvent *e) {
 				break;
 			if(i >= m->ntabs) break;
 		}
-		if(c) {
+		if(c && ev->x <= x) {
 			click = ClkTabBar;
 			arg.ui = i;
+		} else {
+			for (loop = 0; loop < 3; loop++) {
+				x += selmon->tab_btn_w[loop];
+				if (ev->x <= x)
+					break;
+			}
+			click = ClkTabPrev + loop;
 		}
 	}
 	else if((c = wintoclient(ev->window))) {
@@ -584,8 +596,7 @@ void buttonpress(XEvent *e) {
         buttons[i].button == ev->button &&
         CLEANMASK(buttons[i].mask) == CLEANMASK(ev->state))
       buttons[i].func(
-          (click == ClkTagBar || click == ClkTabBar) && buttons[i].arg.i == 0 ? &arg : &buttons[i].arg);
-
+         ((click == ClkTagBar || click == ClkTabBar) && buttons[i].arg.i == 0) ? &arg : &buttons[i].arg);
 }
 
 void checkotherwm(void) {
@@ -1318,7 +1329,7 @@ void dragmfact(const Arg *arg) {
 
 void drawbar(Monitor *m) {
   int x, y = borderpx, w, sw = 0, stw = 0;
-  int th = bh - borderpx * 2;
+  int bh_n = bh - borderpx * 2;
   int mw = m->ww - sp * 2 - borderpx * 2;
   int boxs = drw->fonts->h / 9;
   int boxw = drw->fonts->h / 6 + 2;
@@ -1332,7 +1343,7 @@ void drawbar(Monitor *m) {
 
     /* draw status first so it can be overdrawn by tags later */
     if (m == selmon) { /* status is only drawn on selected monitor */
-      sw = mw - drawstatusbar(m, th, stext);
+      	sw = mw - drawstatusbar(m, bh_n, stext);
     }
 
   resizebarwin(m);
@@ -1345,12 +1356,12 @@ void drawbar(Monitor *m) {
   for (i = 0; i < LENGTH(tags); i++) {
     w = TEXTW(tags[i]);
     drw_setscheme(drw, scheme[occ & 1 << i ? (m->colorfultag ? tagschemes[i] : SchemeSel) : SchemeTag]);
-    drw_text(drw, x, y, w, th, lrpad / 2, tags[i], urg & 1 << i);
+    drw_text(drw, x, y, w, bh_n, lrpad / 2, tags[i], urg & 1 << i);
     if (ulineall ||
         m->tagset[m->seltags] &
             1 << i) /* if there are conflicts, just move these lines directly
                        underneath both 'drw_setscheme' and 'drw_text' :) */
-      drw_rect(drw, x + ulinepad, th - ulinestroke - ulinevoffset,
+        drw_rect(drw, x + ulinepad, bh_n - ulinestroke - ulinevoffset,
                w - (ulinepad * 2), ulinestroke, 1, 0);
     /*if (occ & 1 << i)
       drw_rect(drw, x + boxs, y + boxs, boxw, boxw,
@@ -1362,14 +1373,14 @@ void drawbar(Monitor *m) {
   drw_setscheme(drw, scheme[SchemeLayout]);
   x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
-  if ((w = mw + sp * 2 - sw - stw - x) > th) {
+  if ((w = mw + sp * 2 - sw - stw - x) > bh_n) {
     if (m->sel) {
       drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
       if (m->sel->isfloating)
         drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
     } else {
       drw_setscheme(drw, scheme[SchemeNorm]);
-      drw_rect(drw, x, y, w - sp * 2, th, 1, 1);
+      drw_rect(drw, x, y, w - sp * 2, bh_n, 1, 1);
     }
   }
   drw_map(drw, m->barwin, 0, 0, m->ww - stw, bh);
@@ -1403,12 +1414,20 @@ void
 drawtab(Monitor *m) {
 	Client *c;
 	int i;
+        char *btn_prev = "";
+	char *btn_next = "";
+	char *btn_close = "";
+	int buttons_w = 0;
 	int sorted_label_widths[MAXTABS];
 	int tot_width = 0;
 	int maxsize = bh;
 	int x = 0;
 	int w = 0;
         int mw = m->ww - 2 * sp;
+
+	buttons_w += TEXTW(btn_prev) - lrpad + horizpadtabo;
+	buttons_w += TEXTW(btn_next) - lrpad + horizpadtabo;
+	buttons_w += TEXTW(btn_close) - lrpad + horizpadtabo;
 
 	/* Calculates number of labels and their width */
 	m->ntabs = 0;
@@ -1419,6 +1438,8 @@ drawtab(Monitor *m) {
 	  ++m->ntabs;
 	  if(m->ntabs >= MAXTABS) break;
 	}
+        if (m->ntabs > 0)
+		tot_width = (mw - buttons_w) / m->ntabs;
 
         if(tot_width > mw){ //not enough space to display the labels, they need to be truncated
 	  memcpy(sorted_label_widths, m->tab_widths, sizeof(int) * m->ntabs);
@@ -1432,7 +1453,6 @@ drawtab(Monitor *m) {
 	  maxsize = (m->ww - tot_width) / (m->ntabs - i);
 	} else{
           maxsize = mw;
-
 	}
 	i = 0;
 
@@ -1450,6 +1470,22 @@ drawtab(Monitor *m) {
 	  x += w;
 	  ++i;
 	}
+
+       	w = mw - buttons_w - x;
+	x += w;
+	drw_setscheme(drw, scheme[SchemeNorm]);
+	w = TEXTW(btn_prev) - lrpad + horizpadtabo;
+	m->tab_btn_w[0] = w;
+	drw_text(drw, x + horizpadtabo / 2, vertpadbar / 2, w, th - vertpadbar, 0, btn_prev, 0);
+	x += w;
+	w = TEXTW(btn_next) - lrpad + horizpadtabo;
+	m->tab_btn_w[1] = w;
+	drw_text(drw, x + horizpadtabo / 2, vertpadbar / 2, w, th - vertpadbar, 0, btn_next, 0);
+	x += w;
+	w = TEXTW(btn_close) - lrpad + horizpadtabo;
+	m->tab_btn_w[2] = w;
+	drw_text(drw, x + horizpadtabo / 2, vertpadbar / 2, w, th - vertpadbar, 0, btn_close, 0);
+	x += w;
 
 	drw_map(drw, m->tabwin, 0, 0, m->ww, th);
 }
@@ -2397,6 +2433,7 @@ void setup(void) {
   lrpad = drw->fonts->h;
   bh = drw->fonts->h + 2 + vertpadbar + borderpx * 2;
   th = vertpadtab;
+ // bh_n = vertpadtab;
   updategeom();
   sp = sidepad;
   vp = (topbar == 1) ? vertpad : -vertpad;
