@@ -25,7 +25,7 @@
 
 # Credits 
 
-- [/u/eProTaLT83](https://www.reddit.com/user/eProTaLT83) ( has modified many dwm bar patches like barpadding,statuspadding, systray to work properly with status2d)
+- Thanks a lot to [eProTaLT83](https://www.reddit.com/user/eProTaLT83) ( he has modified many dwm bar patches like barpadding,statuspadding, systray to work properly with status2d) and as implemented most of my ideas and created patches for them!
 - @fitrh helped with [colorful tag patch](https://github.com/fitrh/dwm/issues/1)
 
 # Patches
