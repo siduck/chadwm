@@ -2739,13 +2739,6 @@ void updatebarpos(Monitor *m) {
 
   m->wy = m->my;
   m->wh = m->mh;
-  if (m->showbar) {
-  m->wh = m->wh - vertpad - bh;
-  m->by = m->topbar ? m->wy + vertpad : m->wy + m->wh;
-  if (m->topbar)
-    	m->wy += bh + vertpad;
-  } else
-        m->by = -bh - vertpad;
   	
   for(c = m->clients; c; c = c->next) {
 		if(ISVISIBLE(c)) ++nvis;
@@ -2753,13 +2746,22 @@ void updatebarpos(Monitor *m) {
 
   if(m->showtab == showtab_always
 	   || ((m->showtab == showtab_auto) && (nvis > 1) && (m->lt[m->sellt]->arrange == monocle))) {
-         	m->wh -= th + ((topbar == toptab && m->showbar) ? 0 : vertpad) - gappov;
-		m->ty = m->toptab ? m->wy + ((topbar && m->showbar) ? 0 : vertpad) : m->wy + m->wh - gappov;
+    	  	m->topbar = !toptab;
+          	m->wh -= th + ((m->topbar == toptab && m->showbar) ? 0 : vertpad) - gappov;
+		m->ty = m->toptab ? m->wy + ((m->topbar && m->showbar) ? 0 : vertpad) : m->wy + m->wh - gappov;
 		if ( m->toptab )
-                   m->wy += th + ((topbar && m->showbar) ? 0 : vertpad) - gappov;
+                 m->wy += th + ((m->topbar && m->showbar) ? 0 : vertpad) - gappov;
 	} else {
             m->ty = -th - vertpad;
+            m->topbar = topbar;
    }
+   if (m->showbar) {
+  m->wh = m->wh - vertpad - bh;
+  m->by = m->topbar ? m->wy + vertpad : m->wy + m->wh;
+  if (m->topbar)
+	m->wy += bh + vertpad;
+  } else
+    m->by = -bh - vertpad;
 }
 
 void updateclientlist() {
