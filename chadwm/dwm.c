@@ -363,8 +363,6 @@ static int sw, sh;      /* X display screen geometry width, height */
 static int bh, blw = 0; /* bar geometry */
 static int th = 0;      /* tab bar geometry */
 static int lrpad;       /* sum of left and right padding for text */
-static int vp;          /* vertical padding for bar */
-static int sp;          /* side padding for bar */
 static int (*xerrorxlib)(Display *, XErrorEvent *);
 static unsigned int numlockmask = 0;
 static void (*handler[LASTEvent])(XEvent *) = {
@@ -519,7 +517,8 @@ void arrange(Monitor *m) {
 
 void arrangemon(Monitor *m) {
   updatebarpos(m);
-  XMoveResizeWindow(dpy, m->tabwin, m->wx + sp, m->ty, m->ww - 2 * sp, th);
+  updatesystray();
+  XMoveResizeWindow(dpy, m->tabwin, m->wx + m->gappov, m->ty, m->ww - 2 * m->gappov, th);
   strncpy(m->ltsymbol, m->lt[m->sellt]->symbol, sizeof m->ltsymbol);
   if (m->lt[m->sellt]->arrange)
     m->lt[m->sellt]->arrange(m);
@@ -580,7 +579,7 @@ void buttonpress(XEvent *e) {
 			click = ClkTabBar;
 			arg.ui = i;
 		} else {
-                       x = selmon->ww - 2 * sp;
+                        x = selmon->ww - 2 * m->gappov;
 			for (loop = 2; loop >= 0; loop--) {
 				x -= selmon->tab_btn_w[loop];
 				if (ev->x > x)
@@ -960,8 +959,8 @@ int drawstatusbar(Monitor *m, int bh, char *stext) {
   text = p;
 
   w += horizpadbar;
-  ret = x = m->ww - sp * 2 - borderpx - w;
-  x = m->ww - sp * 2 - borderpx - w - getsystraywidth();
+  ret = x = m->ww - m->gappov * 2 - borderpx - w;
+  x = m->ww - m->gappov * 2 - borderpx - w - getsystraywidth();
 
   drw_setscheme(drw, scheme[LENGTH(colors)]);
   drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
@@ -1335,14 +1334,14 @@ void dragmfact(const Arg *arg) {
 void drawbar(Monitor *m) {
   int x, y = borderpx, w, sw = 0, stw = 0;
   int bh_n = bh - borderpx * 2;
-  int mw = m->ww - sp * 2 - borderpx * 2;
+  int mw = m->ww - m->gappov * 2 - borderpx * 2;
   int boxs = drw->fonts->h / 9;
   int boxw = drw->fonts->h / 6 + 2;
   unsigned int i, occ = 0, urg = 0;
   Client *c;
 
   XSetForeground(drw->dpy, drw->gc, clrborder.pixel);
-  XFillRectangle(drw->dpy, drw->drawable, drw->gc, 0, 0, m->ww - sp * 2, bh);
+  XFillRectangle(drw->dpy, drw->drawable, drw->gc, 0, 0, m->ww - m->gappov * 2, bh);
 
   if (showsystray && m == systraytomon(m))
 
@@ -1378,14 +1377,14 @@ void drawbar(Monitor *m) {
   drw_setscheme(drw, scheme[SchemeLayout]);
   x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
-  if ((w = mw + sp * 2 - sw - stw - x) > bh_n) {
+  if ((w = mw + m->gappov * 2 - sw - stw - x) > bh_n) {
     if (m->sel) {
       drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
       if (m->sel->isfloating)
         drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
     } else {
       drw_setscheme(drw, scheme[SchemeNorm]);
-      drw_rect(drw, x, y, w - sp * 2, bh_n, 1, 1);
+      drw_rect(drw, x, y, w - m->gappov * 2, bh_n, 1, 1);
     }
   }
   drw_map(drw, m->barwin, 0, 0, m->ww - stw, bh);
@@ -1428,7 +1427,7 @@ drawtab(Monitor *m) {
 	int maxsize = bh;
 	int x = 0;
 	int w = 0;
-        int mw = m->ww - 2 * sp;
+        int mw = m->ww - 2 * m->gappov;
 
 	buttons_w += TEXTW(btn_prev) - lrpad + horizpadtabo;
 	buttons_w += TEXTW(btn_next) - lrpad + horizpadtabo;
@@ -1900,17 +1899,10 @@ monocle(Monitor *m)
   int newx, newy, neww, newh;
 
   for (c = nexttiled(m->clients); c; c = nexttiled(c->next)) {
-    if (m->gappoh == 0) {
-      newx = m->wx - c->bw;
-      newy = m->wy - c->bw;
-      neww = m->ww;
-      newh = m->wh;
-    } else {
-      newx = m->wx + m->gappoh - c->bw;
-      newy = m->wy + m->gappoh - c->bw;
-      neww = m->ww - 2 * (m->gappoh + c->bw);
-      newh = m->wh - 2 * (m->gappoh + c->bw);
-    }
+    newx = m->wx + m->gappov - c->bw;
+    newy = m->wy + m->gappoh - c->bw;
+    neww = m->ww - 2 * (m->gappov + c->bw);
+    newh = m->wh - 2 * (m->gappoh + c->bw);
 
     applysizehints(c, &newx, &newy, &neww, &newh, 0);
 
@@ -2093,10 +2085,10 @@ void resize(Client *c, int x, int y, int w, int h, int interact) {
 }
 
 void resizebarwin(Monitor *m) {
-  unsigned int w = m->ww - 2 * sp;
+  unsigned int w = m->ww - 2 * m->gappov;
   if (showsystray && m == systraytomon(m))
     w -= getsystraywidth();
-  XMoveResizeWindow(dpy, m->barwin, m->wx + sp, m->by, w, bh);
+  XMoveResizeWindow(dpy, m->barwin, m->wx + m->gappov, m->by, w, bh);
 }
 
 void resizeclient(Client *c, int x, int y, int w, int h) {
@@ -2441,8 +2433,6 @@ void setup(void) {
   th = vertpadtab;
  // bh_n = vertpadtab;
   updategeom();
-  sp = sidepad;
-  vp = (topbar == 1) ? vertpad : -vertpad;
   /* init atoms */
   utf8string = XInternAtom(dpy, "UTF8_STRING", False);
   wmatom[WMProtocols] = XInternAtom(dpy, "WM_PROTOCOLS", False);
@@ -2602,9 +2592,9 @@ void togglebar(const Arg *arg) {
     if (!selmon->showbar)
       wc.y = -bh;
     else if (selmon->showbar) {
-      wc.y = vp;
+      wc.y = selmon->gappoh;
       if (!selmon->topbar)
-        wc.y = selmon->mh - bh + vp;
+        wc.y = selmon->mh - bh + selmon->gappoh;
     }
     XConfigureWindow(dpy, systray->win, CWY, &wc);
   }
@@ -2717,14 +2707,14 @@ void updatebars(void) {
     if (showsystray && m == systraytomon(m))
       w -= getsystraywidth();
     m->barwin = XCreateWindow(
-        dpy, root, m->wx + sp, m->by, w - 2 * sp, bh, 0,
+        dpy, root, m->wx + m->gappov, m->by, w - 2 * m->gappov, bh, 0,
         DefaultDepth(dpy, screen), CopyFromParent, DefaultVisual(dpy, screen),
         CWOverrideRedirect | CWBackPixmap | CWEventMask, &wa);
     XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
     if (showsystray && m == systraytomon(m))
       XMapRaised(dpy, systray->win);
     XMapRaised(dpy, m->barwin);
-    m->tabwin = XCreateWindow(dpy, root, m->wx + sp, m->ty, m->ww - 2 * sp, th, 0, DefaultDepth(dpy, screen),
+    m->tabwin = XCreateWindow(dpy, root, m->wx + m->gappov, m->ty, m->ww - 2 * m->gappov, th, 0, DefaultDepth(dpy, screen),
 						CopyFromParent, DefaultVisual(dpy, screen),
 						CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
 	XDefineCursor(dpy, m->tabwin, cursor[CurNormal]->cursor);
@@ -2747,21 +2737,21 @@ void updatebarpos(Monitor *m) {
   if(m->showtab == showtab_always
 	   || ((m->showtab == showtab_auto) && (nvis > 1) && (m->lt[m->sellt]->arrange == monocle))) {
     	  	m->topbar = !toptab;
-          	m->wh -= th + ((m->topbar == toptab && m->showbar) ? 0 : vertpad) - gappov;
-		m->ty = m->toptab ? m->wy + ((m->topbar && m->showbar) ? 0 : vertpad) : m->wy + m->wh - gappov;
+                m->wh -= th + ((m->topbar == toptab && m->showbar) ? 0 : m->gappoh) - m->gappoh;
+		m->ty = m->toptab ? m->wy + ((m->topbar && m->showbar) ? 0 : m->gappoh) : m->wy + m->wh - m->gappoh;
 		if ( m->toptab )
-                 m->wy += th + ((m->topbar && m->showbar) ? 0 : vertpad) - gappov;
+                   m->wy += th + ((m->topbar && m->showbar) ? 0 : m->gappoh) - m->gappoh;
 	} else {
-            m->ty = -th - vertpad;
+            m->ty = -th - m->gappoh;
             m->topbar = topbar;
    }
    if (m->showbar) {
-  m->wh = m->wh - vertpad - bh;
-  m->by = m->topbar ? m->wy + vertpad : m->wy + m->wh;
+  m->wh = m->wh - m->gappoh - bh;
+  m->by = m->topbar ? m->wy + m->gappoh : m->wy + m->wh;
   if (m->topbar)
-	m->wy += bh + vertpad;
+    	m->wy += bh + m->gappoh;
   } else
-    m->by = -bh - vertpad;
+    m->by = -bh - m->gappoh;
 }
 
 void updateclientlist() {
@@ -2966,7 +2956,7 @@ void updatesystray(void) {
   XWindowChanges wc;
   Client *i;
   Monitor *m = systraytomon(NULL);
-  unsigned int x = m->mx + m->mw - sp;
+  unsigned int x = m->mx + m->mw - m->gappov;
   unsigned int w = 1;
 
   if (!showsystray)
