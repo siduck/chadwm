@@ -64,6 +64,11 @@ static const char *colors[][3]      = {
     [SchemeBtnClose]   = { red, black, black }, 
 };
 
+static const char *const autostart[] = {
+	"st", NULL,
+	NULL /* terminate */
+};
+
 /* tagging */
 static const char *tags[] = {" ", " ", " ", " ", " "};
 
