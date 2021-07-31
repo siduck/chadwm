@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cat <<EOF | xmenu
-[]= title				0
+[]= tile				0
 [M] monocle				1
 [@] spiral				2
 [\\ dwindle	        		3
