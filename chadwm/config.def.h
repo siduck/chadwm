@@ -65,7 +65,16 @@ static const char *colors[][3]      = {
 };
 
 static const char *const autostart[] = {
-	"st", NULL,
+	"sh", "-c", "feh --bg-fill ~/Pictures/wall/comfy.jpg &", NULL,
+	"sh", "-c", "xrdb merge ~/Public/xresources/nord/.Xresources &", NULL,
+	"sh", "-c", "picom &", NULL,
+	"sh", "-c", "cp -r ~/Public/theme\ and\ icons/flux/.gtkrc-2.0 ~/ &", NULL,
+	"sh", "-c", "cp -r ~/Public/theme\ and\ icons/flux/settings.ini  ~/.config/gtk-3.0/ &", NULL,
+	"sh", "-c", "cp -r ~/Public/rofi/dwm_nord/rofi/ ~/.config/ &", NULL,
+	"sh", "-c", "xbacklight -set 10 &", NULL,
+	"sh", "-c", "xmodmap ~/.xmodmap-sid &", NULL,
+    /* Dont remove these! */
+	"sh", "-c", "~/.dwm/bar &", NULL,
 	NULL /* terminate */
 };
 
