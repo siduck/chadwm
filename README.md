@@ -12,13 +12,14 @@
 
 - xsetroot package ( status2d uses this to add colors on dwmbar)
 - xmenu (for layoutmenu)
-- JetbrainsMono Nerd Font and Material design icon font
+- JetbrainsMono Nerd Font (or any nerd font) and Material design icon font
 
 # Setup 
 
 - Put the .dwm folder in ~/
 - chmod +x all scripts in .dwm folder
 - Put layoutmen.sh in your PATH 
+- copy the stuff from fonts folder to your ~/.local/share/fonts ( this is for material design icon font )
 - cd into chadwm and sudo make install
 - autostart file must be adjusted for your liking!
 - start dwm with exec ~/.dwm/autostart (NOT EXEC DWM) cuz autostart already runs dwm at the last , or change your dwm.desktop ( should be in /usr/share/xsessions folder ) replace the exec value from dwm to ~/.dwm/autostart.
