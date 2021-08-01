@@ -310,6 +310,7 @@ static void run(void);
 static void scan(void);
 static int sendevent(Window w, Atom proto, int m, long d0, long d1, long d2,
                      long d3, long d4);
+static void sendcommand(int tag);
 static void sendmon(Client *c, Monitor *m);
 static void setborderpx(const Arg *arg);
 static void setclientstate(Client *c, long state);
@@ -329,6 +330,7 @@ static void sigchld(int unused);
 static void sighup(int unused);
 static void sigterm(int unused);
 static void spawn(const Arg *arg);
+static void switchtag(void);
 static Monitor *systraytomon(Monitor *m);
 static void tabmode(const Arg *arg);
 static void tag(const Arg *arg);
@@ -372,6 +374,7 @@ static int screen;
 static int sw, sh;      /* X display screen geometry width, height */
 static int bh, blw = 0; /* bar geometry */
 static int th = 0;      /* tab bar geometry */
+static int preview = 0;
 static int lrpad;       /* sum of left and right padding for text */
 static int (*xerrorxlib)(Display *, XErrorEvent *);
 static unsigned int numlockmask = 0;
@@ -1927,10 +1930,30 @@ monocle(Monitor *m)
 }
 
 void motionnotify(XEvent *e) {
+  unsigned int i, x;
   static Monitor *mon = NULL;
   Monitor *m;
   XMotionEvent *ev = &e->xmotion;
 
+ if (ev->window == selmon->barwin) {
+    i = x = 0;
+    do
+      x += TEXTW(tags[i]);
+    while (ev->x >= x && ++i < LENGTH(tags));
+       if (i < LENGTH(tags)) {
+      i++;
+      if (i != preview)
+	      sendcommand(i);
+      preview = i;
+    } else {
+      sendcommand(0);
+      preview = 0;
+    }
+  } else if (preview != 0) {
+	  preview = 0;
+	  sendcommand(0);
+  }
+ 
   if (ev->window != root)
     return;
   if ((m = recttomon(ev->x_root, ev->y_root, 1, 1)) != mon && mon) {
@@ -2246,6 +2269,15 @@ void scan(void) {
     if (wins)
       XFree(wins);
   }
+}
+
+void sendcommand(int tag) {
+	char cmd[50];
+	if (tag)
+		snprintf(cmd, sizeof(cmd), "%s --hide --show %d &", preview_path, tag);
+	else
+		snprintf(cmd, sizeof(cmd), "%s --hide &", preview_path);
+	system(cmd);
 }
 
 void sendmon(Client *c, Monitor *m) {
@@ -2599,6 +2631,10 @@ void spawn(const Arg *arg) {
   }
 }
 
+void switchtag(void) {
+	system("~/.dwm/save_tagpreview");
+}
+
 void
 tabmode(const Arg *arg)
 {
@@ -2677,6 +2713,7 @@ void toggleview(const Arg *arg) {
       selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK);
 
   if (newtagset) {
+         switchtag();
     selmon->tagset[selmon->seltags] = newtagset;
     focus(NULL);
     arrange(selmon);
@@ -2740,7 +2777,8 @@ void updatebars(void) {
   Monitor *m;
   XSetWindowAttributes wa = {.override_redirect = True,
                              .background_pixmap = ParentRelative,
-                             .event_mask = ButtonPressMask | ExposureMask};
+                             .event_mask = ButtonPressMask | ExposureMask | PointerMotionMask};
+
   XClassHint ch = {"dwm", "dwm"};
   for (m = mons; m; m = m->next) {
     if (m->barwin)
@@ -3112,6 +3150,7 @@ void updatewmhints(Client *c) {
 void view(const Arg *arg) {
   if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
     return;
+  switchtag();
   selmon->seltags ^= 1; /* toggle sel tagset */
   if (arg->ui & TAGMASK)
     selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;

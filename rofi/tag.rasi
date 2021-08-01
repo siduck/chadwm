@@ -1,0 +1,13 @@
+configuration {
+    location: 1;
+    xoffset: 51;
+    yoffset: 41;
+  }
+
+window {
+    background-color:  #2E3440;
+    padding: 310px;
+    width: 220px;
+    height: 122px;
+    background-image: url("/home/sid/u.png",width);
+}

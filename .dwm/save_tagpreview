@@ -1,0 +1,12 @@
+#!/bin/sh
+
+preview_dir="$HOME/.dwm/tag_previews/"
+
+current_tag=$(($(wmctrl -d | grep '*' | cut -d ' ' -f1) + 1)) # get tag number, and add 1
+
+save_Screenshot() {
+  file="${preview_dir}${current_tag}.png"
+  maim -u "${file}"
+}
+
+$(save_Screenshot)

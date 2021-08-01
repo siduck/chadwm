@@ -11,8 +11,7 @@ cp -r ~/Public/theme\ and\ icons/flux/settings.ini  ~/.config/gtk-3.0/ &
 cp -r ~/Public/rofi/dwm_nord/rofi/ ~/.config/ &
 
 xbacklight -set 10 &
-xmodmap ~/.xmodmap-sid &
-
-# Dont remove these!
 ~/.dwm/bar &
+
+xmodmap ~/.xmodmap-sid &
 dwm
