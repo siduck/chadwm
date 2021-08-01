@@ -8,8 +8,8 @@ if [ "$1" == "--hide" ]; then # If first argument is --hide execute
 fi
 
 if [ "$1" == "--show" ]; then # If first argument is --show execute
-  file="${screenshot_dir}${2}.png"                              # $2 is the tag which will be previewed
+  file="${screenshot_dir}${2}.jpeg"                              # $2 is the tag which will be previewed
   [ -f $file ] || exit 1                                        # Exit when file does not exist
-  sed -i "s:${HOME}/.*\.png:$file:" $HOME/.config/rofi/tag.rasi #overwrites the tagname in rofi config
+  sed -i "s:${HOME}/.*\.jpeg:$file:" $HOME/.config/rofi/tag.rasi #overwrites the tagname in rofi config
   rofi -show drun -theme tag 2>/dev/null
 fi

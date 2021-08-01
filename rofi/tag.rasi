@@ -9,5 +9,5 @@ window {
     padding: 310px;
     width: 220px;
     height: 122px;
-    background-image: url("/home/sid/u.png",width);
+    background-image: url("/home/sid/.dwm/tag_previews/4.jpeg",width);
 }
