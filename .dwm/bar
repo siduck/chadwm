@@ -27,7 +27,7 @@ xbps_updates() {
 # battery
 batt() {
   printf "^c#81A1C1^  "
-  printf "^c#81A1C1^ $(acpi | sed "s/,//g" | sed "s/%/%%/g" | awk '{if ($3 == "Discharging"){print $4; exit} else {print $4""}}' | tr -d "\n")"
+  printf "^c#81A1C1^ $(acpi | sed "s/,//g" | awk '{if ($3 == "Discharging"){print $4; exit} else {print $4""}}' | tr -d "\n")"
 }
 
 brightness() {

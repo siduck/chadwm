@@ -7,10 +7,8 @@ if [ "$1" == "--hide" ]; then # If first argument is --hide execute
   shift
 fi
 
-# add geometry logic here ( alignment of preview )
-
 if [ "$1" == "--show" ]; then # If first argument is --show execute
   file="${screenshot_dir}${2}.jpeg" # $2 is the tag which will be previewed
   [ -f $file ] || exit 1            # Exit if file doesnt exist
-  feh -g 230x130+10+40 --scale-down $file
+  feh -g 281x158+10+50 --image-bg "#2E3440" -Z -. $file
 fi
