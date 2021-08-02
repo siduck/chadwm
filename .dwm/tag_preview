@@ -3,13 +3,12 @@
 screenshot_dir="$HOME/.dwm/tag_previews/"
 
 if [ "$1" == "--hide" ]; then # If first argument is --hide execute
-  killall rofi 2>/dev/null
-  shift # shift the first argument
+  killall feh # temp
+  shift
 fi
 
 if [ "$1" == "--show" ]; then # If first argument is --show execute
-  file="${screenshot_dir}${2}.jpeg"                              # $2 is the tag which will be previewed
-  [ -f $file ] || exit 1                                        # Exit when file does not exist
-  sed -i "s:${HOME}/.*\.jpeg:$file:" $HOME/.config/rofi/tag.rasi #overwrites the tagname in rofi config
-  rofi -show drun -theme tag 2>/dev/null
+  file="${screenshot_dir}${2}.jpeg" # $2 is the tag which will be previewed
+  [ -f $file ] || exit 1            # Exit if file doesnt exist
+  feh -g 230x130+10+40 --scale-down $file
 fi
