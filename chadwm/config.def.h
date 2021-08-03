@@ -26,6 +26,7 @@ static const int vertpadbar         = 11;
 static const int vertpadtab         = 33;
 static const int horizpadtabi       = 15;
 static const int horizpadtabo       = 15;
+static const int scalepreview       = 4;
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:medium:size=10",
                                         "Material Design Icons-Regular:size=10",
                                       };
@@ -94,9 +95,7 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
-#include "vanitygaps.c"
-#include "movestack.c"
-#include "tatami.c"
+#include "functions.h"
 
 static const Layout layouts[] = {
     /* symbol     arrange function */

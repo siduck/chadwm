@@ -61,6 +61,7 @@
 #define TAGMASK ((1 << LENGTH(tags)) - 1)
 #define TAGSLENGTH              (LENGTH(tags))
 #define TEXTW(X) (drw_fontset_getwidth(drw, (X)) + lrpad)
+#define MAXTABS 50
 
 #define SYSTEM_TRAY_REQUEST_DOCK 0
 
@@ -190,44 +191,6 @@ typedef struct {
   const char *symbol;
   void (*arrange)(Monitor *);
 } Layout;
-
-#define MAXTABS 50
-
-struct Monitor {
-  char ltsymbol[16];
-  float mfact;
-  int nmaster;
-  int num;
-  int by;             /* bar geometry */
-  int ty;             /* tab bar geometry */
-  int mx, my, mw, mh; /* screen size */
-  int wx, wy, ww, wh; /* window area  */
-  int gappih;         /* horizontal gap between windows */
-  int gappiv;         /* vertical gap between windows */
-  int gappoh;         /* horizontal outer gaps */
-  int gappov;         /* vertical outer gaps */
-  unsigned int borderpx;
-  unsigned int seltags;
-  unsigned int sellt;
-  unsigned int tagset[2];
-  unsigned int colorfultag;
-  int showbar, showtab;
-  int topbar, toptab;
-  Client *clients;
-  Client *sel;
-  Client *stack;
-  Monitor *next;
-  Window barwin;
-  Window tabwin;
-  Window tagwin;
-  Pixmap tagmap;
-  Imlib_Image tag_images[9];
-  int previewshow;
-  int ntabs;
-  int tab_widths[MAXTABS];
-  int tab_btn_w[3];
-  const Layout *lt[2];
-};
 
 typedef struct {
   const char *class;
@@ -411,6 +374,46 @@ static Window root, wmcheckwin;
 /* configuration, allows nested code to access above variables */
 #include "config.h"
 
+struct Monitor {
+  char ltsymbol[16];
+  float mfact;
+  int nmaster;
+  int num;
+  int by;             /* bar geometry */
+  int ty;             /* tab bar geometry */
+  int mx, my, mw, mh; /* screen size */
+  int wx, wy, ww, wh; /* window area  */
+  int gappih;         /* horizontal gap between windows */
+  int gappiv;         /* vertical gap between windows */
+  int gappoh;         /* horizontal outer gaps */
+  int gappov;         /* vertical outer gaps */
+  unsigned int borderpx;
+  unsigned int seltags;
+  unsigned int sellt;
+  unsigned int tagset[2];
+  unsigned int colorfultag;
+  int showbar, showtab;
+  int topbar, toptab;
+  Client *clients;
+  Client *sel;
+  Client *stack;
+  Monitor *next;
+  Window barwin;
+  Window tabwin;
+  Window tagwin;
+  Pixmap tagmap;
+  Imlib_Image tag_images[LENGTH(tags)];
+  int previewshow;
+  int ntabs;
+  int tab_widths[MAXTABS];
+  int tab_btn_w[3];
+  const Layout *lt[2];
+};
+
+#include "vanitygaps.c"
+#include "movestack.c"
+#include "tatami.c"
+
 /* compile-time check if all tags fit into an unsigned int bit array. */
 struct NumTags {
   char limitexceeded[LENGTH(tags) > 31 ? -1 : 1];
@@ -536,6 +539,7 @@ void arrangemon(Monitor *m) {
   updatebarpos(m);
   updatesystray();
   XMoveResizeWindow(dpy, m->tabwin, m->wx + m->gappov, m->ty, m->ww - 2 * m->gappov, th);
+  XMoveWindow(dpy, m->tagwin, m->wx + m->gappov, m->by + (m->topbar ? (bh + m->gappoh) : (- (m->mh / scalepreview) - m->gappoh)));
   strncpy(m->ltsymbol, m->lt[m->sellt]->symbol, sizeof m->ltsymbol);
   if (m->lt[m->sellt]->arrange)
     m->lt[m->sellt]->arrange(m);
@@ -665,6 +669,7 @@ void cleanup(void) {
 
 void cleanupmon(Monitor *mon) {
   Monitor *m;
+  size_t i;
 
   if (mon == mons)
     mons = mons->next;
@@ -673,10 +678,19 @@ void cleanupmon(Monitor *mon) {
       ;
     m->next = mon->next;
   }
+  for (i = 0; i < LENGTH(tags); i++) {
+	  if (mon->tag_images[i]) {
+		  imlib_context_set_image(mon->tag_images[i]);
+		  imlib_free_image();
+	  }
+  }
   XUnmapWindow(dpy, mon->barwin);
   XDestroyWindow(dpy, mon->barwin);
   XUnmapWindow(dpy, mon->tabwin);
   XDestroyWindow(dpy, mon->tabwin);
+  XFreePixmap(dpy, mon->tagmap);
+  XUnmapWindow(dpy, mon->tagwin);
+  XDestroyWindow(dpy, mon->tagwin);
   free(mon);
 }
 
@@ -1950,10 +1964,13 @@ void motionnotify(XEvent *e) {
 			x += TEXTW(tags[i]);
 		while (ev->x >= x && ++i < LENGTH(tags));
 		if (i < LENGTH(tags)) {
-			if ((i + 1) != selmon->previewshow) {
+                  if ((i + 1) != selmon->previewshow && !(selmon->tagset[selmon->seltags] & 1 << i)) {
 				selmon->previewshow = i + 1;
 				showtagpreview(i);
-			}
+                  } else if (selmon->tagset[selmon->seltags] & 1 << i) {
+				selmon->previewshow = 0;
+				showtagpreview(0);
+		  }
 		} else if (selmon->previewshow != 0) {
 			selmon->previewshow = 0;
 			showtagpreview(0);
@@ -2615,10 +2632,10 @@ showtagpreview(int tag)
 		imlib_context_set_visual(DefaultVisual(dpy, screen));
 		imlib_context_set_colormap(DefaultColormap(dpy, screen));
 		imlib_context_set_drawable(selmon->tagmap);
-		imlib_render_image_part_on_drawable_at_size(0, 0, selmon->mw, selmon->mh, 0, 0, selmon->mw / 4, selmon->mh / 4);
+               	imlib_render_image_part_on_drawable_at_size(0, 0, selmon->mw, selmon->mh, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview);
 
 		XSetWindowBackgroundPixmap(dpy, selmon->tagwin, selmon->tagmap);
-		XCopyArea(dpy, selmon->tagmap, selmon->tagwin, drw->gc, 0, 0, selmon->mw / 4, selmon->mh / 4, 0, 0);
+                XCopyArea(dpy, selmon->tagmap, selmon->tagwin, drw->gc, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview, 0, 0);
 		XSync(dpy, False);
 		XMapWindow(dpy, selmon->tagwin);
 	} else
