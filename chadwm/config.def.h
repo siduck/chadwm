@@ -135,7 +135,6 @@ static const char *rofi[] = {"rofi", "-show", "drun", NULL };
 static const char *layoutmenu_cmd = "/home/sid/.dwm/layoutmenu.sh";
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
-static const char *preview_path = "/home/sid/.dwm/tag_preview";
 
 static Key keys[] = {
     /* modifier                     key        function        argument */

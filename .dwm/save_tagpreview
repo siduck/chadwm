@@ -1,8 +1,0 @@
-#!/bin/sh
-
-preview_dir="$HOME/.dwm/tag_previews/"
-
-current_tag=$(($(wmctrl -d | sed -E -n '/\*/{s/(.).*/\1/p; d}' ) + 1)) # get tag number, and add 1
-
-file="${preview_dir}${current_tag}.jpeg"
-scrot -o "${file}"
