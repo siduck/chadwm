@@ -8,6 +8,10 @@
 
 - NOTE: This is vanilla dwm bar (status2d patch for setting colors) not dwmblocks or polybar. 
 
+# Tag preview (while hovering tag icon)
+
+https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-bece-f60b0700b6be.mp4
+
 # Requirements
 
 - xsetroot package ( status2d uses this to add colors on dwmbar)
