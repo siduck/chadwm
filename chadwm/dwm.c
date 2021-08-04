@@ -687,7 +687,8 @@ void cleanupmon(Monitor *mon) {
     m->next = mon->next;
   }
   for (i = 0; i < LENGTH(tags); i++) {
-           XFreePixmap(dpy, mon->tagmap[i]);
+       if (mon->tagmap[i])
+	         XFreePixmap(dpy, mon->tagmap[i]);
   }
   XUnmapWindow(dpy, mon->barwin);
   XDestroyWindow(dpy, mon->barwin);
@@ -871,6 +872,7 @@ void configurerequest(XEvent *e) {
 
 Monitor *createmon(void) {
   Monitor *m;
+  size_t i;
 
   m = ecalloc(1, sizeof(Monitor));
   m->tagset[0] = m->tagset[1] = 1;
@@ -889,6 +891,8 @@ Monitor *createmon(void) {
   m->borderpx = borderpx;
   m->lt[0] = &layouts[0];
   m->lt[1] = &layouts[1 % LENGTH(layouts)];
+  for (i = 0; i < LENGTH(tags); i++)
+	  m->tagmap[i] = 0;
   m->previewshow = 0;
   strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
   return m;
@@ -2153,6 +2157,7 @@ void quit(const Arg *arg) {
 	}
 
   running = 0;
+  system("killall bar");
 }
 
 Monitor *recttomon(int x, int y, int w, int h) {
@@ -2729,6 +2734,10 @@ void switchtag(void) {
 		occ |= c->tags;
 	for (i = 0; i < LENGTH(tags); i++) {
 		if (selmon->tagset[selmon->seltags] & 1 << i) {
+                  	if (selmon->tagmap[i] != 0) {
+ 				XFreePixmap(dpy, selmon->tagmap[i]);
+ 				selmon->tagmap[i] = 0;
+ 			}
 			if (occ & 1 << i) {
                           	image = imlib_create_image(sw, sh);
 				imlib_context_set_image(image);
@@ -2740,10 +2749,7 @@ void switchtag(void) {
 				imlib_context_set_drawable(selmon->tagmap[i]);
 				imlib_render_image_part_on_drawable_at_size(0, 0, selmon->mw, selmon->mh, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview);
 				imlib_free_image();
-			} else if(selmon->tagmap[i] != 0) {
-				XFreePixmap(dpy, selmon->tagmap[i]);
-				selmon->tagmap[i] = 0;
-                        }
+			}                         
 		}
 	}
 }
