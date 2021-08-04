@@ -410,8 +410,7 @@ struct Monitor {
   Window barwin;
   Window tabwin;
   Window tagwin;
-  Pixmap tagmap;
-  Imlib_Image tag_images[LENGTH(tags)];
+  Pixmap tagmap[LENGTH(tags)];
   int previewshow;
   int ntabs;
   int tab_widths[MAXTABS];
@@ -688,16 +687,12 @@ void cleanupmon(Monitor *mon) {
     m->next = mon->next;
   }
   for (i = 0; i < LENGTH(tags); i++) {
-	  if (mon->tag_images[i]) {
-		  imlib_context_set_image(mon->tag_images[i]);
-		  imlib_free_image();
-	  }
+           XFreePixmap(dpy, mon->tagmap[i]);
   }
   XUnmapWindow(dpy, mon->barwin);
   XDestroyWindow(dpy, mon->barwin);
   XUnmapWindow(dpy, mon->tabwin);
   XDestroyWindow(dpy, mon->tabwin);
-  XFreePixmap(dpy, mon->tagmap);
   XUnmapWindow(dpy, mon->tagwin);
   XDestroyWindow(dpy, mon->tagwin);
   free(mon);
@@ -2683,16 +2678,9 @@ showtagpreview(int tag)
 		return;
 	}
 
-	if (selmon->tag_images[tag]) {
-		imlib_context_set_image(selmon->tag_images[tag]);
-		imlib_context_set_display(dpy);
-		imlib_context_set_visual(DefaultVisual(dpy, screen));
-		imlib_context_set_colormap(DefaultColormap(dpy, screen));
-		imlib_context_set_drawable(selmon->tagmap);
-               	imlib_render_image_part_on_drawable_at_size(0, 0, selmon->mw, selmon->mh, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview);
-
-		XSetWindowBackgroundPixmap(dpy, selmon->tagwin, selmon->tagmap);
-                XCopyArea(dpy, selmon->tagmap, selmon->tagwin, drw->gc, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview, 0, 0);
+        if (selmon->tagmap[tag]) {
+		XSetWindowBackgroundPixmap(dpy, selmon->tagwin, selmon->tagmap[tag]);
+		XCopyArea(dpy, selmon->tagmap[tag], selmon->tagwin, drw->gc, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview, 0, 0);
 		XSync(dpy, False);
 		XMapWindow(dpy, selmon->tagwin);
 	} else
@@ -2735,21 +2723,26 @@ void switchtag(void) {
   	int i;
 	unsigned int occ = 0;
 	Client *c;
+        Imlib_Image image;
 
 	for (c = selmon->clients; c; c = c->next)
 		occ |= c->tags;
 	for (i = 0; i < LENGTH(tags); i++) {
 		if (selmon->tagset[selmon->seltags] & 1 << i) {
-                  	imlib_context_set_image(selmon->tag_images[i]);
-			imlib_free_image();
-                        selmon->tag_images[i] = NULL;
 			if (occ & 1 << i) {
-				selmon->tag_images[i] = imlib_create_image(sw, sh);
-				imlib_context_set_image(selmon->tag_images[i]);
+                          	image = imlib_create_image(sw, sh);
+				imlib_context_set_image(image);
 				imlib_context_set_display(dpy);
 				imlib_context_set_visual(DefaultVisual(dpy, screen));
 				imlib_context_set_drawable(RootWindow(dpy, screen));
 				imlib_copy_drawable_to_image(0, selmon->mx, selmon->my, selmon->mw ,selmon->mh, 0, 0, 1);
+                                selmon->tagmap[i] = XCreatePixmap(dpy, selmon->tagwin, selmon->mw / scalepreview, selmon->mh / scalepreview, DefaultDepth(dpy, screen));
+				imlib_context_set_drawable(selmon->tagmap[i]);
+				imlib_render_image_part_on_drawable_at_size(0, 0, selmon->mw, selmon->mh, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview);
+				imlib_free_image();
+			} else if(selmon->tagmap[i] != 0) {
+				XFreePixmap(dpy, selmon->tagmap[i]);
+				selmon->tagmap[i] = 0;
                         }
 		}
 	}
@@ -2965,7 +2958,6 @@ updatepreview(void)
 		XDefineCursor(dpy, m->tagwin, cursor[CurNormal]->cursor);
 		XMapRaised(dpy, m->tagwin);
 		XUnmapWindow(dpy, m->tagwin);
-		m->tagmap = XCreatePixmap(dpy, m->tagwin, m->mw / 4, m->mh / 4, DefaultDepth(dpy, screen));
 	}
 }
 
