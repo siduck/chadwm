@@ -112,6 +112,7 @@ static const Layout layouts[] = {
     { ":::",      gaplessgrid },
     { "|M|",      centeredmaster },
     { ">M>",      centeredfloatingmaster },
+    { "|+|",      tatami },
     { "><>",      NULL },    /* no layout function means floating behavior */
 };
 
