@@ -27,7 +27,7 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 - change sid ( my username ) to yours in config.deh.h
 - cd into chadwm and sudo make install
 - autostart file must be adjusted for your liking!
-- start dwm with exec ~/.dwm/autostart (NOT EXEC DWM) cuz autostart already runs dwm at the last , or make a dwm.desktop ( in /usr/share/xsessions folder ) replace the exec value from dwm to ~/.dwm/autostart.
+- start dwm with exec ~/.dwm/autostart (NOT EXEC DWM) cuz autostart already runs dwm at the last , or make a dwm.desktop ( in /usr/share/xsessions folder ) replace the exec value from dwm to /home/your_username/.dwm/autostart.
 
 # Credits 
 
