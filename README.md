@@ -40,7 +40,7 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 - bottomstack
 - cfacts
 - dragmfact 
-- dragcfact (took from bakkeby's build)
+- dragcfact (took from [bakkeby's build](https://github.com/bakkeby/dwm-flexipatch))
 - fibonacii
 - gaplessgrid
 - horizgrid
