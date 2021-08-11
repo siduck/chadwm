@@ -31,7 +31,7 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 
 # Credits 
 
-- HUGE THANKS to [eProTaLT83](https://www.reddit.com/user/eProTaLT83). I wanted certain features in dwm and he implemented my ideas and created patches for me! I   cant even count the number of times he has helped me :v 
+- HUGE THANKS to [eProTaLT83](https://www.reddit.com/user/eProTaLT83). I wanted certain features in dwm like tabbar in monocle , tagpreview etc and he implemented my ideas and created patches for me! I   cant even count the number of times he has helped me :v 
 - @fitrh helped with [colorful tag patch](https://github.com/fitrh/dwm/issues/1)
 
 # Patches
