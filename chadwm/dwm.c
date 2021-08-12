@@ -1521,6 +1521,7 @@ drawtab(Monitor *m) {
 	}
 
         if(tot_width > mw){ //not enough space to display the labels, they need to be truncated
+	  tot_width = 0; // recalculate total width of the tab bar
 	  memcpy(sorted_label_widths, m->tab_widths, sizeof(int) * m->ntabs);
 	  qsort(sorted_label_widths, m->ntabs, sizeof(int), cmpint);
 	  for(i = 0; i < m->ntabs; ++i){
