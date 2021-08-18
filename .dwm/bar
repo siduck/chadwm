@@ -10,28 +10,18 @@ cpu() {
 }
 
 update_icon() {
-  printf "^c#94af7d^  "
+  printf "^c#94af7d^ "
 }
 
-# only for void users!
-xbps_updates() {
-  updates=$(doas xbps-install -un | wc -l)
+pkg_updates() {
+  updates=$(doas xbps-install -un | wc -l) # void
+  # updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
+  # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
 
   if [ -z "$updates" ]; then
     printf "^c#94af7d^ Fully Updated"
   else
-    printf "^c#94af7d^ $updates""s"
-  fi
-}
-
-# only for arch user! it requires pacman-contrib package
-pacman_updates() {
-  updates=$(checkupdates | wc -l)
-
-  if [ -z "$updates" ]; then
-    printf "^c#94af7d^ Fully Updated"
-  else
-    printf "^c#94af7d^ $updates"
+    printf "^c#94af7d^ $updates"" updates"
   fi
 }
 
@@ -71,8 +61,7 @@ clock() {
 
 while true; do
 
-  # remove these 2 lines if u dont use void! or adjust the xbps-updates to get n.o of updates (according your distro ofc)
-  [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && updates=$(xbps-updates) # use updates=$(pacman_updates) for arch
+  [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && updates=$(pkg_updates)
   interval=$((interval + 1))
 
   sleep 1 && xsetroot -name "$(update_icon) $updates $(batt) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
