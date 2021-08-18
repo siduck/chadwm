@@ -15,7 +15,7 @@ update_icon() {
 
 # only for void users!
 xbps_updates() {
-  updates=$(xbps-install -un | cut -d' ' -f2 | sort | uniq -c | xargs)
+  updates=$(doas xbps-install -un | wc -l)
 
   if [ -z "$updates" ]; then
     printf "^c#94af7d^ Fully Updated"
