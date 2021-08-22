@@ -130,8 +130,8 @@ static Key keys[] = {
     { MODKEY,                       XK_c,      spawn,          {.v = rofi } },
 
     // if you dont use st my rm this and uncomment line below it!
-    /* { MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")},  */
-    { MODKEY,                       XK_Return, spawn,    {.v = termcmd }}, 
+     { MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")}, 
+     /* { MODKEY,                       XK_Return, spawn,    {.v = termcmd }},  */
 
     {MODKEY | ControlMask, XK_u, spawn, SHCMD("maim | xclip -selection clipboard -t image/png")},
     {MODKEY, XK_u, spawn,   SHCMD("maim --select | xclip -selection clipboard -t image/png")},

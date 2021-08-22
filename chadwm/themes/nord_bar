@@ -5,12 +5,12 @@ interval=0
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
 
-  printf "^c#3b414d^ ^b#7ec7a2^ CPU"
-  printf "^c#abb2bf^ ^b#353b45^ $cpu_val"
+  printf "^c#3b414d^ ^b#A3BE8C^ CPU"
+  printf "^c#abb2bf^ ^b#414753^ $cpu_val"
 }
 
 update_icon() {
-  printf "^c#7ec7a2^ "
+  printf "^c#94af7d^ "
 }
 
 pkg_updates() {
@@ -19,9 +19,9 @@ pkg_updates() {
   # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
 
   if [ -z "$updates" ]; then
-    printf "^c#7ec7a2^ Fully Updated"
+    printf "^c#94af7d^ Fully Updated"
   else
-    printf "^c#7ec7a2^ $updates"" updates"
+    printf "^c#94af7d^ $updates"" updates"
   fi
 }
 
@@ -43,20 +43,20 @@ brightness() {
 }
 
 mem() {
-  printf "^c#7797b7^^b#1e222a^  "
+  printf "^c#7797b7^^b#2E3440^  "
   printf "^c#7797b7^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
 }
 
 wlan() {
   case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
-  up) printf "^c#3b414d^ ^b#899ed5^ 󰤨 ^d^%s" " ^c#828dd1^Connected" ;;
-  down) printf "^c#3b414d^ ^b#899ed5^ 󰤭 ^d^%s" " ^c#828dd1^Disconnected" ;;
+  up) printf "^c#3b414d^ ^b#7681c5^ 󰤨 ^d^%s" " ^c#828dd1^Connected" ;;
+  down) printf "^c#3b414d^ ^b#7681c5^ 󰤭 ^d^%s" " ^c#828dd1^Disconnected" ;;
   esac
 }
 
 clock() {
-  printf "^c#1e222a^ ^b#7085bc^ 󱑆 "
-  printf "^c#1e222a^^b#859ad1^ $(date '+%a, %I:%M %p') "
+  printf "^c#2E3440^ ^b#828dd1^ 󱑆 "
+  printf "^c#2E3440^^b#6c77bb^ $(date '+%a, %I:%M %p') "
 }
 
 while true; do
