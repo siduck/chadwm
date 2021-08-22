@@ -1,0 +1,85 @@
+configuration{
+    modi: "drun";
+    width: 40;
+    columns: 1;
+    lines: 5;
+    font: "Iosevka 12";
+    show-icons: true;
+    icon-theme: "Oranchelo";
+    terminal: "st";
+    drun-display-format: "{icon} {name}";
+    display-drun: "  ";
+    location: 0;
+    separator-style: "solid";
+    disable-history: false;
+    hide-scrollbar: true;
+}
+
+* {
+    background-color:  #1e222a;
+    border-color: #D8DEE9;
+    text-color: #D8DEE9;
+    separator-color: @border-color;
+    font: "Iosevka 12";
+    show-icons: true;
+}
+
+window {
+    padding: 20px;
+    height: 320px;
+    border: 3px;
+    border-color: #e06c75;
+}
+
+mainbox {
+    padding: 5px;
+    border-radius: 13px;
+}
+
+inputbar {
+    children: [prompt,entry];
+}
+
+prompt {
+    background-color: #61afef;
+    padding: 5px 5px 0px;
+    text-color: @background-color;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+}
+
+entry {
+    padding: 5px;
+}
+
+listview {
+    border: 0px 0px 0px;
+    padding: 6px 0px 0px;
+    columns: 2;
+}
+
+element {
+    padding: 5px;
+}
+
+element-icon {
+size: 25px;
+}
+
+element selected {
+    background-color: #282c34  ;
+    text-color: #fff ;
+}
+
+element urgent {
+    background-color: #BF616A;
+    text-color: @background-color;
+}
+
+element active {
+    background-color: #EBCB8B;
+    text-color: @background-color;
+}

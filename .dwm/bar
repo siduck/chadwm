@@ -49,14 +49,14 @@ mem() {
 
 wlan() {
   case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
-  up) printf "^c#3b414d^ ^b#899ed5^ 󰤨 ^d^%s" " ^c#828dd1^Connected" ;;
-  down) printf "^c#3b414d^ ^b#899ed5^ 󰤭 ^d^%s" " ^c#828dd1^Disconnected" ;;
+  up) printf "^c#3b414d^ ^b#7aa2f7^ 󰤨 ^d^%s" " ^c#7aa2f7^Connected" ;;
+  down) printf "^c#3b414d^ ^b#7aa2f7^ 󰤭 ^d^%s" " ^c#7aa2f7^Disconnected" ;;
   esac
 }
 
 clock() {
-  printf "^c#1e222a^ ^b#7085bc^ 󱑆 "
-  printf "^c#1e222a^^b#859ad1^ $(date '+%a, %I:%M %p') "
+  printf "^c#1e222a^ ^b#668ee3^ 󱑆 "
+  printf "^c#1e222a^^b#7aa2f7^ $(date '+%a, %I:%M %p') "
 }
 
 while true; do
