@@ -33,19 +33,8 @@ static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:medium:si
 static const char dmenufont[]       = "monospace:size=10";
 static const int colorfultag        = 1;  /* 0 means use SchemeSel for selected non vacant tag */
 
-
-static const char black[]       = "#2E3440";
-static const char gray2[]       = "#3B4252"; // unfocused window border
-static const char gray3[]       = "#606672";
-static const char gray4[]       = "#6d8dad";
-static const char blue[]        = "#81A1C1";  // focused window border
-static const char green[]       = "#89b482";
-static const char red[]         = "#BF616A";
-static const char orange[]      = "#caaa6a";
-static const char yellow[]      = "#EBCB8B";
-static const char pink[]        = "#B48EAD";
-static const char col_borderbar[]  = "#2E3440"; // inner border
-static const char purpleBlue[]  = "#6C77BB";
+// theme
+#include "themes/onedark.h"
 
 static const char *colors[][3]      = {
     /*               fg         bg         border   */
@@ -85,7 +74,7 @@ static const Rule rules[] = {
        	/* class      instance    title       tags mask     iscentered   isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            0,           1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           0,           -1 },
-      	{ "feh",      NULL,       NULL,       0,            0,           1,           -1 },
+      	{ "eww",      NULL,       NULL,       0,            0,           1,           -1 },
 };
 
 /* layout(s) */
@@ -141,8 +130,8 @@ static Key keys[] = {
     { MODKEY,                       XK_c,      spawn,          {.v = rofi } },
 
     // if you dont use st my rm this and uncomment line below it!
-     //    { MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")}, 
-     { MODKEY,                       XK_Return, spawn,    {.v = termcmd }}, 
+    /* { MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")},  */
+    { MODKEY,                       XK_Return, spawn,    {.v = termcmd }}, 
 
     {MODKEY | ControlMask, XK_u, spawn, SHCMD("maim | xclip -selection clipboard -t image/png")},
     {MODKEY, XK_u, spawn,   SHCMD("maim --select | xclip -selection clipboard -t image/png")},
