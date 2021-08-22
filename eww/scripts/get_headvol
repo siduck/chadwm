@@ -1,0 +1,2 @@
+#!/bin/sh
+amixer sget Headphone | grep 'Left:' | cut -d\  -f7 | tr -d '[%]'
