@@ -1,17 +1,13 @@
 #!/bin/sh
 
-feh --bg-fill ~/Pictures/wall/comfy.jpg &
+feh --bg-fill ~/Pictures/wall/chad.png &
+
 xrdb merge ~/Public/xresources/nord/.Xresources &
 
 picom & 
 
-cp -r ~/Public/theme\ and\ icons/flux/.gtkrc-2.0 ~/ &
-cp -r ~/Public/theme\ and\ icons/flux/settings.ini  ~/.config/gtk-3.0/ &
-
-cp -r ~/Public/rofi/dwm_nord/rofi/ ~/.config/ &
-
 xbacklight -set 10 &
+
 ~/.dwm/bar &
 
-xmodmap ~/.xmodmap-sid &
 dwm

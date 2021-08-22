@@ -8,6 +8,8 @@
 
 - NOTE: This is vanilla dwm bar (status2d patch for setting colors) not dwmblocks or polybar. 
 
+<img src="https://github.com/siduck76/chadwm/blob/main/screenshots/chadwm.png">
+
 # Tag preview (while hovering tag icon)
 
 https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-bece-f60b0700b6be.mp4
