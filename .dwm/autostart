@@ -2,12 +2,12 @@
 
 feh --bg-fill ~/Pictures/wall/chad.png &
 
-xrdb merge ~/Public/xresources/nord/.Xresources &
+xrdb merge ~/Public/xresources/ocean/.Xresources &
 
 picom & 
 
 xbacklight -set 10 &
 
-~/.dwm/bar &
+~/.dwm/bars/onedark.sh &
 
 dwm
