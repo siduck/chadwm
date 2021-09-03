@@ -1514,7 +1514,7 @@ drawtab(Monitor *m) {
 	m->ntabs = 0;
 	for(c = m->clients; c; c = c->next){
 	  if(!ISVISIBLE(c)) continue;
-          m->tab_widths[m->ntabs] = TEXTW(c->name) - lrpad + horizpadtabi + horizpadtabo;
+          m->tab_widths[m->ntabs] = MIN(TEXTW(c->name) - lrpad + horizpadtabi + horizpadtabo, 250);
 	  tot_width += m->tab_widths[m->ntabs];
 	  ++m->ntabs;
 	  if(m->ntabs >= MAXTABS) break;
