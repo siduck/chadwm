@@ -2872,7 +2872,7 @@ void showhide(Client *c) {
 void
 showtagpreview(int tag)
 {
-	if (!selmon->previewshow) {
+	if (!selmon->previewshow  || !tag_preview ) {
 		XUnmapWindow(dpy, selmon->tagwin);
 		return;
 	}
@@ -2932,7 +2932,7 @@ void switchtag(void) {
  				XFreePixmap(dpy, selmon->tagmap[i]);
  				selmon->tagmap[i] = 0;
  			}
-			if (occ & 1 << i) {
+			if (occ & 1 << i && tag_preview) {
                           	image = imlib_create_image(sw, sh);
 				imlib_context_set_image(image);
 				imlib_context_set_display(dpy);
