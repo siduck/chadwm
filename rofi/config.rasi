@@ -1,7 +1,5 @@
 configuration{
     modi: "drun";
-    width: 40;
-    columns: 1;
     lines: 5;
     font: "Iosevka 12";
     show-icons: true;
@@ -15,35 +13,50 @@ configuration{
     hide-scrollbar: true;
 }
 
+@theme "/dev/null"
+
+element-text, element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
 * {
-    background-color:  #1e222a;
-    border-color: #D8DEE9;
-    text-color: #D8DEE9;
-    separator-color: @border-color;
-    font: "Iosevka 12";
-    show-icons: true;
+    dark-black: #1e2122;
+    bg-col:  #222526;
+    border-col: #282b2c;
+    selected-col: #282b2c;
+    blue: #8dae88;
+    fg-col: #d4be98;
+    fg-col2: #df736d;
+    width: 600;
 }
 
 window {
     padding: 20px;
-    height: 320px;
+    height: 360px;
     border: 3px;
-    border-color: #e06c75;
+    border-color: @border-col;
+    background-color: @bg-col;
 }
 
 mainbox {
     padding: 5px;
     border-radius: 13px;
+    background-color: @bg-col;
 }
 
 inputbar {
     children: [prompt,entry];
+    background-color: @bg-col;
+    border-radius: 5px;
+    padding: 2px;
 }
 
 prompt {
-    background-color: #61afef;
+    background-color: @blue;
     padding: 5px 5px 0px;
-    text-color: @background-color;
+    text-color: @bg-col;
+    border-radius: 3px;
 }
 
 textbox-prompt-colon {
@@ -52,34 +65,29 @@ textbox-prompt-colon {
 }
 
 entry {
-    padding: 5px;
+    padding: 6px;
+    text-color: @fg-col;
+    background-color: @bg-col;
 }
 
 listview {
     border: 0px 0px 0px;
     padding: 6px 0px 0px;
     columns: 2;
+    background-color: @bg-col;
 }
 
 element {
     padding: 5px;
+    background-color: @bg-col;
+    text-color: @fg-col  ;
 }
 
 element-icon {
-size: 25px;
+    size: 25px;
 }
 
 element selected {
-    background-color: #282c34  ;
-    text-color: #fff ;
-}
-
-element urgent {
-    background-color: #BF616A;
-    text-color: @background-color;
-}
-
-element active {
-    background-color: #EBCB8B;
-    text-color: @background-color;
+    background-color:  @selected-col ;
+    text-color: @fg-col2  ;
 }
