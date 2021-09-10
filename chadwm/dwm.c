@@ -3541,6 +3541,7 @@ void view(const Arg *arg) {
   selmon->seltags ^= 1; /* toggle sel tagset */
   if (arg->ui & TAGMASK) {
     selmon->pertag->prevtag = selmon->pertag->curtag;
+    selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
 
 		if (arg->ui == ~0)
 			selmon->pertag->curtag = 0;
@@ -3562,7 +3563,6 @@ void view(const Arg *arg) {
 
 	if (selmon->showbar != selmon->pertag->showbars[selmon->pertag->curtag])
 		togglebar(NULL);
-    selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
   focus(NULL);
   arrange(selmon);
   	updatecurrentdesktop();
