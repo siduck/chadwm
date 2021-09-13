@@ -131,9 +131,9 @@ static Key keys[] = {
     /* modifier                     key        function        argument */
     { MODKEY,                       XK_c,      spawn,          {.v = rofi } },
 
-    // if you dont use st my rm this and uncomment line below it!
-     { MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")}, 
-     /* { MODKEY,                       XK_Return, spawn,    {.v = termcmd }},  */
+    // if you dont use st and this script my rm this and uncomment line below it!
+    //{ MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")}, 
+    { MODKEY,                       XK_Return, spawn,    {.v = termcmd }},  
 
     {MODKEY | ControlMask, XK_u, spawn, SHCMD("maim | xclip -selection clipboard -t image/png")},
     {MODKEY, XK_u, spawn,   SHCMD("maim --select | xclip -selection clipboard -t image/png")},
