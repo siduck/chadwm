@@ -27,8 +27,8 @@ pkg_updates() {
 
 # battery
 batt() {
-  printf "^c#6f8faf^  "
-  printf "^c#6f8faf^ $(acpi | sed "s/,//g" | awk '{if ($3 == "Discharging"){print $4; exit} else {print $4""}}' | tr -d "\n")"
+  get_capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
+  printf "^c#6f8faf^   $get_capacity"
 }
 
 brightness() {
