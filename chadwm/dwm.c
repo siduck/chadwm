@@ -1419,6 +1419,7 @@ void drawbar(Monitor *m) {
   XFillRectangle(drw->dpy, drw->drawable, drw->gc, 0, 0, m->ww - m->gappov * 2, bh);
 
   if (showsystray && m == systraytomon(m))
+    stw = getsystraywidth();
 
     /* draw status first so it can be overdrawn by tags later */
     if (m == selmon) { /* status is only drawn on selected monitor */
