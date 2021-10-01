@@ -126,6 +126,7 @@ static const char *rofi[] = {"rofi", "-show", "drun", NULL };
 static const char *layoutmenu_cmd = "/home/sid/.dwm/layoutmenu.sh";
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
+static const char *chadkeys-script[] = {".dwm/chadkeybinds.sh", NULL};
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
@@ -199,6 +200,7 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_minus, 		setborderpx,    {.i = -1 } },
     { MODKEY|ShiftMask,             XK_p, 	        setborderpx,    {.i = +1 } },
     { MODKEY|ShiftMask,             XK_w, 	        setborderpx,    {.i = default_border } },
+   {MODKEY,                                XK_F1,               spawn,                {.v = chadkeys-script}} },	
 
     TAGKEYS(                        XK_1,                      0)
     TAGKEYS(                        XK_2,                      1)
