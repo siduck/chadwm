@@ -57,7 +57,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = {" ", " ", " ", " ", " "};
+static char *tags[] = {" ", " ", " ", " ", " "};
 
 static const int tagschemes[] = { SchemeTag1, SchemeTag2, SchemeTag3,
                                   SchemeTag4, SchemeTag5

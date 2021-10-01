@@ -1421,10 +1421,10 @@ void drawbar(Monitor *m) {
   if (showsystray && m == systraytomon(m))
     stw = getsystraywidth();
 
-    /* draw status first so it can be overdrawn by tags later */
-    if (m == selmon) { /* status is only drawn on selected monitor */
-      	sw = mw - drawstatusbar(m, bh_n, stext);
-    }
+  /* draw status first so it can be overdrawn by tags later */
+  if (m == selmon) { /* status is only drawn on selected monitor */
+    sw = mw - drawstatusbar(m, bh_n, stext);
+  }
 
   resizebarwin(m);
   for (c = m->clients; c; c = c->next) {
@@ -1476,7 +1476,6 @@ void drawbars(void) {
 void
 drawtabs(void) {
 	Monitor *m;
-	unsigned int i;
 
 	for(m = mons; m; m = m->next)
 		drawtab(m);
