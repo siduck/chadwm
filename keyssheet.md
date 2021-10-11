@@ -45,7 +45,7 @@ key                     | Do         | Value
  win + ctrl + t         | togglegaps |    0
  win + ctrl + shift + d | defaultgaps|    0
 
-## Generak Keys
+## General Keys
 key                    | Do             | Value
 ---------------------- | -------------- | ------
  win + q               |  killclient    | 0
