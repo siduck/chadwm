@@ -17,14 +17,12 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 # Requirements
 
 - xsetroot package ( status2d uses this to add colors on dwmbar)
-- xmenu (for layoutmenu)
 - JetbrainsMono Nerd Font (or any nerd font) and Material design icon font
 
 # Setup 
 
 - Put the .dwm folder in ~/
 - chmod +x all scripts in .dwm folder
-- Put layoutmenu.sh in your PATH 
 - copy the stuff from fonts folder to your ~/.local/share/fonts ( this is for material design icon font )
 - change sid ( my username ) to yours in config.def.h
 - cd into chadwm and sudo make install
@@ -46,7 +44,6 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 - fibonacii
 - gaplessgrid
 - horizgrid
-- layoutmenu 
 - movestack 
 - vanity gaps
 - colorful tags

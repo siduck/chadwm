@@ -78,7 +78,6 @@ key                    | Do             | Value
 -------------- | ---------- | ---------- | ------------- | -------------  
  ClkLtSymbol   |   0        |  Button1   | setlayout     | 0
  ClkLtSymbol   |   0        |  Button3   | setlayout     | layouts[2]
- ClkLtSymbol   |   0        |  Button3   | layoutmenu    | 0
  ClkWinTitle   |   0        |  Button2   | zoom          | 0
  ClkStatusText |   0        |  Button2   | spawn         | termcmd 
  ClkClientWin  |   win +    |  Button1   | moveorplace   | 0

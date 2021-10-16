@@ -123,7 +123,6 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *termcmd[]  = {  "st", NULL }; // change this to your term
 static const char *rofi[] = {"rofi", "-show", "drun", NULL };
-static const char *layoutmenu_cmd = "/home/sid/.dwm/layoutmenu.sh";
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
 
@@ -224,7 +223,6 @@ static Button buttons[] = {
     /* click                event mask      button          function        argument */
     { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
     { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-    { ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
     { ClkWinTitle,          0,              Button2,        zoom,           {0} },
     { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 
