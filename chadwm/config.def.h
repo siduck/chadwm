@@ -36,12 +36,12 @@ static const char dmenufont[]       = "monospace:size=10";
 static const int colorfultag        = 1;  /* 0 means use SchemeSel for selected non vacant tag */
 
 // theme
-#include "themes/onedark.h"
+#include "themes/gruvchad.h"
 
 static const char *colors[][3]      = {
     /*               fg         bg         border   */
     [SchemeNorm]       = { gray3, black, gray2 },
-    [SchemeSel]        = { gray4, blue,  blue  },
+    [SchemeSel]        = { gray4, blue,  gray4  },
     [TabSel]           = { blue, gray2,  black  },
     [TabNorm]          = { gray3, black, black },
     [SchemeTag]        = { gray3, black, black },
@@ -88,6 +88,7 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "functions.h"
 
+
 static const Layout layouts[] = {
     /* symbol     arrange function */
     { "[]=",      tile },    /* first entry is default */
@@ -103,7 +104,6 @@ static const Layout layouts[] = {
     { ":::",      gaplessgrid },
     { "|M|",      centeredmaster },
     { ">M>",      centeredfloatingmaster },
-    { "|+|",      tatami },
     { "><>",      NULL },    /* no layout function means floating behavior */
 };
 
@@ -131,8 +131,8 @@ static Key keys[] = {
     { MODKEY,                       XK_c,      spawn,          {.v = rofi } },
 
     // if you dont use st and this script my rm this and uncomment line below it!
-    //{ MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")}, 
-    { MODKEY,                       XK_Return, spawn,    {.v = termcmd }},  
+    { MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")}, 
+    /* { MODKEY,                       XK_Return, spawn,    {.v = termcmd }},   */
 
     {MODKEY | ControlMask, XK_u, spawn, SHCMD("maim | xclip -selection clipboard -t image/png")},
     {MODKEY, XK_u, spawn,   SHCMD("maim --select | xclip -selection clipboard -t image/png")},

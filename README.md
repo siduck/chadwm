@@ -49,6 +49,5 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 - colorful tags
 - statuspadding 
 - status2d
-- tatami 
 - underline tags
 - notitle
