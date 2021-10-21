@@ -1,13 +1,11 @@
 #!/bin/sh
 
-feh --bg-fill ~/Pictures/wall/chad.png &
+# add your autostart stuffs here
 
-xrdb merge ~/Public/xresources/ocean/.Xresources &
+picom &
+xrdb merge ~/Public/xresources/forest/.Xresources &
+feh --bg-tile ~/Pictures/wall/gruv.png &
 
-picom & 
-
-xbacklight -set 10 &
-
-~/.dwm/bars/onedark.sh &
-
+# run bar script and dwm ( do not remove this ) 
+~/.dwm/bar/./bar.sh & 
 dwm
