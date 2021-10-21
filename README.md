@@ -25,9 +25,27 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 - chmod +x all scripts in .dwm folder
 - copy the stuff from fonts folder to your ~/.local/share/fonts ( this is for material design icon font )
 - cd into chadwm and sudo make install
-- autostart file must be adjusted for your liking!
-- start dwm with exec ~/.dwm/autostart (NOT EXEC DWM) cuz autostart already runs dwm at the last , or make a dwm.desktop ( in /usr/share/xsessions folder ) replace the exec value from dwm to /home/your_username/.dwm/autostart.
+- autostart file is just an example one so it must be adjusted for your liking!
+
+# Run chadwm
+
+- Run the autostart file from .xinitrc or 
+- Create a desktop entry 
+
+```
+touch /usr/share/xsessions/chadwm.desktop  
+```
+
+```
+[Desktop Entry]
+Name=chadwm
+Comment=dwm made beautiful 
+Exec= <path to autostart file> 
+Type=Application 
+```
+
 - [wallpaper](<img src="https://github.com/siduck76/chadwm/blob/screenshots/screenshots/chad.png">)
+
 # Credits 
 
 - HUGE THANKS to [eProTaLT83](https://www.reddit.com/user/eProTaLT83). I wanted certain features in dwm like tabbar in monocle , tagpreview etc and he implemented my ideas and created patches for me! I   cant even count the number of times he has helped me :v 
