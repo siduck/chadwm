@@ -24,7 +24,6 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 - Put the .dwm folder in ~/
 - chmod +x all scripts in .dwm folder
 - copy the stuff from fonts folder to your ~/.local/share/fonts ( this is for material design icon font )
-- change sid ( my username ) to yours in config.def.h
 - cd into chadwm and sudo make install
 - autostart file must be adjusted for your liking!
 - start dwm with exec ~/.dwm/autostart (NOT EXEC DWM) cuz autostart already runs dwm at the last , or make a dwm.desktop ( in /usr/share/xsessions folder ) replace the exec value from dwm to /home/your_username/.dwm/autostart.
