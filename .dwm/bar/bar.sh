@@ -33,14 +33,8 @@ battery() {
 }
 
 brightness() {
-
-	backlight() {
-		backlight="$(xbacklight -get)"
-		printf "$backlight"
-	}
-
 	printf "^c$red^   "
-	printf "^c$red^%.0f\n" $(backlight)
+	printf "^c$red^%.0f\n" $(cat /sys/class/backlight/*/brightness)
 }
 
 mem() {
