@@ -44,7 +44,7 @@ Exec= <path to autostart file>
 Type=Application 
 ```
 
-- [wallpaper](<img src="https://github.com/siduck76/chadwm/blob/screenshots/screenshots/chad.png">)
+- [wallpaper](https://github.com/siduck76/chadwm/blob/screenshots/screenshots/chad.png)
 
 # Credits 
 
