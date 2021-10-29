@@ -1,14 +1,14 @@
 # chadwm (Initial look)
 
-<img src="https://github.com/siduck76/chadwm/blob/screenshots/screenshots/initial_look.png">
-<img src="https://github.com/siduck76/chadwm/blob/screenshots/screenshots/col_layout.png">
+<img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/initial_look.png">
+<img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/col_layout.png">
 
-<img src="https://github.com/siduck76/chadwm/blob/screenshots/screenshots/occ_act_tags.png">
+<img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/occ_act_tags.png">
 (empty workspaces have their color greyed out)
 
 - NOTE: This is vanilla dwm bar (status2d patch for setting colors) not dwmblocks or polybar. 
 
-<img src="https://github.com/siduck76/chadwm/blob/screenshots/screenshots/chadwm.png">
+<img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/chadwm.png">
 
 # Tag preview (while hovering tag icon)
 
@@ -44,7 +44,7 @@ Exec= <path to autostart file>
 Type=Application 
 ```
 
-- [wallpaper](https://github.com/siduck76/chadwm/blob/screenshots/screenshots/chad.png)
+- [wallpaper](https://github.com/siduck/chadwm/blob/screenshots/screenshots/chad.png)
 
 # Credits 
 
