@@ -41,7 +41,7 @@ static const int colorfultag        = 1;  /* 0 means use SchemeSel for selected 
 static const char *colors[][3]      = {
     /*               fg         bg         border   */
     [SchemeNorm]       = { gray3, black, gray2 },
-    [SchemeSel]        = { gray4, blue,  gray4  },
+    [SchemeSel]        = { gray4, blue,  blue  },
     [TabSel]           = { blue, gray2,  black  },
     [TabNorm]          = { gray3, black, black },
     [SchemeTag]        = { gray3, black, black },
