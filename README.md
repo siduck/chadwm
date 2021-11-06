@@ -16,6 +16,7 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 
 # Requirements
 
+- dash (shell)
 - xsetroot package ( status2d uses this to add colors on dwmbar)
 - JetbrainsMono Nerd Font (or any nerd font) and Material design icon font
 
