@@ -7,5 +7,5 @@ xrdb merge ~/Public/xresources/forest/.Xresources &
 feh --bg-tile ~/Pictures/wall/gruv.png &
 
 # run bar script and dwm ( do not remove this ) 
-~/.dwm/bar/./bar.sh & 
+~/.dwm/bar/bar.sh & 
 dwm
