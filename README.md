@@ -7,8 +7,9 @@
 (empty workspaces have their color greyed out)
 
 - NOTE: This is vanilla dwm bar (status2d patch for setting colors) not dwmblocks or polybar. 
-
 <img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/chadwm.png">
+- The small widget over the top right is an eww widget and thats old! Ive improved the eww widget 
+<img src='https://chadpaste.com/f/guhksddehy.png'>
 
 # Tag preview (while hovering tag icon)
 
@@ -23,15 +24,14 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 
 # Setup 
 
-- mv chadwm dir (this repo) to ~/.config
-- chmod +x all scripts in scripts dir
-- copy the stuff from fonts folder to your ~/.local/share/fonts 
-- compile dwm :
 ```
-cd ~/.config/chadwm/chadwm
+git clone https://github.com/siduck/chadwm --depth 1
+mv chadwm ~/.config
+cd ~/.config/chadwm
 sudo make install
 ```
-- autostart file is just an example one so it must be adjusted for your liking!
+- copy the stuff from fonts folder to your ~/.local/share/fonts 
+- autostart script in the scripts dir is just an example one so it must be adjusted for your liking!
 
 # Run chadwm
 
@@ -60,6 +60,13 @@ Type=Application
 ```
 
 - [wallpaper](https://github.com/siduck/chadwm/blob/screenshots/screenshots/chad.png)
+
+
+# Change themes 
+
+- Bar  : in bar.sh and config.def.h
+- eww  : in eww.scss
+- rofi : in config.rasi 
 
 # Credits 
 
