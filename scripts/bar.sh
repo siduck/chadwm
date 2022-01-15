@@ -5,8 +5,8 @@
 
 interval=0
 
-# load colors!
-. ~/.dwm/bar/themes/onedark
+# load colors
+. ~/.config/chadwm/scripts/bar_themes/onedark
 
 cpu() {
 	cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)

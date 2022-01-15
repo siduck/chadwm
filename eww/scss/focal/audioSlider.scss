@@ -1,0 +1,46 @@
+.audioSliders {
+  margin-bottom: 1rem;
+}
+
+.masterSlider,.headphoneSlider,.micSlider {
+  margin: 0 .5rem;
+  font-size: 1.5rem;
+  margin-top: -1rem;
+  margin-bottom: -2rem;
+}
+
+.addPadding {
+  padding: 0 .3rem;
+}
+
+.masterSlider scale trough highlight, .headphoneSlider scale trough highlight , .micSlider scale trough highlight {
+  border-radius: 10px;
+}
+
+.masterSlider scale trough, .headphoneSlider scale trough , .micSlider scale trough {
+  background-color: $blackAlt;
+  border-radius: 1rem;
+  min-width: 1.5rem;
+}
+
+.masterSlider scale trough highlight {
+  background-color: $red; 
+}
+
+.headphoneSlider scale trough highlight {
+  background-color: $yellow; 
+}
+
+.micSlider scale trough highlight {
+  background-color: $blue; 
+}
+
+.audioIcon {
+  font-family:  'JetbrainsMono Nerd Font';
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 0.5rem 1.1rem;
+  background-color: $blackAlt;
+  border-radius: 50%;
+  color: $lightGrey;
+}

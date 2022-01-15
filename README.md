@@ -23,15 +23,28 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 
 # Setup 
 
-- Put the .dwm folder in ~/
-- chmod +x all scripts in .dwm folder
-- copy the stuff from fonts folder to your ~/.local/share/fonts ( this is for material design icon font )
-- cd into chadwm and sudo make install
+- mv chadwm dir (this repo) to ~/.config
+- chmod +x all scripts in scripts dir
+- copy the stuff from fonts folder to your ~/.local/share/fonts 
+- compile dwm :
+```
+cd ~/.config/chadwm/chadwm
+sudo make install
+```
 - autostart file is just an example one so it must be adjusted for your liking!
 
 # Run chadwm
 
-- Run the autostart file from .xinitrc or 
+- Run the autostart file from .xinitrc
+
+(.xinitrc file)
+```
+#!/bin/sh
+
+exec ~/.config/chadwm/scripts/./autostart
+```
+OR
+
 - Create a desktop entry 
 
 ```
@@ -42,7 +55,7 @@ touch /usr/share/xsessions/chadwm.desktop
 [Desktop Entry]
 Name=chadwm
 Comment=dwm made beautiful 
-Exec= <path to autostart file> 
+Exec= ~/.config/chadwm/scripts/./autostart 
 Type=Application 
 ```
 

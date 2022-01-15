@@ -1,66 +1,19 @@
-* {
-  all: unset; //Unsets everything so you can style everything from scratch
-}
+@import "scss/themes/gruvchad.scss";
 
-//Global Styles
-.alsa-gui {
-  background-color: #1e222a;
-  color: #abb2bf;
-  padding: 12px;
-  border-radius: 7px;
-  font-size : 25px;
-}
+// header
+@import "scss/header/equalizer.scss";
+@import "scss/header/fetch.scss";
 
-.metric scale trough {
-  all: unset;
-  border-radius: 50px;
-  min-height: 3px;
-  min-width: 90px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
+// focal
+@import "scss/focal/focal.scss";
+@import "scss/focal/audioSlider.scss";
 
-.chad scale trough {
-  all: unset;
-  border-radius: 50px;
-  min-height: 3px;
-  min-width: 90px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
+// footer
+@import "scss/footer/btns.scss";
+@import "scss/footer/brightness.scss";
 
-.metric scale trough highlight {
-  all: unset;
-  background-color: #668ee3;
-  border-radius: 10px;
-}
-
-.chad scale trough highlight {
-  all: unset;
-  background-color: #e06c75;
-  border-radius: 10px;
-}
-
-.bri  {
-  background-color: #d47d85;
-}
-
-.metric scale trough {
-  all: unset;
-  background-color: #282c34;
-  border-radius: 50px;
-  min-height: 6px;
-  min-width: 90px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.chad scale trough {
-  all: unset;
-  background-color: #282c34;
-  border-radius: 50px;
-  min-height: 6px;
-  min-width: 90px;
-  margin-left: 10px;
-  margin-right: 10px;
+.eww {
+  padding: 1rem;
+  padding-top: .6rem;
+  background-color: $black;
 }

@@ -1,0 +1,12 @@
+(defwidget headerBtns[]
+  (box :space-evenly false :valign 'end' :halign 'end' :class 'headerBtns'
+       (button :class 'min' :onclick 'eww close eww' '')
+       (button :class 'close' :onclick 'eww kill'   '')
+      )
+  )
+
+(defwidget header[]
+  (box :orientation 'v' :space-evenly false
+   (headerBtns)
+   (fetch)
+))

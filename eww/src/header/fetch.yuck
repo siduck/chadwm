@@ -1,0 +1,37 @@
+(defwidget txt [label]
+  (box :halign 'start' label ))
+
+(defwidget title[]
+ (box :class 'fetchTitles' :orientation 'v'
+    (txt :label 'os')
+    (txt :label 'wm')
+    (txt :label 'sh')
+))
+
+; dummy details for now!
+(defwidget details[]
+  (box :class 'fetchDetails' :orientation 'v'
+  (txt :label  os)
+  (txt :label  wm)
+  (txt :label  shell)
+))
+
+(defwidget hdd[]
+  (box :orientation 'v' :class 'hdd'
+   (progressBar
+      :value disk 
+      :text 'HDD'
+      :class 'DISK'
+      )
+  )
+  )
+
+(defwidget fetch[]
+ (box :class 'fetch' 
+ (box :class 'logo'  '' ) 
+  (box :orientation 'h' :class 'fetchContent' :space-evenly false
+  (title) 
+  (details)
+ )
+  (hdd)
+))

@@ -1,0 +1,14 @@
+.close , .min , .max{
+  font-family: 'JetBrainsMono Nerd Font';
+  font-size: 1.3rem;
+  padding: 0 0.3rem;
+  color: $red;
+}
+
+.min {
+  color: $yellow;
+}
+
+.max {
+  color: $green;
+}
