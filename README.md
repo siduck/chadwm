@@ -27,7 +27,7 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 ```
 git clone https://github.com/siduck/chadwm --depth 1
 mv chadwm ~/.config
-cd ~/.config/chadwm
+cd ~/.config/chadwm/chadwm
 sudo make install
 ```
 - copy the stuff from fonts folder to your ~/.local/share/fonts 
