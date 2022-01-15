@@ -35,7 +35,7 @@ sudo make install
 
 # Run chadwm
 
-- Run the autostart file from .xinitrc
+Run the autostart file from .xinitrc
 
 (.xinitrc file)
 ```
@@ -45,7 +45,7 @@ exec ~/.config/chadwm/scripts/./autostart
 ```
 OR
 
-- Create a desktop entry 
+Create a desktop entry 
 
 ```
 touch /usr/share/xsessions/chadwm.desktop  
@@ -61,6 +61,15 @@ Type=Application
 
 - [wallpaper](https://github.com/siduck/chadwm/blob/screenshots/screenshots/chad.png)
 
+# Recompile 
+
+- You need to recompile dwm after every change you make in its src code 
+
+```
+cd ~/.config/chadwm/chadwm
+rm config.h
+sudo make install
+```
 
 # Change themes 
 
