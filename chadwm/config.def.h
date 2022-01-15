@@ -134,7 +134,7 @@ static Key keys[] = {
     /* modifier                     key        function        argument */
     { MODKEY,                       XK_c,      spawn,          {.v = rofi } },
     { MODKEY,                       XK_Return, spawn,           {.v = term }},  
-    { MODKEY,                       XK_Return, spawn,          SHCMD("st_pad && st")},  
+    // { MODKEY,                       XK_Return, spawn,          SHCMD("st_pad && st")},  
 
     {MODKEY | ControlMask, XK_u, spawn, SHCMD("maim | xclip -selection clipboard -t image/png")},
     {MODKEY, XK_u, spawn,   SHCMD("maim --select | xclip -selection clipboard -t image/png")},
