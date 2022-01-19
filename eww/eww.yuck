@@ -23,5 +23,5 @@
            :geometry (geometry :x "-1%"
                                :y "-2%"
                                :anchor "right bottom")
-           :wm-ignore true
+           :wm-ignore false
 (dashboard))

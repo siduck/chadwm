@@ -14,6 +14,7 @@
 .sleep {
   color: $red;
 }
+
 .restart {
   color: $green;
 }
@@ -23,7 +24,7 @@
   padding: 0 1.4rem;
 }
 
-.lock:hover , .restart:hover, .close:hover, .wifi:hover{
+.lock:hover , .restart:hover, .wifi:hover, .sleep:hover{
   background-color: $green;
   color: $black;
 }
