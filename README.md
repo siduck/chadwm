@@ -9,7 +9,8 @@
 - NOTE: This is vanilla dwm bar (status2d patch for setting colors) not dwmblocks or polybar. 
 <img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/chadwm.png">
 - The small widget over the top right is an eww widget and thats old! Ive improved the eww widget 
-<img src='https://chadpaste.com/f/guhksddehy.png'>
+<img src='https://i.redd.it/t1pvmqlq3oc81.png'>
+(catppuccin theme)
 
 # Tag preview (while hovering tag icon)
 
