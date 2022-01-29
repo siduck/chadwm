@@ -11,6 +11,8 @@
 - The small widget over the top right is an eww widget and thats old! Ive improved the eww widget 
 <img src='https://i.redd.it/t1pvmqlq3oc81.png'>
 (catppuccin theme)
+<img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/gruvchad.png">
+(gruvbox material dark)
 
 # Tag preview (while hovering tag icon)
 
