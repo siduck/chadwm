@@ -8,9 +8,8 @@
     (txt :label 'sh')
 ))
 
-; dummy details for now!
 (defwidget details[]
-  (box :class 'fetchDetails' :orientation 'v'
+  (box :orientation 'v'
   (txt :label  os)
   (txt :label  wm)
   (txt :label  shell)
