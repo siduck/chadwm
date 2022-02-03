@@ -82,8 +82,9 @@ sudo make install
 
 # Credits 
 
-- HUGE THANKS to [eProTaLT83](https://www.reddit.com/user/eProTaLT83). I wanted certain features in dwm like tabbar in monocle , tagpreview etc and he implemented my ideas and created patches for me! I   cant even count the number of times he has helped me :v 
+- HUGE THANKS to [eProTaLT83](https://www.reddit.com/user/eProTaLT83). I wanted certain features in dwm like tabbar in monocle , tagpreview etc and he implemented my ideas and created patches for me! I cant even count the number of times he has helped me :v 
 - @fitrh helped with [colorful tag patch](https://github.com/fitrh/dwm/issues/1)
+- [6gk](https://github.com/6gk/fet.sh), eww's pure posix fetch functions taken from here
 
 # Patches
 

@@ -1,0 +1,44 @@
+#!/bin/sh
+
+pkgCount() {
+  xbps-query -l | wc -l
+}
+
+pkgUpdates() {
+  updates=$(xbps-install -S -un | cut -d' ' -f2 | sort | uniq -c | xargs)
+
+  if [ -z "$updates" ]; then
+    echo "Fully Updated"
+  else
+    echo " $updates""s"
+  fi
+}
+
+battery() {
+  cat /sys/class/power_supply/BAT1/capacity
+}
+
+cpu() {
+  grep -o "^[^ ]*" /proc/loadavg
+}
+
+disk() {
+  df -hl | awk '/^\/dev\/sd[ab]/ { sum+=$5 } END { print sum }'
+}
+
+ram() {
+  printf "%.0f\n" $(free -m | grep Mem | awk '{print ($3/$2)*100}')
+}
+
+backlight() {
+  printf "%.0f\n" $(xbacklight -get)
+}
+
+wifi() {
+  case "$(cat /sys/class/net/wl*/operstate 2>/dev/null)" in
+  up) printf "󰤨" ;;
+  down) printf "󰤭" ;;
+  esac
+}
+
+"$@"

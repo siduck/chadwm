@@ -1,1 +1,0 @@
-xbps-query -l | wc -l

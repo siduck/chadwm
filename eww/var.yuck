@@ -1,15 +1,15 @@
 ; system i.e for progress bars
 (defpoll cpu :interval "1s"
-    "scripts/system/cpu")
+    "scripts/system cpu")
 
 (defpoll ram :interval "1s"
-    "scripts/system/ram")
+    "scripts/system ram")
 
 (defpoll disk :interval "1s"
-    "scripts/system/disk")
+    "scripts/system disk")
 
 (defpoll battery :interval "1s"
-    "scripts/system/battery")
+    "scripts/system battery")
 
 ; date time
 (defpoll time :interval "1s"
@@ -22,37 +22,37 @@
 
 ; audio 
 (defpoll master_vol :interval "1s"
-  "scripts/audio/mastervol")
+  "scripts/audio mastervol")
 
 (defpoll head_vol :interval "1s"
-  "scripts/audio/headvol")
+  "scripts/audio headvol")
 
 (defpoll mic_vol :interval "1h"
-  "scripts/audio/micvol")
+  "scripts/audio micvol")
 
 ; backlight 
 (defpoll brightness :interval "1s"
-  "scripts/backlight")
+  "scripts/system backlight")
 
 ; pkg related 
 (defpoll updates :interval "1s"
-    "scripts/pkg/updates")
+    "scripts/system pkgUpdates")
 
 (defpoll pkgs :interval "1s"
-    "scripts/pkg/pkgs")
+    "scripts/system pkgCount")
 
 ; btns
 
 ; wifi iwdgtk btn 
 (defpoll wifi :interval "1s"
-    "scripts/wifi")
+    "scripts/system wifi")
 
 ;fetch 
 (defpoll os :interval '10000s'
-  'scripts/fetch/os')
+  'scripts/fetch os')
 
 (defpoll shell :interval '100000s'
-  'scripts/fetch/shell')
+  'scripts/fetch shell')
 
 (defpoll wm :interval '100000s'
-  'scripts/fetch/wm')
+  'scripts/fetch wm')
