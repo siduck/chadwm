@@ -1,4 +1,8 @@
-#!/bin/dash
+#!/bin/sh
+
+# If installed replace this process with dash for performance
+[ ! "$IS_DASH" -a -n "$(command -v dash)" ] && IS_DASH=1 exec dash "$(pwd)/$0"
+
 
 # ^c$var^ = fg color
 # ^b$var^ = bg color
@@ -6,7 +10,7 @@
 interval=0
 
 # load colors
-. ~/.config/chadwm/scripts/bar_themes/onedark
+source $pwd/bar_themes/onedark
 
 cpu() {
 	cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
@@ -60,4 +64,5 @@ while true; do
 	interval=$((interval + 1))
 
 	sleep 1 && xsetroot -name "$updates $(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
+
 done
