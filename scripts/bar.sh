@@ -10,7 +10,7 @@
 interval=0
 
 # load colors
-source $pwd/bar_themes/onedark
+source "$(pwd)/bar_themes/onedark"
 
 cpu() {
 	cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
