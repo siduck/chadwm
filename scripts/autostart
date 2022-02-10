@@ -2,6 +2,7 @@
 
 # If installed replace this process with dash for performance
 [ ! "$IS_DASH" -a -n "$(command -v dash)" ] && IS_DASH=1 exec dash "$(pwd)/$0"
+unset IS_DASH
 
 # this is just an example!
 # add your autostart stuffs here
