@@ -3,7 +3,7 @@ configuration{
     lines: 5;
     font: "Iosevka 12";
     show-icons: true;
-    icon-theme: "Oranchelo";
+    icon-theme: "Paper Mono";
     terminal: "st";
     drun-display-format: "{icon} {name}";
     location: 0;
@@ -12,7 +12,7 @@ configuration{
     display-drun: "   Apps ";
 }
 
-@theme "gruv"
+@theme "everblush"
 
 element-text, element-icon , mode-switcher {
     background-color: inherit;
