@@ -9,5 +9,5 @@ xrdb merge ~/.Xresources &
 feh --bg-fill ~/Pictures/wall/gruvchad.png &
 
 # run bar script and dwm ( do not remove this )
-~/.config/chadwm/scripts/./bar.sh &
+bash ~/.config/chadwm/scripts/./bar.sh &
 dwm

@@ -23,18 +23,23 @@ pkg_updates() {
 	if [ -z "$updates" ]; then
 		printf "^c$green^  Fully Updated"
 	else
-		printf "^c$green^  $updates"" updates"
+		printf "^c$red^  $updates"" updates"
 	fi
 }
 
 battery() {
-	get_capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
-	printf "^c$blue^   $get_capacity"
+	get_capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
+	get_status="$(cat /sys/class/power_supply/BAT0/status)"
+	if [ $get_status == 'Discharging' ]; then
+		printf "^c$blue^  $get_capacity"
+	else
+		printf "^c$blue^  $get_capacity"
+	fi
 }
 
 brightness() {
-	printf "^c$red^   "
-	printf "^c$red^%.0f\n" $(cat /sys/class/backlight/*/brightness)
+	printf "^c$red^  "
+	printf "^c$red^%.0f\n" $(cat /sys/class/backlight/acpi_video0/brightness)
 }
 
 mem() {
@@ -59,5 +64,5 @@ while true; do
 	[ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
 	interval=$((interval + 1))
 
-	sleep 1 && xsetroot -name "$updates $(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
+	sleep 1 && xsetroot -name "$(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
 done
