@@ -1,7 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 
-#define XF86MonBrightnessDown 0x1008ff03
-#define XF86MonBrightnessUp 0x1008ff02
+#include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
@@ -138,8 +137,8 @@ static Key keys[] = {
 
     {MODKEY | ControlMask, XK_u, spawn, SHCMD("maim | xclip -selection clipboard -t image/png")},
     {MODKEY, XK_u, spawn,   SHCMD("maim --select | xclip -selection clipboard -t image/png")},
-    {0, XF86MonBrightnessDown, spawn, {.v = xd}},
-    {0, XF86MonBrightnessUp, spawn, {.v = xi}},
+    {0,         XF86XK_MonBrightnessDown,      spawn, {.v = xd}},
+    {0,           XF86XK_MonBrightnessUp,      spawn, {.v = xi}},
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY|ControlMask,                       XK_w,      tabmode,        { -1 } },
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
