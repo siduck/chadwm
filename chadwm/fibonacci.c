@@ -6,12 +6,12 @@ fibonacci(Monitor *mon, int s) {
 	for(n = 0, c = nexttiled(mon->clients); c; c = nexttiled(c->next), n++);
 	if(n == 0)
 		return;
-	
+
 	nx = mon->wx;
 	ny = 0;
 	nw = mon->ww;
 	nh = mon->wh;
-	
+
 	for(i = 0, c = nexttiled(mon->clients); c; c = nexttiled(c->next)) {
 		if((i % 2 && nh / 2 > 2 * c->bw)
 		   || (!(i % 2) && nw / 2 > 2 * c->bw)) {
