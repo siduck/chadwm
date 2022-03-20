@@ -1,22 +1,22 @@
-## Windows Keys                                     
-key               | Do         | Value
------------------ | ---------- | ------
- win + b          | togglebar  |   0   
- win + ctrl + w   | tabmode    |  -1
- win + j          | focusstack |  +1
- win + k          | focusstack |  -1
- win + i          | incnmaster |  +1
- win + d          | incnmaster |  -1 
- win + h          | setmfact   |  -0.05
- win + l          | setmfact   |  +0.05
- win + shift + h  | setcfact   |  +0.25
- win + shift + l  | setcfact   |  -0.25
- win + shift + o  | setcfact   |   0.00
- win + shift + j  | movestack  |  +1 
- win + shift + k  | movestack  |  -1 
- win + Return     | zoom       |   0
- win + Tab        | view       |   0
- 
+## Windows Keys
+key                    | Do         | Value
+---------------------- | ---------- | ------
+ win + b               | togglebar  |   0
+ win + ctrl + w        | tabmode    |  -1
+ win + j               | focusstack |  +1
+ win + k               | focusstack |  -1
+ win + i               | incnmaster |  +1
+ win + d               | incnmaster |  -1
+ win + h               | setmfact   |  -0.05
+ win + l               | setmfact   |  +0.05
+ win + shift + h       | setcfact   |  +0.25
+ win + shift + l       | setcfact   |  -0.25
+ win + shift + o       | setcfact   |   0.00
+ win + shift + j       | movestack  |  +1
+ win + shift + k       | movestack  |  -1
+ win + shift + Return  | zoom       |   0
+ win + Tab             | view       |   0
+
 ##  Overall gaps
 key             | Do         | Value
 --------------- | ---------- | ------
