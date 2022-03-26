@@ -149,6 +149,13 @@ enum {
   ClkLast
 }; /* clicks */
 
+enum showtab_modes {
+  showtab_never,
+  showtab_auto,
+  showtab_nmodes,
+  showtab_always
+}; /* tab modes */
+
 typedef union {
   int i;
   unsigned int ui;
@@ -620,20 +627,20 @@ void buttonpress(XEvent *e) {
 
 		for(i = 0; i < LENGTH(launchers); i++) {
 			x += TEXTW(launchers[i].name);
-			
+
 			if (ev->x < x) {
 				Arg a;
 				a.v = launchers[i].command;
 				spawn(&a);
 				return;
 			}
-	}	
+	}
 
 	if (ev->x > selmon->ww - TEXTW(stext))
          click = ClkStatusText;
     else
          click = ClkWinTitle;
-    	} 
+    	}
 	if(ev->window == selmon->tabwin) {
 		i = 0; x = 0;
 		for(c = selmon->clients; c; c = c->next){
@@ -2058,8 +2065,8 @@ void motionnotify(XEvent *e) {
 	} else if (selmon->previewshow != 0) {
 		selmon->previewshow = 0;
 		showtagpreview(0);
-   } 
- 
+   }
+
   if (ev->window != root)
     return;
   if ((m = recttomon(ev->x_root, ev->y_root, 1, 1)) != mon && mon) {
@@ -2954,7 +2961,7 @@ void switchtag(void) {
 				imlib_context_set_drawable(selmon->tagmap[i]);
 				imlib_render_image_part_on_drawable_at_size(0, 0, selmon->mw, selmon->mh, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview);
 				imlib_free_image();
-			}                         
+			}
 		}
 	}
 }
@@ -3036,7 +3043,7 @@ void toggleview(const Arg *arg) {
   unsigned int newtagset =
       selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK);
    int i;
- 
+
 
   if (newtagset) {
          switchtag();
@@ -3204,7 +3211,7 @@ void updatebarpos(Monitor *m) {
 
   m->wy = m->my;
   m->wh = m->mh;
-  	
+
   for(c = m->clients; c; c = c->next) {
 		if(ISVISIBLE(c)) ++nvis;
 	}
