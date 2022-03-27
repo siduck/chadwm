@@ -3,8 +3,8 @@
 # this is just an example!
 # add your autostart stuffs here
 xbacklight -set 100 &
-xmodmap ~/.xmodmap-sid &
-xrdb merge ~/.Xresources &
+xmodmap ~/.Xmodmap &
+#xrdb merge ~/.Xresources &
 feh --bg-fill ~/Pictures/wall/wallpaper.png &
 xset r rate 170 60 &
 # run bar script and dwm ( do not remove this )
