@@ -56,7 +56,13 @@ wlan() {
 
 clock() {
 	printf "^c$black^ ^b$darkblue^ 󱑆 "
-	printf "^c$black^^b$blue^ $(date '+%H:%M %a %b %Y')  "
+	printf "^c$black^^b$blue^ $(date '+%H:%M %a %d %b %Y')  "
+}
+
+volume() {
+        volume=$(pamixer --get-volume)
+        printf "^c$black^^b$darkblue^  "
+        printf "^c$black^^b$blue^ $volume"
 }
 
 while true; do
@@ -64,5 +70,5 @@ while true; do
 	[ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
 	interval=$((interval + 1))
 
-	sleep 1 && xsetroot -name "$(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
+	sleep 1 && xsetroot -name "$(volume) $(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
 done
