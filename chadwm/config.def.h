@@ -126,9 +126,15 @@ static const char *term[]  = {  "st", NULL }; // change this to your term
 static const char *rofi[] = {"rofi", "-show", "drun", NULL };
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
+static const char *rv[] = {"pamixer", "-i", "5", NULL};
+static const char *lv[] = {"pamixer", "-d", "5", NULL};
+static const char *tv[] = {"pamixer", "-t", NULL};
 
 static Key keys[] = {
     /* modifier                         key         function        argument */
+    {0,                     XF86XK_AudioMute,       spawn,          {.v = tv}},
+    {0,              XF86XK_AudioRaiseVolume,       spawn,          {.v = rv}},
+    {0,              XF86XK_AudioLowerVolume,       spawn,          {.v = lv}},
     {0,             XF86XK_MonBrightnessDown,       spawn,          {.v = xd}},
     {0,               XF86XK_MonBrightnessUp,       spawn,          {.v = xi}},
     {MODKEY|ControlMask,                XK_u,       spawn,
