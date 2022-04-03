@@ -1,7 +1,9 @@
 #!/bin/bash
 
 os() {
-  source /etc/os-release && echo $PRETTY_NAME
+  source /etc/os-release
+  echo  $PRETTY_NAME | awk '{print $1;}' 
+
 }
 
 wm() {
