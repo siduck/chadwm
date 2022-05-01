@@ -1,13 +1,15 @@
 !/bin/sh
 
 # this is just an example!
-# add your autostart stuffs here
-xrandr --output DP1 --auto --right-of LVDS1 &
-xbacklight -set 100 &
-xmodmap ~/.Xmodmap
-#xrdb merge ~/.Xresources &
+# my autostart stuffs here
+
+xbacklight -set 20 &
+xrdb merge ~/.Xresources &
 feh --bg-fill ~/Pictures/wall/wall.png &
 xset r rate 200 50 &
-# run bar script and dwm ( do not remove this )
+
+# run bar script and dwm ( never remove this )
 bash ~/.config/chadwm/scripts/./bar.sh &
 dwm
+
+# you can paste the whole thing in .xinitrc to but at the end it should be ```exec dwm```
