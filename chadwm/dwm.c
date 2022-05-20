@@ -283,7 +283,7 @@ static Client *nexttiled(Client *c);
 static void placemouse(const Arg *arg);
 static void pop(Client *);
 static void propertynotify(XEvent *e);
-static void quit(const Arg *arg);
+static void restart(const Arg *arg);
 static Client *recttoclient(int x, int y, int w, int h);
 static Monitor *recttomon(int x, int y, int w, int h);
 static void removesystrayicon(Client *i);
@@ -2355,8 +2355,7 @@ void propertynotify(XEvent *e) {
   }
 }
 
-void quit(const Arg *arg) {
-  if(arg->i == 0)  system("killall bar.sh");
+void restart(const Arg *arg) {
   running = 0;
 }
 

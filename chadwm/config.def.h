@@ -217,13 +217,13 @@ static Key keys[] = {
     { MODKEY|ShiftMask,                 XK_w,       setborderpx,    {.i = default_border } },
 
     // kill dwm
-    { MODKEY|ControlMask,               XK_q,       spawn,        SHCMD("killall -p dwm") },
+    { MODKEY|ControlMask,               XK_q,       spawn,        SHCMD("killall bar.sh dwm") },
 
     // kill window
     { MODKEY,                           XK_q,       killclient,     {0} },
 
     // restart
-    { MODKEY|ShiftMask,                 XK_r,       quit,           {0} },
+    { MODKEY|ShiftMask,                 XK_r,       restart,           {0} },
 
     // hide & restore windows
     { MODKEY,                           XK_e,       hidewin,        {0} },
