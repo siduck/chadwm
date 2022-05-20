@@ -23,42 +23,52 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 - dash (shell)
 - imlib2 
 - xsetroot package ( status2d uses this to add colors on dwmbar)
-- JetbrainsMono Nerd Font (or any nerd font) and Material design icon font
+- JetbrainsMono Nerd Font or any nerd font but dont forget to set it in config.def.h
+- Materiald design icon font - [link](https://github.com/Templarian/MaterialDesign-Font/blob/master/MaterialDesignIconsDesktop.ttf)
+- Make sure to setup your terminal's theme accordingly do chadwm's theme such as nord, onedark etc.
 
-# Setup 
+# Install 
 
 ```
-git clone https://github.com/siduck/chadwm --depth 1
-mv chadwm ~/.config
+git clone https://github.com/siduck/chadwm --depth 1  ~/.config
 cd ~/.config/chadwm/chadwm
+mv eww ~/.config
 sudo make install
 ```
-- copy the stuff from fonts folder to your ~/.local/share/fonts 
-- autostart script in the scripts dir is just an example one so it must be adjusted for your liking!
 
 # Run chadwm
 
-Run the autostart file from .xinitrc
+## With startx
 
-(.xinitrc file)
+```shell
+startx ~/.config/chadwm/scripts/run.sh
 ```
-#!/bin/sh
 
-exec ~/.config/chadwm/scripts/./autostart
+## With sx
+
+```shell
+sx sh ~/.config/chadwm/scripts/run.sh
 ```
-OR
 
-Create a desktop entry 
+(Make an alias for this :v)
 
+```shell
+alias chadwm='startx ~/.config/chadwm/scripts/run.sh'
 ```
-touch /usr/share/xsessions/chadwm.desktop  
+
+## With Display Manager
+
+- Create a desktop entry :
+
+```shell
+sudo touch /usr/share/xsessions/chadwm.desktop  
 ```
 
 ```
 [Desktop Entry]
 Name=chadwm
 Comment=dwm made beautiful 
-Exec= ~/.config/chadwm/scripts/./autostart 
+Exec= ~/.config/chadwm/scripts/./run.sh 
 Type=Application 
 ```
 
@@ -104,3 +114,4 @@ sudo make install
 - status2d
 - underline tags
 - notitle
+- [preserveonrestart](https://github.com/PhyTech-R0/dwm-phyOS/blob/master/patches/dwm-6.3-patches/dwm-preserveonrestart-6.3.diff), This patch doesnt let all windows mix up into tag 1 after restarting dwm

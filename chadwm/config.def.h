@@ -29,7 +29,7 @@ static const int tag_preview        = 0;        /* 1 means enable, 0 is off */
 static const int colorfultag        = 1;        /* 0 means use SchemeSel for selected non vacant tag */
 
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:medium:size=10",
-                                        "Material Design Icons-Regular:size=10" };
+                                        "Material Design Icons Desktop:size=10" };
 
 // theme
 #include "themes/onedark.h"
@@ -141,8 +141,8 @@ static Key keys[] = {
 
 
     { MODKEY,                           XK_c,       spawn,          SHCMD("rofi -show drun") },
-    { MODKEY,                           XK_Return,  spawn,          SHCMD("st")},
-    // { MODKEY,                           XK_Return, spawn,            SHCMD("st_pad && st")},
+    // { MODKEY,                           XK_Return,  spawn,          SHCMD("st")},
+    { MODKEY,                           XK_Return, spawn,            SHCMD("st_pad && st")},
     
 
     // toggle stuff
@@ -217,13 +217,13 @@ static Key keys[] = {
     { MODKEY|ShiftMask,                 XK_w,       setborderpx,    {.i = default_border } },
 
     // kill dwm
-    { MODKEY|ControlMask,               XK_q,       quit,           {0} },
+    { MODKEY|ControlMask,               XK_q,       spawn,        SHCMD("killall -p dwm") },
 
     // kill window
     { MODKEY,                           XK_q,       killclient,     {0} },
 
     // restart
-    { MODKEY|ShiftMask,                 XK_r,       quit,           {1} },
+    { MODKEY|ShiftMask,                 XK_r,       quit,           {0} },
 
     // hide & restore windows
     { MODKEY,                           XK_e,       hidewin,        {0} },
