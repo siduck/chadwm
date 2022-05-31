@@ -108,6 +108,7 @@ static const Layout layouts[] = {
     { "|M|",      centeredmaster },
     { ">M>",      centeredfloatingmaster },
     { "><>",      NULL },    /* no layout function means floating behavior */
+    { NULL,       NULL },
 };
 
 /* key definitions */
