@@ -110,6 +110,7 @@ eww open eww
 eww open alsa-gui
 ```
 
+- It could be a good idea to add these lines to your autostart file, located at ~/.config/chadwm/scripts/autostart
 
 # Credits 
 
