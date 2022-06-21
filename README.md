@@ -8,7 +8,7 @@
 
 - NOTE: This is vanilla dwm bar (status2d patch for setting colors) not dwmblocks or polybar. 
 <img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/chadwm.png">
-- The small widget over the top right is an eww widget and thats old! Ive improved the eww widget 
+- The small widget on the top right is an eww widget and thats old! I've improved the eww widget.
 <img src='https://i.redd.it/t1pvmqlq3oc81.png'>
 (catppuccin theme)
 <img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/gruvchad.png">
@@ -76,7 +76,7 @@ Type=Application
 
 # Recompile 
 
-- You need to recompile dwm after every change you make in its src code 
+- You need to recompile dwm after every change you make to its source code.
 
 ```
 cd ~/.config/chadwm/chadwm
@@ -86,9 +86,31 @@ sudo make install
 
 # Change themes 
 
-- Bar  : in bar.sh and config.def.h
-- eww  : in eww.scss
-- rofi : in config.rasi 
+- Bar  : in bar.sh (line 9) and config.def.h (line 35)
+- eww  : in eww.scss (line 1)
+- rofi : in config.rasi (line 15)
+
+# Eww
+
+- First, make sure you have copied the eww directory to your config:
+
+```
+cp -r ~/.config/chadwm/eww ~/.config/
+```
+
+- To launch the eww widget, you need the following command:
+
+```
+eww open eww
+```
+
+- If you use alsa to manage your audio, instead of pulseaudio or pipewire, you can also launch an alsa widget:
+
+```
+eww open alsa-gui
+```
+
+- It could be a good idea to add these lines to your autostart file, located at ~/.config/chadwm/scripts/autostart
 
 # Credits 
 
@@ -114,4 +136,4 @@ sudo make install
 - status2d
 - underline tags
 - notitle
-- [preserveonrestart](https://github.com/PhyTech-R0/dwm-phyOS/blob/master/patches/dwm-6.3-patches/dwm-preserveonrestart-6.3.diff), This patch doesnt let all windows mix up into tag 1 after restarting dwm
+- [preserveonrestart](https://github.com/PhyTech-R0/dwm-phyOS/blob/master/patches/dwm-6.3-patches/dwm-preserveonrestart-6.3.diff). This patch doesnt let all windows mix up into tag 1 after restarting dwm.
