@@ -255,7 +255,7 @@ static Button buttons[] = {
 
     /* placemouse options, choose which feels more natural:
     *    0 - tiled position is relative to mouse cursor
-    *    1 - tiled postiion is relative to window center
+    *    1 - tiled position is relative to window center
     *    2 - mouse pointer warps to window center
     *
     * The moveorplace uses movemouse or placemouse depending on the floating state
