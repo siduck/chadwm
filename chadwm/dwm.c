@@ -635,11 +635,12 @@ void buttonpress(XEvent *e) {
 			}
 	}
 
-	if (ev->x > selmon->ww - TEXTW(stext))
+  if (ev->x > selmon->ww - (int)TEXTW(stext))
          click = ClkStatusText;
-    else
+  else
          click = ClkWinTitle;
-    	}
+  }
+    	
 	if(ev->window == selmon->tabwin) {
 		i = 0; x = 0;
 		for(c = selmon->clients; c; c = c->next){
@@ -714,6 +715,7 @@ void cleanup(void) {
     drw_cur_free(drw, cursor[i]);
   for (i = 0; i < LENGTH(colors) + 1; i++)
     free(scheme[i]);
+  free(scheme);
   XDestroyWindow(dpy, wmcheckwin);
   drw_free(drw);
   XSync(dpy, False);
@@ -1449,6 +1451,9 @@ void drawbar(Monitor *m) {
 
   if (showsystray && m == systraytomon(m))
     stw = getsystraywidth();
+
+  if (!m->showbar)
+   		return;
 
   /* draw status first so it can be overdrawn by tags later */
   if (m == selmon) { /* status is only drawn on selected monitor */
