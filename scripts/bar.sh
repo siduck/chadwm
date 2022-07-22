@@ -21,9 +21,9 @@ pkg_updates() {
   # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
 
   if [ -z "$updates" ]; then
-    printf "  ^c$green^  Fully Updated"
+    printf "  ^c$green^    Fully Updated"
   else
-    printf "  ^c$green^  $updates"" updates"
+    printf "  ^c$green^    $updates"" updates"
   fi
 }
 

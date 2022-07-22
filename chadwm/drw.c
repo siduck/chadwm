@@ -4,6 +4,7 @@
 #include <string.h>
 #include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
+#include <Imlib2.h>
 
 #include "drw.h"
 #include "util.h"
@@ -71,6 +72,7 @@ drw_create(Display *dpy, int screen, Window root, unsigned int w, unsigned int h
 	drw->w = w;
 	drw->h = h;
 	drw->drawable = XCreatePixmap(dpy, root, w, h, DefaultDepth(dpy, screen));
+	drw->picture = XRenderCreatePicture(dpy, drw->drawable, XRenderFindVisualFormat(dpy, DefaultVisual(dpy, screen)), 0, NULL);
 	drw->gc = XCreateGC(dpy, root, 0, NULL);
 	XSetLineAttributes(dpy, drw->gc, 1, LineSolid, CapButt, JoinMiter);
 
@@ -85,14 +87,18 @@ drw_resize(Drw *drw, unsigned int w, unsigned int h)
 
 	drw->w = w;
 	drw->h = h;
+	if (drw->picture)
+		XRenderFreePicture(drw->dpy, drw->picture);
 	if (drw->drawable)
 		XFreePixmap(drw->dpy, drw->drawable);
 	drw->drawable = XCreatePixmap(drw->dpy, drw->root, w, h, DefaultDepth(drw->dpy, drw->screen));
+	drw->picture = XRenderCreatePicture(drw->dpy, drw->drawable, XRenderFindVisualFormat(drw->dpy, DefaultVisual(drw->dpy, drw->screen)), 0, NULL);
 }
 
 void
 drw_free(Drw *drw)
 {
+	XRenderFreePicture(drw->dpy, drw->picture);
 	XFreePixmap(drw->dpy, drw->drawable);
 	XFreeGC(drw->dpy, drw->gc);
 	drw_fontset_free(drw->fonts);
@@ -238,6 +244,67 @@ drw_setscheme(Drw *drw, Clr *scm)
 		drw->scheme = scm;
 }
 
+Picture
+drw_picture_create_resized(Drw *drw, char *src, unsigned int srcw, unsigned int srch, unsigned int dstw, unsigned int dsth) {
+	Pixmap pm;
+	Picture pic;
+	GC gc;
+
+	if (srcw <= (dstw << 1u) && srch <= (dsth << 1u)) {
+		XImage img = {
+			srcw, srch, 0, ZPixmap, src,
+			ImageByteOrder(drw->dpy), BitmapUnit(drw->dpy), BitmapBitOrder(drw->dpy), 32,
+			32, 0, 32,
+			0, 0, 0
+		};
+		XInitImage(&img);
+
+		pm = XCreatePixmap(drw->dpy, drw->root, srcw, srch, 32);
+		gc = XCreateGC(drw->dpy, pm, 0, NULL);
+		XPutImage(drw->dpy, pm, gc, &img, 0, 0, 0, 0, srcw, srch);
+		XFreeGC(drw->dpy, gc);
+
+		pic = XRenderCreatePicture(drw->dpy, pm, XRenderFindStandardFormat(drw->dpy, PictStandardARGB32), 0, NULL);
+		XFreePixmap(drw->dpy, pm);
+
+		XRenderSetPictureFilter(drw->dpy, pic, FilterBilinear, NULL, 0);
+		XTransform xf;
+		xf.matrix[0][0] = (srcw << 16u) / dstw; xf.matrix[0][1] = 0; xf.matrix[0][2] = 0;
+		xf.matrix[1][0] = 0; xf.matrix[1][1] = (srch << 16u) / dsth; xf.matrix[1][2] = 0;
+		xf.matrix[2][0] = 0; xf.matrix[2][1] = 0; xf.matrix[2][2] = 65536;
+		XRenderSetPictureTransform(drw->dpy, pic, &xf);
+	} else {
+		Imlib_Image origin = imlib_create_image_using_data(srcw, srch, (DATA32 *)src);
+		if (!origin) return None;
+		imlib_context_set_image(origin);
+		imlib_image_set_has_alpha(1);
+		Imlib_Image scaled = imlib_create_cropped_scaled_image(0, 0, srcw, srch, dstw, dsth);
+		imlib_free_image_and_decache();
+		if (!scaled) return None;
+		imlib_context_set_image(scaled);
+		imlib_image_set_has_alpha(1);
+
+		XImage img = {
+		    dstw, dsth, 0, ZPixmap, (char *)imlib_image_get_data_for_reading_only(),
+		    ImageByteOrder(drw->dpy), BitmapUnit(drw->dpy), BitmapBitOrder(drw->dpy), 32,
+		    32, 0, 32,
+		    0, 0, 0
+		};
+		XInitImage(&img);
+
+		pm = XCreatePixmap(drw->dpy, drw->root, dstw, dsth, 32);
+		gc = XCreateGC(drw->dpy, pm, 0, NULL);
+		XPutImage(drw->dpy, pm, gc, &img, 0, 0, 0, 0, dstw, dsth);
+		imlib_free_image_and_decache();
+		XFreeGC(drw->dpy, gc);
+
+		pic = XRenderCreatePicture(drw->dpy, pm, XRenderFindStandardFormat(drw->dpy, PictStandardARGB32), 0, NULL);
+		XFreePixmap(drw->dpy, pm);
+	}
+
+	return pic;
+}
+
 void
 drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int invert)
 {
@@ -379,6 +446,14 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
 		XftDrawDestroy(d);
 
 	return x + (render ? w : 0);
+}
+
+void
+drw_pic(Drw *drw, int x, int y, unsigned int w, unsigned int h, Picture pic)
+{
+	if (!drw)
+		return;
+	XRenderComposite(drw->dpy, PictOpOver, pic, None, drw->picture, 0, 0, 0, 0, x, y, w, h);
 }
 
 void
