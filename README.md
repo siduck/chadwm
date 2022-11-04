@@ -36,7 +36,7 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 # Install
 
 ```
-git clone https://github.com/siduck/chadwm --depth 1  ~/.config
+git clone https://github.com/siduck/chadwm --depth 1  ~/.config/chadwm
 cd ~/.config/chadwm/
 mv eww ~/.config
 sudo make install
