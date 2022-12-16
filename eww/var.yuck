@@ -35,9 +35,6 @@
   "scripts/system backlight")
 
 ; pkg related 
-(defpoll updates :interval "1s"
-    "scripts/system pkgUpdates")
-
 (defpoll pkgUpdates :interval "1000s"
     "scripts/system pkgUpdates")
 
