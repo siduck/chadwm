@@ -38,8 +38,8 @@
 (defpoll updates :interval "1s"
     "scripts/system pkgUpdates")
 
-(defpoll pkgs :interval "1s"
-    "scripts/system pkgCount")
+(defpoll pkgUpdates :interval "1000s"
+    "scripts/system pkgUpdates")
 
 ; btns
 

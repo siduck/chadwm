@@ -7,12 +7,8 @@
 .CPU, .RAM , .DISK, .battery {
   background-color: $blackAlt;
   color: $blue;
-  font-size: 2.1rem;
-  font-family: 'JetBrainsMono Nerd Font';
-}
-
-.CPU {
- font-size: 2.5rem; 
+  font-size: 3.1rem;
+  font-family: 'JetBrainsMono Nerd Mono';
 }
 
 .RAM {
@@ -44,8 +40,8 @@
   background-color: $blackAlt;
   border-radius: 1rem;
   color: $green;
-  font-family: 'JetBrainsMono Nerd Font';
-  font-size: 2rem;
+  font-family: 'JetBrainsMono Nerd Font Mono ';
+  font-size: 3rem;
   margin:  .8rem ;
 }
 
@@ -57,7 +53,7 @@
 .pkgs{
  margin: 1.5rem;
  border-radius: 1rem;
- font-family: 'JetBrainsMono Nerd Font';
+ font-family: 'Comic Mono';
  color: $green;
  background-color: $blackAlt;
  padding: 0 1rem;
@@ -67,7 +63,6 @@
   margin: -1rem;
   margin-top: .3rem;
   margin-bottom: -3.5rem;
-  margin-left: .15rem;
 }
 
 .CPUBOX {

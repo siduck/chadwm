@@ -27,7 +27,7 @@
 
 (defwidget fetch[]
  (box :class 'fetch' 
- (box :class 'logo'  '' ) 
+ (box :class 'logo'  '' ) 
   (box :orientation 'h' :class 'fetchContent' :space-evenly false
   (title) 
   (details)

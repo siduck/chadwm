@@ -42,6 +42,6 @@
       :class 'battery'
       )
     ; package count
-    (label :text ' ${pkgs} pkgs' :class 'pkgs')
+    (label :text '${pkgUpdates}' :class 'pkgs')
   )
  ))

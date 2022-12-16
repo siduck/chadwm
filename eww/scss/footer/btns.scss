@@ -1,6 +1,6 @@
 .btn {
-  font-family: "JetbrainsMono Nerd Font";
-  font-size: 1.6rem;
+  font-family: "JetbrainsMono Nerd Font Mono";
+  font-size: 2rem;
   padding: 0 1.3rem;
   box-shadow: none;
   background-color: $grey;
@@ -33,6 +33,7 @@
   background-color: $red;
   color: $black;
   padding: 0 1.1rem;
+  font-size: 1.7rem;
 }
 
 .lock, .restart, .close, .wifi{

@@ -4,7 +4,6 @@
 
 .masterSlider,.headphoneSlider,.micSlider {
   margin: 0 .5rem;
-  font-size: 1.5rem;
   margin-top: -1rem;
   margin-bottom: -2rem;
 }
@@ -20,7 +19,7 @@
 .masterSlider scale trough, .headphoneSlider scale trough , .micSlider scale trough {
   background-color: $blackAlt;
   border-radius: 1rem;
-  min-width: 1.5rem;
+  min-width: 1.8rem;
 }
 
 .masterSlider scale trough highlight {
@@ -36,10 +35,10 @@
 }
 
 .audioIcon {
-  font-family:  'JetbrainsMono Nerd Font';
-  font-size: 1.5rem;
+  font-family:  'JetbrainsMono Nerd Font Mono';
+  font-size: 1.8rem;
   margin-bottom: 2rem;
-  padding: 0.5rem 1.1rem;
+  padding: 0 1.2rem;
   background-color: $blackAlt;
   border-radius: 50%;
   color: $lightGrey;
