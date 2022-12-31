@@ -16,8 +16,8 @@ cpu() {
 }
 
 pkg_updates() {
-  updates=$(doas xbps-install -un | wc -l) # void
-  # updates=$(checkupdates | wc -l)   # arch
+  #updates=$(doas xbps-install -un | wc -l) # void
+  updates=$(checkupdates 2>/dev/null | wc -l) # arch
   # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
 
   if [ -z "$updates" ]; then
