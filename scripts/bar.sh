@@ -54,32 +54,10 @@ clock() {
 	printf "^c$black^^b$blue^ $(date '+%H:%M')  "
 }
 
-net_speed(){
-  spd=`/home/tassry/.config/chadwm/scripts/wlan.sh`
-  printf "^c$darkblue^ ^b$black^ 龍"
-  printf "^c$darkblue^ ^b$black^ $spd"
-}
-
-
-mastervol() {
-  vol=`amixer get Master | awk '$0~/%/{print $4}' | tr -d '[%]'`
-  if [ $vol -gt 80 ]; then
-    volicon="墳"
-  elif [ $vol -gt 20 ]; then
-    volicon="奔"
-  elif [ $vol -eq 0 ]; then
-    volicon="婢"
-  else
-    volicon="奔"
-  fi 
-  printf "^c$green^ ^b$black^ $volicon"
-  printf "^c$green^ ^b$black^ $vol"
-}
-
 while true; do
 
   [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
   interval=$((interval + 1))
 
-  sleep 1 && xsetroot -name "$updates $(net_speed) $(mastervol) $(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
+  sleep 1 && xsetroot -name "$updates $(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
 done
