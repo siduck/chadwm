@@ -587,8 +587,14 @@ void arrangemon(Monitor *m) {
 }
 
 void attach(Client *c) {
-  c->next = c->mon->clients;
-  c->mon->clients = c;
+  if(new_window_attach_on_end){
+    Client**tmp = &c->mon->clients;
+    while(*tmp)tmp = &(*tmp)->next;
+    *tmp = c;
+  }else{
+    c->next = c->mon->clients;
+    c->mon->clients = c;
+  }
 }
 
 void attachstack(Client *c) {
