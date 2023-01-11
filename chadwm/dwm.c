@@ -3370,14 +3370,16 @@ void updatebarpos(Monitor *m) {
         m->topbar = topbar;
   }
   if (m->showbar) {
-  m->wh = m->wh - m->gappoh - bh;
-  if(floatbar){
-    m->by = m->topbar ? m->wy + m->gappoh : m->wy + m->wh;
-  }else{
-    m->by = m->topbar ? m->wy : m->wy + m->wh;
-  }
-  if (m->topbar)
-    	m->wy += bh + m->gappoh;
+    if(floatbar){
+      m->wh = m->wh - m->gappoh - bh;
+      m->by = m->topbar ? m->wy + m->gappoh : m->wy + m->wh;
+    }else{
+      m->wh = m->wh - bh;
+      m->by = m->topbar ? m->wy : m->wy + m->wh;
+    }
+    if (m->topbar){
+      m->wy = floatbar?bh+gappoh:bh;
+    }
   } else
     m->by = -bh - m->gappoh;
 }
