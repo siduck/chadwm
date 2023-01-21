@@ -671,7 +671,7 @@ void buttonpress(XEvent *e) {
 			click = ClkTabBar;
 			arg.ui = i;
 		} else {
-                        x = selmon->ww - 2 * m->gappov;
+      x = selmon->ww - 2 * m->gappov;
 			for (loop = 2; loop >= 0; loop--) {
 				x -= selmon->tab_btn_w[loop];
 				if (ev->x > x)
@@ -1080,8 +1080,13 @@ int drawstatusbar(Monitor *m, int bh, char *stext) {
   text = p;
 
   w += horizpadbar;
-  ret = x = m->ww - m->gappov * 2 - borderpx - w;
-  x = m->ww - m->gappov * 2 - borderpx - w - getsystraywidth();
+  if(floatbar){
+    ret = x = m->ww - m->gappov * 2 - borderpx - w;
+    x = m->ww - m->gappov * 2 - borderpx - w - getsystraywidth();
+  }else{
+    ret = x = m->ww -  borderpx - w;
+    x = m->ww - w - getsystraywidth();
+  }
 
   drw_setscheme(drw, scheme[LENGTH(colors)]);
   drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
@@ -1455,14 +1460,23 @@ void dragmfact(const Arg *arg) {
 void drawbar(Monitor *m) {
   int x, y = borderpx, w, sw = 0, stw = 0;
   int bh_n = bh - borderpx * 2;
-  int mw = m->ww - m->gappov * 2 - borderpx * 2;
+  int mw;
+  if(floatbar){
+    mw = m->ww - m->gappov * 2 - borderpx * 2;
+  }else{
+    mw = m->ww - borderpx * 2;
+  }
   int boxs = drw->fonts->h / 9;
   int boxw = drw->fonts->h / 6 + 2;
   unsigned int i, occ = 0, urg = 0;
   Client *c;
 
   XSetForeground(drw->dpy, drw->gc, clrborder.pixel);
-  XFillRectangle(drw->dpy, drw->drawable, drw->gc, 0, 0, m->ww - m->gappov * 2, bh);
+  if(floatbar){
+    XFillRectangle(drw->dpy, drw->drawable, drw->gc, 0, 0, m->ww - m->gappov * 2, bh);
+  }else{
+    XFillRectangle(drw->dpy, drw->drawable, drw->gc, 0, 0, m->ww, bh);
+  }
 
   if (showsystray && m == systraytomon(m))
     stw = getsystraywidth();
@@ -1509,7 +1523,8 @@ void drawbar(Monitor *m) {
 		x += w;
 	}
 
-  if ((w = mw + m->gappov * 2 - sw - stw - x) > bh_n) {
+  w = floatbar?mw + m->gappov * 2 - sw - stw - x:mw - sw - stw - x;
+  if (w > bh_n) {
     if (m->sel) {
       drw_setscheme(drw, scheme[m == selmon ? SchemeTitle : SchemeNorm]);
      	drw_text(drw, x, 0, w, bh, lrpad / 2 + (m->sel->icon ? m->sel->icw + ICONSPACING : 0), m->sel->name, 0);
@@ -1518,7 +1533,11 @@ void drawbar(Monitor *m) {
         drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
     } else {
       drw_setscheme(drw, scheme[SchemeNorm]);
-      drw_rect(drw, x, y, w - m->gappov * 2, bh_n, 1, 1);
+      if(floatbar){
+        drw_rect(drw, x, y, w - m->gappov * 2, bh_n, 1, 1);
+      }else{
+        drw_rect(drw, x, y, w, bh_n, 1, 1);
+      }
     }
   }
   drw_map(drw, m->barwin, 0, 0, m->ww - stw, bh);
@@ -1624,8 +1643,7 @@ drawtab(Monitor *m) {
 	int maxsize = bh;
 	int x = 0;
 	int w = 0;
-        int mw = m->ww - 2 * m->gappov;
-
+  int mw = floatbar?m->ww - 2 * m->gappov:m->ww;
 	buttons_w += TEXTW(btn_prev) - lrpad + horizpadtabo;
 	buttons_w += TEXTW(btn_next) - lrpad + horizpadtabo;
 	buttons_w += TEXTW(btn_close) - lrpad + horizpadtabo;
@@ -2504,10 +2522,14 @@ void resize(Client *c, int x, int y, int w, int h, int interact) {
 }
 
 void resizebarwin(Monitor *m) {
-  unsigned int w = m->ww - 2 * m->gappov;
+  unsigned int w =floatbar? m->ww - 2 * m->gappov:m->ww;
   if (showsystray && m == systraytomon(m))
     w -= getsystraywidth();
-  XMoveResizeWindow(dpy, m->barwin, m->wx + m->gappov, m->by, w, bh);
+  if(floatbar){
+    XMoveResizeWindow(dpy, m->barwin, m->wx + m->gappov, m->by, w, bh);
+  }else{
+    XMoveResizeWindow(dpy, m->barwin, m->wx, m->by, w, bh);
+  }
 }
 
 void resizeclient(Client *c, int x, int y, int w, int h) {
@@ -3334,14 +3356,20 @@ void updatebarpos(Monitor *m) {
 		if ( m->toptab )
                    m->wy += th + ((m->topbar && m->showbar) ? 0 : m->gappoh) - m->gappoh;
 	} else {
-            m->ty = -th - m->gappoh;
-            m->topbar = topbar;
-   }
-   if (m->showbar) {
-  m->wh = m->wh - m->gappoh - bh;
-  m->by = m->topbar ? m->wy + m->gappoh : m->wy + m->wh;
-  if (m->topbar)
-    	m->wy += bh + m->gappoh;
+        m->ty = -th - m->gappoh;
+        m->topbar = topbar;
+  }
+  if (m->showbar) {
+    if(floatbar){
+      m->wh = m->wh - m->gappoh - bh;
+      m->by = m->topbar ? m->wy + m->gappoh : m->wy + m->wh;
+    }else{
+      m->wh = m->wh - bh;
+      m->by = m->topbar ? m->wy : m->wy + m->wh;
+    }
+    if (m->topbar){
+      m->wy = floatbar?bh+gappoh:bh;
+    }
   } else
     m->by = -bh - m->gappoh;
 }
@@ -3558,7 +3586,7 @@ void updatesystray(void) {
   XWindowChanges wc;
   Client *i;
   Monitor *m = systraytomon(NULL);
-  unsigned int x = m->mx + m->mw - m->gappov;
+  unsigned int x = floatbar?m->mx + m->mw - m->gappov:m->mx + m->mw;
   unsigned int w = 1;
 
   if (!showsystray)
