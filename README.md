@@ -16,8 +16,11 @@
 
 # Tag preview (while hovering tag icon)
 
-https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-bece-f60b0700b6be.mp4
 
+
+https://user-images.githubusercontent.com/59060246/220520443-2c0605e9-19f2-46e4-8445-d367583c9e1d.mp4
+
+ 
 # Requirements
 
 - dash (shell)
