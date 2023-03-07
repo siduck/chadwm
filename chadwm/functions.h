@@ -28,3 +28,4 @@ static void getfacts(Monitor *m, int msize, int ssize, float *mf, float *sf, int
 static void setgaps(int oh, int ov, int ih, int iv);
 
 static void movestack(const Arg *arg);
+static void shiftview(const Arg *arg);

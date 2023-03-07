@@ -445,6 +445,7 @@ struct Monitor {
 
 #include "vanitygaps.c"
 #include "movestack.c"
+#include "shiftview.c"
 
 struct Pertag {
 	unsigned int curtag, prevtag; /* current and previous tag */
