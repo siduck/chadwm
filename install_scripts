@@ -50,12 +50,15 @@ curl -o $WORKING_DIR/wall/nord.jpeg https://i.imgur.com/SBKjnxm.jpeg
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 ## Install Elkowars Wacky Widgets
-git clone https://github.com/elkowar/eww
-cd eww
+git clone https://github.com/elkowar/eww eww-release
+cd eww-release
 cargo build --release
 cd target/release
 chmod +x ./eww
 cp -vf eww ~/.local/bin/
+
+# Return to working dir
+cd $WORKING_DIR/
 
 ## Install Chadwm
 git clone https://github.com/siduck/chadwm --depth 1  $WORKING_DIR
