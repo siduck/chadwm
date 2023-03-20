@@ -37,6 +37,9 @@ curl -o $WORKING_DIR/wall/chad.png https://raw.githubusercontent.com/siduck/chad
 curl -o $WORKING_DIR/wall/gruv.png https://raw.githubusercontent.com/siduck/chadwm/d3d9f29b0082d0e8d8f3f70bcfec0a7cf227340b/wall/gruv.png
 curl -o $WORKING_DIR/wall/gruvchad.png https://raw.githubusercontent.com/siduck/chadwm/d3d9f29b0082d0e8d8f3f70bcfec0a7cf227340b/wall/gruvchad.png
 curl -o $WORKING_DIR/wall/onedark.png https://raw.githubusercontent.com/siduck/chadwm/d3d9f29b0082d0e8d8f3f70bcfec0a7cf227340b/wall/onedark.png
+curl -o $WORKING_DIR/wall/magenta-cat.png https://images.pling.com/img/00/00/64/68/85/1707302/magenta-cat.png
+curl -o $WORKING_DIR/wall/dark-cat-rosewater.png https://images.pling.com/img/00/00/64/68/85/1707302/dark-cat-rosewater.png
+curl -o $WORKING_DIR/wall/nord.jpeg https://i.imgur.com/SBKjnxm.jpeg
 
 ## chose:
 ## 2) customie
@@ -79,7 +82,7 @@ cat <<EOF >  $WORKING_DIR/scripts/run.sh
 #!/bin/sh
 
 xrdb merge $WORKING_DIR/.Xresources &
-feh --bg-scale $WORKING_DIR/wall/chad.png &
+feh --bg-scale $WORKING_DIR/wall/nord.png &
 xset r rate 200 50 &
 picom --daemon &
 eww daemon &
@@ -97,3 +100,19 @@ EOF
 ## eww.scss line 1
 ## config.rasi line 15
 ##################################################################################
+
+cd $WORKING_DIR
+
+## Add the suckless terminal
+git clone https://git.suckless.org/st
+cd st
+make
+sudo make install
+
+cd ../
+
+## Add the suckless surf browser
+git clone https://git.suckless.org/surf
+cd surf
+make
+sudo make install
