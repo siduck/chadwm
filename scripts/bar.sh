@@ -39,7 +39,7 @@ case "$get_status" in
     "Discharging")
         case "$get_capacity" in
             9[0-9]|100) icon=" " ;;
-            7[5-9]|8[0-9]) icon=" " ;;
+            7[0-9]|8[0-9]) icon=" " ;;
             4[0-9]|5[0-9]|6[0-9]) icon=" " ;;
             1[0-9]|2[0-9]|3[0-9]) icon=" " ;;
             *) icon=" " ;;
