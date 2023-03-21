@@ -1,4 +1,4 @@
-#!/bin/env dash
+#!/bin/dash
 
 # This script sets up a custom status bar for the dwm window manager.
 # The status bar includes information such as CPU load, battery level,
@@ -9,19 +9,9 @@
 # to set the foreground and background colors of different sections of the bar.
 
 interval=0
-# Directory where the theme files are located.
-themes_dir="$HOME/.config/chadwm/scripts/bar_themes/"
 
-# Name of the current theme and available themes.
-current_theme="catppuccin"
-
-# Load the color variables from the theme file.
-if [ -f "${themes_dir}/${current_theme}" ]; then
-  . "${themes_dir}/${current_theme}"
-else
-  echo "Theme not found: ${current_theme}"
-  exit 1
-fi
+# load colors
+. ~/.config/chadwm/scripts/bar_themes/onedark
 
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
