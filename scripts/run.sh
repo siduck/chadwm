@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 xrdb merge ~/.Xresources 
 xbacklight -set 10 &

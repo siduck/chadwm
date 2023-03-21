@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/env dash
 
 # This script sets up a custom status bar for the dwm window manager.
 # The status bar includes information such as CPU load, battery level,

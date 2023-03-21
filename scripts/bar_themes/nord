@@ -1,5 +1,4 @@
-#!/bin/env bash
-# shellcheck disable=SC2034
+#!/bin/dash
 # colors
 black=#2E3440
 green=#A3BE8C
