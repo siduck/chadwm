@@ -17,7 +17,7 @@
   )
 
 (btn :name ""
-  :command "slock"
+  :command "slock & doas zzz"
   :class "lock"
  )
 
