@@ -11,6 +11,7 @@
 - xorg-server
 - xorg-xbacklight
 - xorg-xsetroot
+- xorg-xset
 - libxft
 - imlib2
 - libxinerama

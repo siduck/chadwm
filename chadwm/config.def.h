@@ -37,7 +37,7 @@ static const int new_window_attach_on_end = 0; /*  1 means the new window will a
 #define ICONSIZE 19   /* icon size */
 #define ICONSPACING 8 /* space between icon and title */
 
-static const char *fonts[]          = {"Hack Nerd Font Mono:style:pixelsize=12" };
+static const char *fonts[]          = {"Hack Nerd Font Mono:style:pixelsize=20" };
 
 // theme
 #include "themes/onedark.h"
@@ -62,7 +62,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static char *tags[] = {"", "", "", "", ""};
+static char *tags[] = {"", "", "", "󰭹", ""};
 
 static const char* eww[] = { "eww", "open" , "eww", NULL };
 
