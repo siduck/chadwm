@@ -37,7 +37,7 @@ static const int new_window_attach_on_end = 0; /*  1 means the new window will a
 #define ICONSIZE 19   /* icon size */
 #define ICONSPACING 8 /* space between icon and title */
 
-static const char *fonts[]          = {"Iosevka:style:medium:size=12" ,"JetBrainsMono Nerd Font Mono:style:medium:size=19" };
+static const char *fonts[]          = {"Hack Nerd Font Mono:style:pixelsize=12" };
 
 // theme
 #include "themes/onedark.h"
@@ -149,8 +149,9 @@ static const Key keys[] = {
     {MODKEY,                            XK_u,       spawn,
         SHCMD("maim --select | xclip -selection clipboard -t image/png")},
 
-    { MODKEY,                           XK_c,       spawn,          SHCMD("rofi -show drun") },
-    { MODKEY,                           XK_Return,  spawn,            SHCMD("st")},
+    { MODKEY,                           XK_w,       spawn,          SHCMD("$BROWSER") },
+    { MODKEY,                           XK_d,       spawn,          SHCMD("rofi -show drun") },
+    { MODKEY|ShiftMask,                 XK_Return,  spawn,          SHCMD("$TERMINAL") },
 
     // toggle stuff
     { MODKEY,                           XK_b,       togglebar,      {0} },
@@ -161,8 +162,8 @@ static const Key keys[] = {
     { MODKEY|ControlMask,               XK_w,       tabmode,        { -1 } },
     { MODKEY,                           XK_j,       focusstack,     {.i = +1 } },
     { MODKEY,                           XK_k,       focusstack,     {.i = -1 } },
-    { MODKEY,                           XK_i,       incnmaster,     {.i = +1 } },
-    { MODKEY,                           XK_d,       incnmaster,     {.i = -1 } },
+    { MODKEY,                           XK_o,       incnmaster,     {.i = +1 } },
+    { MODKEY|ShiftMask,                 XK_o,       incnmaster,     {.i = -1 } },
 
     // shift view
     { MODKEY,                           XK_Left,    shiftview,      {.i = -1 } },
@@ -173,14 +174,15 @@ static const Key keys[] = {
     { MODKEY,                           XK_l,       setmfact,       {.f = +0.05} },
     { MODKEY|ShiftMask,                 XK_h,       setcfact,       {.f = +0.25} },
     { MODKEY|ShiftMask,                 XK_l,       setcfact,       {.f = -0.25} },
-    { MODKEY|ShiftMask,                 XK_o,       setcfact,       {.f =  0.00} },
+    //{ MODKEY|ShiftMask,                 XK_o,       setcfact,       {.f =  0.00} },
 
 
     { MODKEY|ShiftMask,                 XK_j,       movestack,      {.i = +1 } },
     { MODKEY|ShiftMask,                 XK_k,       movestack,      {.i = -1 } },
-    { MODKEY|ShiftMask,                 XK_Return,  zoom,           {0} },
+    { MODKEY,                           XK_Return,  zoom,           {0} },
     { MODKEY,                           XK_Tab,     view,           {0} },
 
+    /*
     // overall gaps
     { MODKEY|ControlMask,               XK_i,       incrgaps,       {.i = +1 } },
     { MODKEY|ControlMask,               XK_d,       incrgaps,       {.i = -1 } },
@@ -204,6 +206,7 @@ static const Key keys[] = {
     { MODKEY|ControlMask|ShiftMask,     XK_9,       incrovgaps,     {.i = -1 } },
 
     { MODKEY|ControlMask|ShiftMask,     XK_d,       defaultgaps,    {0} },
+    */
 
     // layout
     { MODKEY,                           XK_t,       setlayout,      {.v = &layouts[0]} },

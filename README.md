@@ -1,41 +1,30 @@
-# chadwm (Initial look)
+# chadwm
 
 <img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/initial_look.png">
-<img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/col_layout.png">
 
-<img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/occ_act_tags.png">
-(empty workspaces have their color greyed out)
+- [wallpaper](https://github.com/siduck/chadwm/blob/screenshots/screenshots/chad.png)
 
-- NOTE: This is vanilla dwm bar (status2d patch for setting colors) not dwmblocks or polybar. 
-<img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/chadwm.png">
-- The small widget on the top right is an eww widget and thats old! I've improved the eww widget.
-<img src='https://i.redd.it/t1pvmqlq3oc81.png'>
-(catppuccin theme)
-<img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/gruvchad.png">
-(gruvbox material dark)
+# Requirements (Clean install)
 
-# Tag preview (while hovering tag icon)
-
-https://user-images.githubusercontent.com/59060246/223068062-d3c9847a-8713-42c7-bc9d-07247a0486a8.mp4
-
-# Requirements
-
-- dash (shell)
-- imlib2 
-- xsetroot package (status2d uses this to add colors on dwmbar)
-- JetbrainsMono Nerd Font or any nerd font but dont forget to set it in config.def.h
-- Make sure to setup your terminal's theme accordingly do chadwm's theme such as nord, onedark etc...
-
-## Other requirements
+- git
+- xorg-xinit
+- xorg-server
+- xorg-xbacklight
+- xorg-xsetroot
+- libxft
+- imlib2
+- libxinerama
 - picom
 - feh
 - acpi
 - rofi
+- ttf-hack-nerd
+- [st](https://github.com/borsched/st)
 
 # Install
 
 ```
-git clone https://github.com/siduck/chadwm --depth 1  ~/.config/chadwm
+git clone https://github.com/borsched/chadwm --depth 1  ~/.config/chadwm
 cd ~/.config/chadwm/
 mv eww ~/.config
 cd chadwm
@@ -44,50 +33,9 @@ sudo make install
 
 # Run chadwm
 
-## With startx
-
+I prefer zsh, so I add it to my .zshrc after installing zsh and changing my user's shell.
 ```shell
-startx ~/.config/chadwm/scripts/run.sh
-```
-
-## With sx
-
-```shell
-sx sh ~/.config/chadwm/scripts/run.sh
-```
-
-(Make an alias for this :v)
-
-```shell
-alias chadwm='startx ~/.config/chadwm/scripts/run.sh'
-```
-
-## With Display Manager
-
-- Create a desktop entry (make sure to change `user` with your user):
-
-```shell
-sudo touch /usr/share/xsessions/chadwm.desktop  
-```
-
-```
-[Desktop Entry]
-Name=chadwm
-Comment=dwm made beautiful 
-Exec=/home/user/.config/chadwm/scripts/./run.sh 
-Type=Application 
-```
-
-- [wallpaper](https://github.com/siduck/chadwm/blob/screenshots/screenshots/chad.png)
-
-# Recompile
-
-- You need to recompile dwm after every change you make to its source code.
-
-```
-cd ~/.config/chadwm/chadwm
-rm config.h
-sudo make install
+exec startx ~/.config/chadwm/scripts/run.sh
 ```
 
 # Change themes
