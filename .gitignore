@@ -1,6 +1,6 @@
-chadwm/dwm 
-chadwm/config.h 
-chadwm/*.o
-chadwm/*.orig
-chadwm/*.rej
+dwm 
+config.h 
+*.o
+*.orig
+*.rej
 .ccls-cache/

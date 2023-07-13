@@ -4,63 +4,14 @@
 
 - [wallpaper](https://github.com/siduck/chadwm/blob/screenshots/screenshots/chad.png)
 
-# Requirements (Clean install)
-
-- git
-- xorg-xinit
-- xorg-server
-- xorg-xbacklight
-- xorg-xsetroot
-- xorg-xset
-- libxft
-- imlib2
-- libxinerama
-- picom
-- feh
-- acpi
-- rofi
-- ttf-hack-nerd
-- [st](https://github.com/borsched/st)
-
-# Install
-
-```
-git clone https://github.com/borsched/chadwm --depth 1  ~/.config/chadwm
-cd ~/.config/chadwm/
-mv eww ~/.config
-cd chadwm
-sudo make install
-```
-
-# Run chadwm
-
-I prefer zsh, so I add it to my .zshrc after installing zsh and changing my user's shell.
-```shell
-exec startx ~/.config/chadwm/scripts/run.sh
-```
+# Installation
+This is meant to be installed alongside my [dotfiles](https://github.com/borsched/voidrice-laptop), which includes necessary scripts.
 
 # Change themes
 
 - Bar  : in bar.sh (line 9) and config.def.h (line 35)
 - eww  : in eww.scss (line 1)
 - rofi : in config.rasi (line 15)
-
-# Eww
-
-- First, make sure you have copied the eww directory to your config:
-
-```
-cp -r ~/.config/chadwm/eww ~/.config/
-```
-
-- To launch the eww widget, you need the following command:
-
-```
-eww open eww
-```
-(Note: I use only alsa on my system so audio scripts on widget are alsa related, modify them to support pulseaudio)
-
-- It could be a good idea to add these lines to your autostart file, located at ~/.config/chadwm/scripts/run.sh
 
 # Credits
 

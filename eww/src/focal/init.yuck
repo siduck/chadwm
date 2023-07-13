@@ -1,5 +1,0 @@
-(defwidget focal []
-  (box :orientation "v"
-    (time)
-    (radialBars)
- ))

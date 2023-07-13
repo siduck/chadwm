@@ -14,7 +14,7 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails,display systray on the 1st monitor,False: display systray on last monitor*/
-static const int showsystray        = 1;        /* 0 means no systray */
+static const int showsystray        = 0;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int showtab            = showtab_auto;
 static const int toptab             = 1;        /* 0 means bottom tab */
@@ -37,7 +37,7 @@ static const int new_window_attach_on_end = 0; /*  1 means the new window will a
 #define ICONSIZE 19   /* icon size */
 #define ICONSPACING 8 /* space between icon and title */
 
-static const char *fonts[]          = {"Hack Nerd Font Mono:style:pixelsize=20" };
+static const char *fonts[]          = {"Hack Nerd Font Mono:style:pixelsize=22" };
 
 // theme
 #include "themes/onedark.h"
@@ -50,25 +50,25 @@ static const char *colors[][3]      = {
     [TabSel]           = { blue,    gray2,  black },
     [TabNorm]          = { gray3,   black,  black },
     [SchemeTag]        = { gray3,   black,  black },
-    [SchemeTag1]       = { blue,    black,  black },
-    [SchemeTag2]       = { red,     black,  black },
-    [SchemeTag3]       = { orange,  black,  black },
+    [SchemeTag1]       = { red,    black,  black },
+    [SchemeTag2]       = { orange,     black,  black },
+    [SchemeTag3]       = { blue,  black,  black },
     [SchemeTag4]       = { green,   black,  black },
     [SchemeTag5]       = { pink,    black,  black },
-    [SchemeLayout]     = { green,   black,  black },
+    [SchemeLayout]     = { blue,   black,  black },
     [SchemeBtnPrev]    = { green,   black,  black },
     [SchemeBtnNext]    = { yellow,  black,  black },
     [SchemeBtnClose]   = { red,     black,  black },
 };
 
 /* tagging */
-static char *tags[] = {"", "", "", "󰭹", ""};
+static char *tags[] = {"󰖟", "", "", "󰭹", ""};
 
 static const char* eww[] = { "eww", "open" , "eww", NULL };
 
 static const Launcher launchers[] = {
     /* command     name to display */
-    { eww,         "" },
+    { eww,         "" },
 };
 
 static const int tagschemes[] = {
