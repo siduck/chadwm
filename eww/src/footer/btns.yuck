@@ -16,7 +16,7 @@
     :class "restart"
   )
 
-(btn :name ""
+(btn :name "󰌾"
   :command "slock & doas zzz"
   :class "lock"
  )

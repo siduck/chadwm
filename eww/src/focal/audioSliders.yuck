@@ -3,7 +3,7 @@
 
     ; Master
     (box :orientation 'v' :class 'addPadding' 
-    (label :text '' :class 'audioIcon')
+    (label :text '󰎆' :class 'audioIcon')
     (metric
              :class 'masterSlider'
              :value master_vol
@@ -15,7 +15,7 @@
 
     ; Headphone
     (box :orientation 'v' :class 'addPadding'
-    (label :text '' :class 'audioIcon')
+    (label :text '󰋋' :class 'audioIcon')
     (metric
              :class 'headphoneSlider'
              :value head_vol

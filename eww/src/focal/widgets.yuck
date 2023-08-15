@@ -7,13 +7,13 @@
   (box :class "radialBars" 
     (progressBar
       :value cpu 
-      :text ''
+      :text ''
       :class 'CPU'
       :boxClass 'CPUBOX'
       )
    (progressBar
       :value ram
-      :text '﬙'
+      :text ''
       :class 'RAM'
       :boxClass 'RAMBOX'
       )
