@@ -136,16 +136,12 @@ static const Key keys[] = {
 
     // brightness and audio 
     {0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol}},
-	{0,                       XF86XK_AudioMute, spawn, {.v = mutevol }},
-	{0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol}},
-	{0,				XF86XK_MonBrightnessUp,		spawn,	SHCMD("sudo xbacklight -inc 5")},
-	{0,				XF86XK_MonBrightnessDown,	spawn,	SHCMD("sudo xbacklight -dec 5")},
+    {0,                       XF86XK_AudioMute, spawn, {.v = mutevol }},
+    {0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol}},
+    {0,				XF86XK_MonBrightnessUp,		spawn,	SHCMD("sudo xbacklight -inc 5")},
+    {0,				XF86XK_MonBrightnessDown,	spawn,	SHCMD("sudo xbacklight -dec 5")},
 
-    // screenshot fullscreen and cropped
-    {MODKEY|ControlMask,                XK_u,       spawn,
-        SHCMD("maim | xclip -selection clipboard -t image/png")},
-    {MODKEY,                            XK_u,       spawn,
-        SHCMD("maim --select | xclip -selection clipboard -t image/png")},
+    {0,				XK_Print,               	spawn,	SHCMD("maimpick")},
 
     { MODKEY,                           XK_w,       spawn,          SHCMD("$BROWSER") },
     { MODKEY,                           XK_d,       spawn,          SHCMD("rofi -show drun") },
