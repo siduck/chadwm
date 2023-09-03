@@ -25,7 +25,6 @@ static const int vertpadbar         = 11;
 static const int vertpadtab         = 35;
 static const int horizpadtabi       = 15;
 static const int horizpadtabo       = 15;
-static const int scalepreview       = 4;
 static const int tag_preview        = 0;        /* 1 means enable, 0 is off */
 static const int scalepreview       = 4;        /* preview scaling (display w and h / scalepreview) */
 static const int previewbar         = 1;        /* show the bar in the preview window */
