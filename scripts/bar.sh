@@ -10,9 +10,11 @@ interval=0
 
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
+  cpu_temp=$(cat /sys/devices/platform/coretemp.0/hwmon/hwmon*/temp1_input)
+  cpu_temp=$((cpu_temp / 1000))
 
   printf "^c$black^ ^b$green^ CPU"
-  printf "^c$white^ ^b$grey^ $cpu_val"
+  printf "^c$white^ ^b$grey^ $cpu_val|$cpu_temp°C"
 }
 
 pkg_updates() {
@@ -23,23 +25,13 @@ pkg_updates() {
   if [ -z "$updates" ]; then
     printf "  ^c$green^    Fully Updated"
   else
-    printf "  ^c$green^    $updates"" updates"
+    printf "  ^c$green^    $updates updates"
   fi
-}
-
-battery() {
-  get_capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
-  printf "^c$blue^   $get_capacity"
-}
-
-brightness() {
-  printf "^c$red^   "
-  printf "^c$red^%.0f\n" $(cat /sys/class/backlight/*/brightness)
 }
 
 mem() {
   printf "^c$blue^^b$black^  "
-  printf "^c$blue^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
+  printf "^c$blue^$(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
 }
 
 wlan() {
@@ -51,13 +43,37 @@ wlan() {
 
 clock() {
 	printf "^c$black^ ^b$darkblue^ 󱑆 "
-	printf "^c$black^^b$blue^ $(date '+%H:%M')  "
+  printf "^c$black^^b$blue^$(date +"%a, %d %B %H:%M"| sed 's/  / /g')"
+}
+
+current_network_speed() {
+  interface="eno1"
+  interval="1"  # Adjust this for longer intervals
+
+  # Get initial values
+  rx1=$(cat /sys/class/net/$interface/statistics/rx_bytes)
+  tx1=$(cat /sys/class/net/$interface/statistics/tx_bytes)
+  sleep $interval
+  rx2=$(cat /sys/class/net/$interface/statistics/rx_bytes)
+  tx2=$(cat /sys/class/net/$interface/statistics/tx_bytes)
+
+  # Calculate the difference to get the speed
+  rx_speed=$(( ($rx2 - $rx1) / $interval * 8 / 1048576 ))
+  tx_speed=$(( ($tx2 - $tx1) / $interval * 8 / 1048576 ))
+	printf "^c$blue^^b$black^ ⬇️⬆️"
+  printf "^c$blue^$rx_speed|$tx_speed"
+}
+
+volume_level() {
+  vol_lvl=$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*%\).*,\1,')
+	printf "^c$blue^^b$black^ 🔊"
+  printf "^c$blue^ $vol_lvl%"
 }
 
 while true; do
 
-  [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
+  [ $interval = 30 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
   interval=$((interval + 1))
 
-  sleep 1 && xsetroot -name "$updates $(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
+  sleep 1 && xsetroot -name "$updates $(cpu) $(mem) $(current_network_speed) $(volume_level) $(clock)"
 done

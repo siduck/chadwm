@@ -12,7 +12,7 @@ configuration{
     display-drun: "   Apps ";
 }
 
-@theme "everblush"
+@theme "onedark"
 
 element-text, element-icon , mode-switcher {
     background-color: inherit;
