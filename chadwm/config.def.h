@@ -46,7 +46,7 @@ static const char *colors[][3]      = {
     /*                     fg       bg      border */
     [SchemeNorm]       = { gray3,   black,  gray2 },
     [SchemeSel]        = { gray4,   blue,   blue  },
-    [SchemeTitle]      = { white,   black,  black  }, // active window title
+    [SchemeTitle]      = { white,   black,  black }, // active window title
     [TabSel]           = { blue,    gray2,  black },
     [TabNorm]          = { gray3,   black,  black },
     [SchemeTag]        = { gray3,   black,  black },
