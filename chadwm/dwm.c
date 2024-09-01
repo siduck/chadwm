@@ -319,11 +319,10 @@ static void setviewport(void);
 static void seturgent(Client *c, int urg);
 static void show(Client *c);
 static void showhide(Client *c);
-static void showtagpreview(unsigned int i);
-static void takepreview(void);
-static void previewtag(const Arg *arg);
+static void showtagpreview(int tag);
 static void sigchld(int unused);
 static void spawn(const Arg *arg);
+static void switchtag(void);
 static Monitor *systraytomon(Monitor *m);
 static void tabmode(const Arg *arg);
 static void tag(const Arg *arg);
@@ -435,13 +434,13 @@ struct Monitor {
   Window barwin;
   Window tabwin;
   Window tagwin;
+  Pixmap tagmap[LENGTH(tags)];
   int previewshow;
   int ntabs;
   int tab_widths[MAXTABS];
   int tab_btn_w[3];
   const Layout *lt[2];
   Pertag *pertag;
-  Pixmap *tagmap;
 };
 
 #include "vanitygaps.c"
@@ -633,11 +632,6 @@ void buttonpress(XEvent *e) {
     if (i < LENGTH(tags)) {
       click = ClkTagBar;
       arg.ui = 1 << i;
-      /* hide preview if we click the bar */
-      if (selmon->previewshow) {
-	selmon->previewshow = 0;
-	XUnmapWindow(dpy, selmon->tagwin);
-      }
       goto execute_handler;
      } else if (ev->x < x + TEXTW(selmon->ltsymbol)) {
       click = ClkLtSymbol;
@@ -756,10 +750,10 @@ void cleanupmon(Monitor *mon) {
       ;
     m->next = mon->next;
   }
-  for (i = 0; i < LENGTH(tags); i++)
-    if (mon->tagmap[i])
-      XFreePixmap(dpy, mon->tagmap[i]);
-  free(mon->tagmap);
+  for (i = 0; i < LENGTH(tags); i++) {
+       if (mon->tagmap[i])
+	         XFreePixmap(dpy, mon->tagmap[i]);
+  }
   XUnmapWindow(dpy, mon->barwin);
   XDestroyWindow(dpy, mon->barwin);
   XUnmapWindow(dpy, mon->tabwin);
@@ -961,7 +955,6 @@ Monitor *createmon(void) {
   m->borderpx = borderpx;
   m->lt[0] = &layouts[0];
   m->lt[1] = &layouts[1 % LENGTH(layouts)];
-  m->tagmap = ecalloc(LENGTH(tags), sizeof(Pixmap));
   for (i = 0; i < LENGTH(tags); i++)
 	  m->tagmap[i] = 0;
   m->previewshow = 0;
@@ -2170,40 +2163,32 @@ monocle(Monitor *m)
 }
 
 void motionnotify(XEvent *e) {
+  unsigned int i, x;
   static Monitor *mon = NULL;
   Monitor *m;
   XMotionEvent *ev = &e->xmotion;
 
-	unsigned int i, x;
-
-	if (ev->window == selmon->barwin) {
-	  i = x = 0;
-	  do
-	    x += TEXTW(tags[i]);
-	  while (ev->x >= x && ++i < LENGTH(tags));
-	  /* FIXME when hovering the mouse over the tags and we view the tag,
-	   *       the preview window get's in the preview shot */
-
-	  if (i < LENGTH(tags)) {
-	    if (selmon->previewshow != (i + 1)
-		&& !(selmon->tagset[selmon->seltags] & 1 << i)) {
-	      selmon->previewshow = i + 1;
-	      showtagpreview(i);
-	    } else if (selmon->tagset[selmon->seltags] & 1 << i) {
-	      selmon->previewshow = 0;
-	      XUnmapWindow(dpy, selmon->tagwin);
-	    }
-	  } else if (selmon->previewshow) {
-	    selmon->previewshow = 0;
-	    XUnmapWindow(dpy, selmon->tagwin);
-	  }
-	} else if (ev->window == selmon->tagwin) {
-	  selmon->previewshow = 0;
-	  XUnmapWindow(dpy, selmon->tagwin);
-	} else if (selmon->previewshow) {
-	  selmon->previewshow = 0;
-	  XUnmapWindow(dpy, selmon->tagwin);
-	}
+  if (ev->window == selmon->barwin) {
+		i = x = 0;
+		do
+			x += TEXTW(tags[i]);
+		while (ev->x >= x && ++i < LENGTH(tags));
+		if (i < LENGTH(tags)) {
+                  if ((i + 1) != selmon->previewshow && !(selmon->tagset[selmon->seltags] & 1 << i)) {
+				selmon->previewshow = i + 1;
+				showtagpreview(i);
+                  } else if (selmon->tagset[selmon->seltags] & 1 << i) {
+				selmon->previewshow = 0;
+				showtagpreview(0);
+		  }
+		} else if (selmon->previewshow != 0) {
+			selmon->previewshow = 0;
+			showtagpreview(0);
+		}
+	} else if (selmon->previewshow != 0) {
+		selmon->previewshow = 0;
+		showtagpreview(0);
+   }
 
   if (ev->window != root)
     return;
@@ -3033,80 +3018,20 @@ void showhide(Client *c) {
 }
 
 void
-showtagpreview(unsigned int i)
+showtagpreview(int tag)
 {
-	if (!selmon->previewshow || !selmon->tagmap[i] || !tag_preview) {
+	if (!selmon->previewshow  || !tag_preview ) {
 		XUnmapWindow(dpy, selmon->tagwin);
 		return;
 	}
 
-	XSetWindowBackgroundPixmap(dpy, selmon->tagwin, selmon->tagmap[i]);
-	XCopyArea(dpy, selmon->tagmap[i], selmon->tagwin, drw->gc, 0, 0,
-			selmon->mw / scalepreview, selmon->mh / scalepreview,
-			0, 0);
-	XSync(dpy, False);
-	XMapRaised(dpy, selmon->tagwin);
-}
-
-void
-takepreview(void)
-{
-	Client *c;
-	Imlib_Image image;
-	unsigned int occ = 0, i;
-
-	for (c = selmon->clients; c; c = c->next)
-		occ |= c->tags;
-		//occ |= c->tags == 255 ? 0 : c->tags; /* hide vacants */
-
-	for (i = 0; i < LENGTH(tags); i++) {
-		/* searching for tags that are occupied && selected */
-		if (!(occ & 1 << i) || !(selmon->tagset[selmon->seltags] & 1 << i)
-		    || !tag_preview)
-			continue;
-
-		if (selmon->tagmap[i]) { /* tagmap exist, clean it */
-			XFreePixmap(dpy, selmon->tagmap[i]);
-			selmon->tagmap[i] = 0;
-		}
-
-		/* try to unmap the window so it doesn't show the preview on the preview */
-		selmon->previewshow = 0;
-		XUnmapWindow(dpy, selmon->tagwin);
+        if (selmon->tagmap[tag]) {
+		XSetWindowBackgroundPixmap(dpy, selmon->tagwin, selmon->tagmap[tag]);
+		XCopyArea(dpy, selmon->tagmap[tag], selmon->tagwin, drw->gc, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview, 0, 0);
 		XSync(dpy, False);
-
-		if (!(image = imlib_create_image(sw, sh))) {
-			fprintf(stderr, "dwm: imlib: failed to create image, skipping.");
-			continue;
-		}
-		imlib_context_set_image(image);
-		imlib_context_set_display(dpy);
-		/* uncomment if using alpha patch */
-		//imlib_image_set_has_alpha(1);
-		//imlib_context_set_blend(0);
-		//imlib_context_set_visual(visual);
-		imlib_context_set_visual(DefaultVisual(dpy, screen));
-		imlib_context_set_drawable(root);
-
-		if (previewbar)
-			imlib_copy_drawable_to_image(0, selmon->wx, selmon->wy, selmon->ww, selmon->wh, 0, 0, 1);
-		else
-			imlib_copy_drawable_to_image(0, selmon->mx, selmon->my, selmon->mw ,selmon->mh, 0, 0, 1);
-		selmon->tagmap[i] = XCreatePixmap(dpy, selmon->tagwin, selmon->mw / scalepreview, selmon->mh / scalepreview, DefaultDepth(dpy, screen));
-		imlib_context_set_drawable(selmon->tagmap[i]);
-		imlib_render_image_part_on_drawable_at_size(0, 0, selmon->mw, selmon->mh, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview);
-		imlib_free_image();
-	}
-}
-
-void
-previewtag(const Arg *arg)
-{
-	if (selmon->previewshow != (arg->ui + 1))
-		selmon->previewshow = arg->ui + 1;
-	else
-		selmon->previewshow = 0;
-	showtagpreview(arg->ui);
+		XMapWindow(dpy, selmon->tagwin);
+	} else
+		XUnmapWindow(dpy, selmon->tagwin);
 }
 
 
@@ -3134,6 +3059,37 @@ setclienttagprop(Client *c)
 	long data[] = { (long) c->tags, (long) c->mon->num };
 	XChangeProperty(dpy, c->win, netatom[NetClientInfo], XA_CARDINAL, 32,
 			PropModeReplace, (unsigned char *) data, 2);
+}
+
+
+void switchtag(void) {
+  	int i;
+	unsigned int occ = 0;
+	Client *c;
+        Imlib_Image image;
+
+	for (c = selmon->clients; c; c = c->next)
+		occ |= c->tags;
+	for (i = 0; i < LENGTH(tags); i++) {
+		if (selmon->tagset[selmon->seltags] & 1 << i) {
+                  	if (selmon->tagmap[i] != 0) {
+ 				XFreePixmap(dpy, selmon->tagmap[i]);
+ 				selmon->tagmap[i] = 0;
+ 			}
+			if (occ & 1 << i && tag_preview) {
+                          	image = imlib_create_image(sw, sh);
+				imlib_context_set_image(image);
+				imlib_context_set_display(dpy);
+				imlib_context_set_visual(DefaultVisual(dpy, screen));
+				imlib_context_set_drawable(RootWindow(dpy, screen));
+				imlib_copy_drawable_to_image(0, selmon->mx, selmon->my, selmon->mw ,selmon->mh, 0, 0, 1);
+                                selmon->tagmap[i] = XCreatePixmap(dpy, selmon->tagwin, selmon->mw / scalepreview, selmon->mh / scalepreview, DefaultDepth(dpy, screen));
+				imlib_context_set_drawable(selmon->tagmap[i]);
+				imlib_render_image_part_on_drawable_at_size(0, 0, selmon->mw, selmon->mh, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview);
+				imlib_free_image();
+			}
+		}
+	}
 }
 
 void
@@ -3220,7 +3176,7 @@ void toggleview(const Arg *arg) {
 
 
   if (newtagset) {
-	 takepreview();
+         switchtag();
     selmon->tagset[selmon->seltags] = newtagset;
 
     	if (newtagset == ~0) {
@@ -3340,13 +3296,6 @@ void updatebars(void) {
 
   XClassHint ch = {"dwm", "dwm"};
   for (m = mons; m; m = m->next) {
-    if (!m->tagwin) {
-      m->tagwin = XCreateWindow(dpy, root, m->wx, m->by + bh, m->mw / scalepreview,
-				m->mh / scalepreview, 0, DefaultDepth(dpy, screen), CopyFromParent,
-				DefaultVisual(dpy, screen), CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
-      XDefineCursor(dpy, m->tagwin, cursor[CurNormal]->cursor);
-      XUnmapWindow(dpy, m->tagwin);
-    }
     if (m->barwin)
       continue;
     w = m->ww;
@@ -3745,7 +3694,7 @@ void view(const Arg *arg) {
 
   if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
     return;
-  takepreview();
+  switchtag();
   selmon->seltags ^= 1; /* toggle sel tagset */
   if (arg->ui & TAGMASK) {
     selmon->pertag->prevtag = selmon->pertag->curtag;
