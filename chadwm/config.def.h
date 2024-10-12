@@ -18,7 +18,7 @@ static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int showtab            = showtab_auto;
 static const int toptab             = 1;        /* 0 means bottom tab */
-static const int floatbar           = 1;/* 1 means the bar will float(don't have padding),0 means the bar have padding */
+static const int floatbar           = 1;        /* 1 means the bar will float(don't have padding),0 means the bar have padding */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 5;
 static const int vertpadbar         = 11;
@@ -46,7 +46,7 @@ static const char *colors[][3]      = {
     /*                     fg       bg      border */
     [SchemeNorm]       = { gray3,   black,  gray2 },
     [SchemeSel]        = { gray4,   blue,   blue  },
-    [SchemeTitle]      = { white,   black,  black  }, // active window title
+    [SchemeTitle]      = { white,   black,  black }, // active window title
     [TabSel]           = { blue,    gray2,  black },
     [TabNorm]          = { gray3,   black,  black },
     [SchemeTag]        = { gray3,   black,  black },
@@ -137,12 +137,13 @@ static const Layout layouts[] = {
 static const Key keys[] = {
     /* modifier                         key         function        argument */
 
-    // brightness and audio 
-  {0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol}},
-	{0,                       XF86XK_AudioMute, spawn, {.v = mutevol }},
-	{0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol}},
-	{0,				XF86XK_MonBrightnessUp,		spawn,	{.v = light_up}},
-	{0,				XF86XK_MonBrightnessDown,	spawn,	{.v = light_down}},
+  // brightness and audio 
+  {0,       XF86XK_AudioLowerVolume,    spawn, {.v = downvol}},
+	{0,       XF86XK_AudioMute,           spawn, {.v = mutevol }},
+	{0,       XF86XK_AudioRaiseVolume,    spawn, {.v = upvol}},
+	{0,				XF86XK_MonBrightnessUp,     spawn, {.v = light_up}},
+	{0,				XF86XK_MonBrightnessDown,   spawn, {.v = light_down}},
+
 
     // screenshot fullscreen and cropped
     {MODKEY|ControlMask,                XK_u,       spawn,
