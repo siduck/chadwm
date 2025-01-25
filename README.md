@@ -123,6 +123,7 @@ eww open eww
 
 # Patches
 
+- systray
 - barpadding 
 - bottomstack
 - cfacts
