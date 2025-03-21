@@ -590,6 +590,7 @@ void arrangemon(Monitor *m) {
 
 void attach(Client *c) {
   if(new_window_attach_on_end){
+    c->next = NULL;
     Client**tmp = &c->mon->clients;
     while(*tmp)tmp = &(*tmp)->next;
     *tmp = c;
