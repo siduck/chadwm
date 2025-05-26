@@ -27,22 +27,15 @@ pkg_updates() {
   fi
 }
 
-# uncomment this and comment the other "battery()" function if using a laptop
-# some laptops may prefer BAT1, so change it as necessary
-
-# battery() {
-#   status="$(cat /sys/class/power_supply/BAT0/status)"
-#   get_capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
-#   if [[ "$status" == "Charging" ]]; then
-#     printf "^c$green^ 󰂄 $get_capacity%%"
-#   else
-#     printf "^c$red^ 󱟤 $get_capacity%%"
-#   fi
-# }
-
 battery() {
-  get_capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
-  printf "^c$blue^   $get_capacity"
+  # change BAT0 to BAT1 if your battery isn't detected
+  status="$(cat /sys/class/power_supply/BAT0/status)"
+  get_capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
+  if [[ "$status" == "Charging" ]]; then
+    printf "^c$green^ 󰂄 $get_capacity%%"
+  else
+    printf "^c$red^ 󱟤 $get_capacity%%"
+  fi
 }
 
 brightness() {
