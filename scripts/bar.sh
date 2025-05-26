@@ -28,6 +28,7 @@ pkg_updates() {
 }
 
 # uncomment this and comment the other "battery()" function if using a laptop
+# some laptops may prefer BAT1, so change it as necessary
 
 # battery() {
 #   status="$(cat /sys/class/power_supply/BAT0/status)"
