@@ -1,5 +1,4 @@
 .radialBars {
-  margin-bottom: -4rem;
   padding: 1.5rem 0.8rem;
 }
 
@@ -29,10 +28,8 @@
   font-family: 'Iosevka';
   font-size: 1.2rem;
   background-color: $blackAlt;
-  margin: 2.5rem 0.5rem;
-  margin-bottom: -0.6rem;
   border-radius:1rem;
-  padding: 0 1rem;
+  padding: 1rem;
   color: $white;
 }
 
@@ -56,13 +53,11 @@
  font-family: 'Comic Mono';
  color: $green;
  background-color: $blackAlt;
- padding: 0 1rem;
+ padding: 1rem;
 }
 
 .pkgsBox {
-  margin: -1rem;
   margin-top: .3rem;
-  margin-bottom: -3.5rem;
 }
 
 .CPUBOX {

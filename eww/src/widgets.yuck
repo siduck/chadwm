@@ -8,17 +8,3 @@
    )
   )
 )
-
-; slider
-(defwidget metric [class value ?onchange orientation flipped ]
-  (box :class class  :orientation orientation :space-evenly true
-    (scale 
-           :min 0
-           :max 101
-           :active {onchange != ""}
-           :value value
-           :onchange onchange
-           :orientation orientation
-           :flipped flipped
-           )
-))

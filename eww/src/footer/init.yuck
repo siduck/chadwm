@@ -1,15 +1,13 @@
-(defwidget backlightSlider []
-    (metric
-             :class 'brightness'
-             :value brightness
-             :onchange "xbacklight -set {}%"
-             :orientation 'h'
-             :flipped false
-             )
-)
-
 (defwidget footer []
-  (box :orientation "v"
-  (backlightSlider)
+  (box :orientation "v" :space-evenly false 
+
+  (scale
+        :class 'brightness'
+        :min 0
+        :max 100
+        :value head_vol
+        :value brightness
+        :onchange "xbacklight -set {}%"
+      )
   (btns)
  ))

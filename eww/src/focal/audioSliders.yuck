@@ -1,47 +1,56 @@
 (defwidget audioSliders []
   (box :space-evenly false :class 'audioSliders'
 
-    ; Master
-    (box :orientation 'v' :class 'addPadding' 
-    (label :text '󰎆' :class 'audioIcon')
-    (metric
-             :class 'masterSlider'
-             :value master_vol
-             :onchange "amixer set Master {}%"
-             :orientation 'v'
-             :flipped true
-         )
+    ;; Master
+    (box :orientation 'v' :class 'masterSlider' :space-evenly false
+      (label :text '󰎆' :class 'audioIcon')
+      (scale 
+        :min 0
+        :max 100
+        :value 30
+        :onchange "amixer set Master {}%"
+        :orientation 'v'
+        :flipped true
+          :round-digits 0
+      )
     )
 
-    ; Headphone
-    (box :orientation 'v' :class 'addPadding'
-    (label :text '󰋋' :class 'audioIcon')
-    (metric
-             :class 'headphoneSlider'
-             :value head_vol
-             :onchange "amixer set Headphone {}%"
-             :orientation 'v'
-             :flipped true 
-            ))
-
-    ; Mic 
-    (box :orientation 'v'  :class 'addPadding'
-    (label :text '' :class 'audioIcon')
-    (metric 
-             :class 'micSlider'
-             :value mic_vol
-             :onchange "amixer set Mic {}%"
-             :orientation 'v'
-             :flipped true 
-            ))
-
-   (box :orientation 'v' :class 'pkgsBox'
-    (progressBar
-      :value battery 
-      :text ''
-      :class 'battery'
+    ;; Headphone
+    (box :orientation 'v' :class 'headphoneSlider' :space-evenly false
+      (label :text '󰋋' :class 'audioIcon')
+      (scale
+        :min 0
+        :max 100
+        :value head_vol
+        :onchange "amixer set Headphone {}%"
+        :orientation 'v'
+        :flipped true
+        :active true
       )
-    ; package count
-    (label :text '${pkgUpdates}' :class 'pkgs')
+    )
+
+    ;; Mic 
+    (box :orientation 'v' :class 'micSlider' :space-evenly false
+      (label :text '' :class 'audioIcon')
+      (scale
+        :min 0
+        :max 100
+        :value mic_vol
+        :onchange "amixer set Mic {}%"
+        :orientation 'v'
+        :flipped true
+        :active true
+      )
+    )
+
+    ;; Battery + Packages
+    (box :orientation 'v' :class 'pkgsBox'
+      (progressBar
+        :value battery 
+        :text ''
+        :class 'battery'
+      )
+      (label :text '${pkgUpdates}' :class 'pkgs')
+    )
   )
- ))
+)
