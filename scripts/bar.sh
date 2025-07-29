@@ -10,9 +10,12 @@ interval=0
 
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
+  cpu_temp_raw=$(cat /sys/class/thermal/thermal_zone0/temp)
+  cpu_temp=$(echo "scale=1; $cpu_temp_raw / 1000" | bc)
 
   printf "^c$black^ ^b$green^ CPU"
-  printf "^c$white^ ^b$grey^ $cpu_val"
+  printf "^c$white^ ^b$grey^ $cpu_val | $cpu_temp °C"
+
 }
 
 pkg_updates() {
