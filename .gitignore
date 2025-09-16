@@ -6,3 +6,6 @@ chadwm/*.rej
 .ccls-cache/
 setup*
 up.sh
+
+# ignore eww
+eww/

@@ -1,3 +1,5 @@
+! for 4k 27 monitor
+Xft.dpi: 192
 Xft.antialias:	1
 Xft.hinting:	1
 Xft.autohint:	0
