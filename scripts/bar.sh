@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/bash
 
 # ^c$var^ = fg color
 # ^b$var^ = bg color
@@ -6,7 +6,7 @@
 interval=0
 
 # load colors
-. ~/.config/chadwm/scripts/bar_themes/onedark
+. ~/.config/chadwm/scripts/bar_themes/nord
 
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
@@ -38,8 +38,11 @@ brightness() {
 }
 
 mem() {
-  printf "^c$blue^^b$black^  "
-  printf "^c$blue^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
+  mem_avail_mb=$(( $(awk '/MemAvailable:/ {print $2}' /proc/meminfo) / 1024 ))
+  mem_total_mb=$(( $(awk '/MemTotal:/ {print $2}' /proc/meminfo) / 1024 ))
+  mem_perc=$(awk -v a="$mem_total_mb" -v b="$mem_avail_mb" 'BEGIN { printf("%.1f", (a-b)/a*100) }')
+  printf "^c$black^ ^b$red^ MEM "
+  printf "^c$white^ ^b$grey^%s%%" "$mem_perc"
 }
 
 wlan() {
@@ -55,9 +58,5 @@ clock() {
 }
 
 while true; do
-
-  [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
-  interval=$((interval + 1))
-
-  sleep 1 && xsetroot -name "$updates $(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
+  sleep 1 && xsetroot -name "$(cpu) $(mem) $(clock)"
 done
