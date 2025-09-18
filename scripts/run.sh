@@ -11,6 +11,10 @@ if [ ! -f /tmp/chadwm_running ]; then
     redshift -l 30.6:114.3 -t 6500:4000 &  # Auto night mode for Wuhan location
     dash ~/.config/chadwm/scripts/bar.sh &
     
+    ~/Documents/Snipaste-2.10.8-x86_64.AppImage &
+    # set default output bluetooth device
+    # pactl set-default-sink bluez_output.F4_4E_FD_45_ED_58.1
+    
     touch /tmp/chadwm_running
     trap 'rm -f /tmp/chadwm_running; exit' EXIT INT TERM
 fi
