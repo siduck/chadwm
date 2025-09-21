@@ -14,7 +14,8 @@ if [ ! -f /tmp/chadwm_running ]; then
     ~/Documents/Snipaste-2.10.8-x86_64.AppImage &
     # set default output bluetooth device
     # pactl set-default-sink bluez_output.F4_4E_FD_45_ED_58.1
-    
+
+    pot &
     touch /tmp/chadwm_running
     trap 'rm -f /tmp/chadwm_running; exit' EXIT INT TERM
 fi

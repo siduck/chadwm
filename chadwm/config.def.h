@@ -89,6 +89,7 @@ static const Rule rules[] = {
     { "Gimp",     NULL,       NULL,       0,            0,           1,           -1 },
     { "Firefox",  NULL,       NULL,       1 << 8,       0,           0,           -1 },
     { "eww",      NULL,       NULL,       0,            0,           1,           -1 },
+    { "Pot",      NULL,       NULL,       0,            0,	     1,           -1 },
 };
 
 /* layout(s) */
@@ -151,6 +152,7 @@ static const Key keys[] = {
 
     { MODKEY,                           XK_c,       spawn,          SHCMD("rofi -show drun") },
     { MODKEY,                           XK_Return,  spawn,          SHCMD("alacritty")},
+    { MODKEY,                           XK_s,  spawn,          SHCMD("maim -s ~/.cache/com.pot-app.desktop/pot_screenshot_cut.png && curl '127.0.0.1:60828/ocr_translate?screenshot=false'")},
 
     // toggle stuff
     { MODKEY,                           XK_b,       togglebar,      {0} },
