@@ -1,5 +1,4 @@
-! for 4k 27 monitor
-Xft.dpi: 192
+Xft.dpi: 124
 Xft.antialias:	1
 Xft.hinting:	1
 Xft.autohint:	0
@@ -10,10 +9,10 @@ Xft.lcdfilter:	lcddefault
 ! window padding
 st.borderpx: 20
 
-!-- values between 0.1  - 1.0 --! 
+!-- values between 0.1  - 1.0 --!
 
-st.alpha: 1.0 
-st.font:           JetBrainsMono Nerd Font:style:medium:pixelsize=15
+st.alpha: 1.0
+st.font:           JetBrainsMono Nerd Font:style:medium:pixelsize=19
 
 #define base00 #282c34
 #define base01 #353b45

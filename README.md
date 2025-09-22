@@ -6,13 +6,13 @@
 <img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/occ_act_tags.png">
 (empty workspaces have their color greyed out)
 
-- NOTE: This is vanilla dwm bar (status2d patch for setting colors) not dwmblocks or polybar. 
-<img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/chadwm.png">
+- NOTE: This is vanilla dwm bar (status2d patch for setting colors) not dwmblocks or polybar.
+  <img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/chadwm.png">
 - The small widget on the top right is an eww widget and thats old! I've improved the eww widget.
-<img src='https://i.redd.it/t1pvmqlq3oc81.png'>
-(catppuccin theme)
-<img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/gruvchad.png">
-(gruvbox material dark)
+  <img src='https://i.redd.it/t1pvmqlq3oc81.png'>
+  (catppuccin theme)
+  <img src="https://github.com/siduck/chadwm/blob/screenshots/screenshots/gruvchad.png">
+  (gruvbox material dark)
 
 # Tag preview (while hovering tag icon)
 
@@ -21,12 +21,13 @@ https://user-images.githubusercontent.com/59060246/223068062-d3c9847a-8713-42c7-
 # Requirements
 
 - dash (shell)
-- imlib2 
+- imlib2
 - xsetroot package (status2d uses this to add colors on dwmbar)
 - JetbrainsMono Nerd Font or any nerd font but dont forget to set it in config.def.h
 - Make sure to setup your terminal's theme accordingly do chadwm's theme such as nord, onedark etc...
 
 ## Other requirements
+
 - picom
 - feh
 - acpi
@@ -35,12 +36,13 @@ https://user-images.githubusercontent.com/59060246/223068062-d3c9847a-8713-42c7-
 # Install
 
 ```
-git clone https://github.com/lg641135360/chadwm.git --depth 1  ~/.config/chadwm
+git clone git@github.com:lg641135360/chadwm.git --depth 1  ~/.config/chadwm
 cd ~/.config/chadwm/
 mv eww ~/.config
 cd chadwm
 sudo make install
 ```
+
 (Note: chmod +x all of the scripts)
 
 # Run chadwm
@@ -68,15 +70,15 @@ alias chadwm='startx ~/.config/chadwm/scripts/run.sh'
 - Create a desktop entry (make sure to change `user` with your user):
 
 ```shell
-sudo touch /usr/share/xsessions/chadwm.desktop  
+sudo touch /usr/share/xsessions/chadwm.desktop
 ```
 
 ```
 [Desktop Entry]
 Name=chadwm
-Comment=dwm made beautiful 
-Exec=/home/user/.config/chadwm/scripts/./run.sh 
-Type=Application 
+Comment=dwm made beautiful
+Exec=/home/user/.config/chadwm/scripts/./run.sh
+Type=Application
 ```
 
 - [wallpaper](https://github.com/siduck/chadwm/blob/screenshots/screenshots/chad.png)
@@ -93,8 +95,8 @@ sudo make install
 
 # Change themes
 
-- Bar  : in bar.sh (line 9) and config.def.h (line 35)
-- eww  : in eww.scss (line 1)
+- Bar : in bar.sh (line 9) and config.def.h (line 35)
+- eww : in eww.scss (line 1)
 - rofi : in config.rasi (line 15)
 
 # Eww
@@ -110,6 +112,7 @@ cp -r ~/.config/chadwm/eww ~/.config/
 ```
 eww open eww
 ```
+
 (Note: I use only alsa on my system so audio scripts on widget are alsa related, modify them to support pulseaudio)
 
 - It could be a good idea to add these lines to your autostart file, located at ~/.config/chadwm/scripts/run.sh
@@ -124,18 +127,18 @@ eww open eww
 # Patches
 
 - systray
-- barpadding 
+- barpadding
 - bottomstack
 - cfacts
-- dragmfact 
+- dragmfact
 - dragcfact (took from [bakkeby's build](https://github.com/bakkeby/dwm-flexipatch))
 - fibonacii
 - gaplessgrid
 - horizgrid
-- movestack 
+- movestack
 - vanity gaps
 - colorful tags
-- statuspadding 
+- statuspadding
 - status2d
 - underline tags
 - notitle
