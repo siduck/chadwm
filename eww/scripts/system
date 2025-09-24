@@ -5,9 +5,9 @@ pkgUpdates() {
   updates=$(checkupdates 2>/dev/null | wc -l) # arch
 
 	if [ -z "$updates" ]; then
-		echo "Updated"
+		echo "0"
 	else
-		echo "$updates"" updates"
+		echo "$updates"
 	fi
 }
 
@@ -28,12 +28,12 @@ ram() {
 }
 
 backlight() {
-	printf "%.0f\n" $(xbacklight -get)
+	printf "%.0f\n" $(light -G)
 }
 
 wifi() {
 	case "$(cat /sys/class/net/wl*/operstate 2>/dev/null)" in
-	up) printf "󰤨" ;;
+	up) printf "" ;;
 	down) printf "󰤭" ;;
 	esac
 }

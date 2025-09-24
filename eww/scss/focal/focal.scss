@@ -1,9 +1,13 @@
 .radialBars {
-  padding: 1.5rem 0.8rem;
+  margin-top:1rem;
+  // background-color: red;
+  // min-height: 5rem;
+  // padding: 1.5rem 0.8rem;
+  // background-color: blue;
 }
 
 // progress bars
-.CPU, .RAM , .DISK, .battery {
+.CPU, .RAM , .DISK, .TEMP,.battery {
   background-color: $blackAlt;
   color: $blue;
   font-size: 3.1rem;
@@ -60,10 +64,14 @@
   margin-top: .3rem;
 }
 
-.CPUBOX {
-  margin-right: .4rem;
+.batterybox  {
+  background-color: $blackAlt;
+   padding: 0.5rem;
+   border-radius: 1rem;
 }
 
-.RAMBOX {
-  margin-left: .4rem;
-} 
+.batteryactive  {
+  background-color: $grey;
+  border-radius: .6rem;;
+  padding: .4rem;
+}

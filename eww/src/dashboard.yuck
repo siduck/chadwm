@@ -1,3 +1,7 @@
+(include './src/header.yuck')
+(include './src/middle.yuck')
+(include './src/footer.yuck')
+
 (defwidget dashboard []
   (box :orientation "v" :space-evenly false
   (header)

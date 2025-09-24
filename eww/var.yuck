@@ -5,7 +5,7 @@
 (defpoll ram :interval "1s"
     "scripts/system ram")
 
-(defpoll disk :interval "1s"
+(defpoll disk :interval "100s"
     "scripts/system disk")
 
 (defpoll battery :interval "1s"
@@ -16,7 +16,7 @@
     "date +'%H:%M'")
 
 (defpoll date :interval "1s"
-    "date +'%a, %d %m %y'")
+    "date +'%a |   %d %m %y'")
 
 ; sliders
 

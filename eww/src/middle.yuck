@@ -1,0 +1,71 @@
+(defwidget time[]
+    (box :class 'time' 
+    '  ${time} | ${date}')
+ )
+
+(defwidget battery[]
+   (box  :class 'batterybox'  :orientation  'v' :hexpand true :spacing 10
+      (label :class 'batteryactive' :style "border-radius: 1rem"
+         :text "  ${battery} %" )
+
+      (label :class 'batteryactive' :style "border-radius: 1rem"
+         :text "  ${round(EWW_TEMPS.CORETEMP_CORE_0, 0)}°C" )
+         ; :text "   ${round(EWW_NET.wlan0.NET_DOWN  * 0.001, 0)}    ${round(EWW_NET.wlan0.NET_UP * 0.001, 1)}" )
+     )
+  )
+
+(defwidget audioSliders []
+  (box :space-evenly false :class 'audioSliders' :spacing 10
+
+    ;; Master
+    (box :orientation 'v' :class 'masterSlider' :space-evenly false :spacing 10
+      (label :text '' :class 'audioIcon')
+      (scale 
+        :min 0
+        :max 100
+        :value 30
+        :onchange "amixer set Master {}%"
+        :orientation 'v'
+        :flipped true
+        :round-digits 0
+        :vexpand true
+      )
+    )
+
+    ;; Battery + Packages
+    (box :orientation 'v' :class 'pkgsBox'
+      (progressBar
+        :value battery 
+        :text ''
+        :class 'battery'
+      )
+      (label :text '    ${pkgUpdates}' :class 'pkgs')
+    )
+  )
+)
+
+
+(defwidget radialBars[]
+  (box :class "radialBars" :space-evenly false  :spacing 15 
+    (progressBar
+      :value cpu 
+      :text ''
+      :class 'CPU'
+      :boxstyle 'padding:2rem'
+      )
+   (progressBar
+      :value ram
+      :text ''
+      :class 'RAM'
+      :boxstyle 'padding:2rem'
+      )
+     (battery)
+     )
+)
+
+
+(defwidget focal []
+  (box :orientation "v" :space-evenly false
+    (time)
+    (radialBars)
+ ))
