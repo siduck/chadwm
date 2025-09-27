@@ -53,3 +53,15 @@
 
 (defpoll wm :interval '100000s'
   'scripts/fetch wm')
+
+(defvar old_time 0)
+(defvar timer false)
+(defvar timer_min 25)
+(defvar timer_state "")
+(defvar paused_elapsed 0)
+
+(defpoll timer_str
+  :interval '1s'
+  :run-while timer
+  'scripts/timer update_timer')
+

@@ -10,26 +10,26 @@
 
       (label :class 'batteryactive' :style "border-radius: 1rem"
          :text "  ${round(EWW_TEMPS.CORETEMP_CORE_0, 0)}°C" )
-         ; :text "   ${round(EWW_NET.wlan0.NET_DOWN  * 0.001, 0)}    ${round(EWW_NET.wlan0.NET_UP * 0.001, 1)}" )
      )
   )
 
 (defwidget timer[]
       (box :valign 'fill' :vexpand true :class "timer"  :space-evenly false :spacing 10
         (box  :hexpand true 
-        (circular-progress :value 70  :thickness 5 :class "timerprogress"  (label  :text "25:00"))
+        (circular-progress :value 0  
+          :thickness 4 :class "timerprogress" 
+          (label  :text '${timer_state != "" && timer_str != "00:00" ? timer_str: timer_min + ":00"}'))
         )
 
         (box :orientation 'v' :spacing 10
         (box :class "btnbox" :orientation 'h' :space-evnly false :spacing 10
-          (button "")
-          (button '')
+          (button :onclick "scripts/timer start &" "${timer? "": "" }")
+          (button :onclick "scripts/timer restart &"  '')
              )
         
-        
         (box :class "btnbox" :orientation 'h' :space-evnly false :spacing 10
-          (button "")
-          (button '')
+          (button :onclick "${EWW_CMD} update timer_min=${timer_min == 60? 60:timer_min + 1}"  "")
+          (button :onclick "${EWW_CMD} update timer_min=${timer_min == 0? 0:timer_min - 1}"  "")
              )
 )
 
@@ -38,13 +38,13 @@
         :min 0
         :max 100
         :value 30
-        :onchange "amixer set Master {}%"
+        :onchange "scripts/timer onchange {}%"
         :orientation 'v'
         :flipped true
         :round-digits 0
         :vexpand true
       ))
-             )
+      )
 
       )
 
@@ -68,10 +68,9 @@
 
     (box :orientation 'v' :class 'minibomb' :hexpand true :space-evenly false
       (timer)
+
     (box :orientation 'h' :class 'netspeed'  :space-evenly false :hexpand true :spacing 10
       (label :text '   ${pkgUpdates}')
-      (label :text '  ${round(EWW_NET.wlan0.NET_DOWN *0.001, 0)}   ${round(EWW_NET.wlan0.NET_DOWN *0.001, 0)}')
-      (label :text "MBPS" :halign 'end' :hexpand true) 
     ))
   )
 )
