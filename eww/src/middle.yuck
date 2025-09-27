@@ -1,12 +1,11 @@
 (defwidget time[]
-    (box :class 'time' 
-    '  ${time} | ${date}')
+    (box :class 'time' '${datetime}')
  )
 
 (defwidget battery[]
    (box  :class 'batterybox'  :orientation  'v' :hexpand true :spacing 10
       (label :class 'batteryactive' :style "border-radius: 1rem"
-         :text "  ${battery} %" )
+         :text "  ${EWW_BATTERY.total_avg} %" )
 
       (label :class 'batteryactive' :style "border-radius: 1rem"
          :text "  ${round(EWW_TEMPS.CORETEMP_CORE_0, 0)}°C" )
@@ -58,7 +57,7 @@
         :min 0
         :max 100
         :value 30
-        :onchange "amixer set Master {}%"
+          :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%"
         :orientation 'v'
         :flipped true
         :round-digits 0
@@ -69,8 +68,8 @@
     (box :orientation 'v' :class 'minibomb' :hexpand true :space-evenly false
       (timer)
 
-    (box :orientation 'h' :class 'netspeed'  :space-evenly false :hexpand true :spacing 10
-      (label :text '   ${pkgUpdates}')
+    (box :orientation 'h' :class 'netspeed'  :space-evenly false :hexpand true :spacing 0
+      (label :text '   ${pkgUpdates} Updates' )
     ))
   )
 )
@@ -79,13 +78,13 @@
 (defwidget radialBars[]
   (box :class "radialBars" :space-evenly false  :spacing 15 
     (progressBar
-      :value cpu 
+      :value "${EWW_CPU.avg}" 
       :text ''
       :class 'CPU'
       :boxstyle 'padding:2rem'
       )
    (progressBar
-      :value ram
+      :value "${EWW_RAM.used_mem_perc}"
       :text ''
       :class 'RAM'
       :boxstyle 'padding:2rem'

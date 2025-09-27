@@ -18,7 +18,7 @@
 (defwidget hdd[]
   (box :orientation 'v' :class 'hdd'
    (progressBar
-      :value disk 
+      :value "${EWW_DISK['/'].used_perc}"
       :text 'SSD'
       :class 'DISK'
       )
