@@ -6,13 +6,13 @@
 interval=0
 
 # load colors
-. ~/.config/chadwm/scripts/bar_themes/onedark
+. ~/.config/chadwm/scripts/bar_themes/tundra
 
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
 
   printf "^c$black^ ^b$green^ CPU"
-  printf "^c$white^ ^b$grey^ $cpu_val"
+  printf "^c$white^ ^b$grey^ $cpu_val ^b$black^"
 }
 
 pkg_updates() {
@@ -23,13 +23,15 @@ pkg_updates() {
   if [ -z "$updates" ]; then
     printf "  ^c$green^    Fully Updated"
   else
-    printf "  ^c$green^    $updates"" updates"
+    printf "  ^c$white^    $updates"" updates"
   fi
 }
 
 battery() {
-  get_capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
-  printf "^c$blue^   $get_capacity"
+  val="$(cat /sys/class/power_supply/BAT1/capacity)"
+  printf "^c$black^ ^b$red^ BAT"
+  printf "^c$white^ ^b$grey^ $val ^b$black^"
+
 }
 
 brightness() {
@@ -38,8 +40,8 @@ brightness() {
 }
 
 mem() {
-  printf "^c$blue^^b$black^  "
-  printf "^c$blue^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
+  printf "^c$red^^b$black^  "
+  printf "^c$red^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
 }
 
 wlan() {
@@ -59,5 +61,5 @@ while true; do
   [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
   interval=$((interval + 1))
 
-  sleep 1 && xsetroot -name "$updates $(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
+  sleep 1 && xsetroot -name "$updates $(cpu) $(battery) $(mem) $(wlan) $(clock)"
 done
