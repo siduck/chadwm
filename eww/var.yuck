@@ -55,10 +55,12 @@
   'scripts/fetch wm')
 
 (defvar old_time 0)
+(defvar new_time 0)
 (defvar timer false)
 (defvar timer_min 25)
 (defvar timer_state "")
 (defvar paused_elapsed 0)
+(defvar timer_progress 0)
 
 (defpoll timer_str
   :interval '1s'

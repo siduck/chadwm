@@ -4,7 +4,7 @@
 
 (defwindow eww
            :geometry (geometry :x "-70%"
-                               :y "-30%"
+                               :y "-32%"
                                :anchor "right bottom")
            :wm-ignore true
 (dashboard))

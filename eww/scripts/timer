@@ -36,6 +36,8 @@ update_timer() {
   [ "$secs" -lt 10 ] && secs="0$secs"
 
   str="$mins:$secs"
+  progress=$((100 - (remaining * 100 / total)))
+  eww -c . update timer_progress=$progress
   echo "$str"
 }
 
@@ -63,6 +65,7 @@ restart() {
   eww -c . update timer_str=""
   eww -c . update timer_state=""
   eww -c . update paused_elapsed=0
+  eww -c . update timer_progress=0
 }
 
 onchange() {
@@ -75,10 +78,6 @@ onchange() {
 finish() {
   restart
   timer_onfinish
-}
-
-test_eww() {
-  rofi -show drun &
 }
 
 "$@"

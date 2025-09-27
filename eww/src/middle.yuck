@@ -16,7 +16,7 @@
 (defwidget timer[]
       (box :valign 'fill' :vexpand true :class "timer"  :space-evenly false :spacing 10
         (box  :hexpand true 
-        (circular-progress :value 0  
+        (circular-progress :value "${timer_progress}"  
           :thickness 4 :class "timerprogress" 
           (label  :text '${timer_state != "" && timer_str != "00:00" ? timer_str: timer_min + ":00"}'))
         )
