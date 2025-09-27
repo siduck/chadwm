@@ -14,6 +14,40 @@
      )
   )
 
+(defwidget timer[]
+      (box :valign 'fill' :vexpand true :class "timer"  :space-evenly false :spacing 10
+        (box  :hexpand true 
+        (circular-progress :value 70  :thickness 5 :class "timerprogress"  (label  :text "25:00"))
+        )
+
+        (box :orientation 'v' :spacing 10
+        (box :class "btnbox" :orientation 'h' :space-evnly false :spacing 10
+          (button "")
+          (button '')
+             )
+        
+        
+        (box :class "btnbox" :orientation 'h' :space-evnly false :spacing 10
+          (button "")
+          (button '')
+             )
+)
+
+    (box :orientation 'v' :class 'timerSlider' :space-evenly false :spacing 10
+          (scale 
+        :min 0
+        :max 100
+        :value 30
+        :onchange "amixer set Master {}%"
+        :orientation 'v'
+        :flipped true
+        :round-digits 0
+        :vexpand true
+      ))
+             )
+
+      )
+
 (defwidget audioSliders []
   (box :space-evenly false :class 'audioSliders' :spacing 10
 
@@ -32,15 +66,13 @@
       )
     )
 
-    ;; Battery + Packages
-    (box :orientation 'v' :class 'pkgsBox'
-      (progressBar
-        :value battery 
-        :text ''
-        :class 'battery'
-      )
-      (label :text '    ${pkgUpdates}' :class 'pkgs')
-    )
+    (box :orientation 'v' :class 'minibomb' :hexpand true :space-evenly false
+      (timer)
+    (box :orientation 'h' :class 'netspeed'  :space-evenly false :hexpand true :spacing 10
+      (label :text '   ${pkgUpdates}')
+      (label :text '  ${round(EWW_NET.wlan0.NET_DOWN *0.001, 0)}   ${round(EWW_NET.wlan0.NET_DOWN *0.001, 0)}')
+      (label :text "MBPS" :halign 'end' :hexpand true) 
+    ))
   )
 )
 

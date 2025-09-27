@@ -8,6 +8,11 @@
     background-color: $lightGrey;
     border-radius: 10px;
   }
+
+  trough highlight:hover {
+    background-color: $white;
+    border-radius: 10px;
+  }
 }
 
 .brightness trough {

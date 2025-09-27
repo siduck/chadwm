@@ -30,8 +30,8 @@
 
 (defwidget footer []
   (box :orientation "v" :space-evenly false 
-
-  (box :orientation "h"  :class "brightnessbox" 
+  (box :orientation "h"  :class "brightnessbox" :space-evenly false :spacing 20
+  (label :text '')
   (scale
         :class 'brightness'
         :min 0
@@ -39,6 +39,7 @@
         :value head_vol
         :value brightness
         :onchange "light -S {}%"
+        :hexpand true
       ))
   (btns)
  ))
