@@ -3546,26 +3546,24 @@ void updatestatus(void) {
   updatesystray();
 }
 
-void updatesystrayicongeom(Client *i, int w, int h) {
+void
+updatesystrayicongeom(Client *i, int w, int h) {
   int rh = bh - vertpadbar;
-  if (i) {
+
+  if (!i)
+    return;
+
+  applysizehints(i, &(i->x), &(i->y), &(i->w), &(i->h), False);
+
+  if (systrayiconsize >= rh) {
+    i->w = rh;
     i->h = rh;
-    if (w == h)
-      i->w = rh;
-    else if (h == rh)
-      i->w = w;
-    else
-      i->w = (int)((float)rh * ((float)w / (float)h));
     i->y = i->y + vertpadbar / 2;
-    applysizehints(i, &(i->x), &(i->y), &(i->w), &(i->h), False);
-    /* force icons into the systray dimensions if they don't want to */
-    if (i->h > rh) {
-      if (i->w == i->h)
-        i->w = rh;
-      else
-        i->w = (int)((float)rh * ((float)i->w / (float)i->h));
-      i->h = rh;
-    }
+  } else {
+    i->w = systrayiconsize;
+    i->h = systrayiconsize;
+    /* center icons vertically if smaller than bar */
+    i->y = (rh - systrayiconsize) / 2 + vertpadbar;
   }
 }
 
@@ -3638,7 +3636,11 @@ void updatesystray(void) {
     XMapRaised(dpy, i->win);
     w += systrayspacing;
     i->x = w;
-    XMoveResizeWindow(dpy, i->win, i->x, vertpadbar / 2, i->w, i->h);
+    if (systrayiconsize >= bh)
+    i->y = 0;
+    else
+    i->y = (bh - systrayiconsize) / 2;
+    XMoveResizeWindow(dpy, i->win, i->x, i->y, i->w, i->h);
     w += i->w;
     if (i->mon != m)
       i->mon = m;
