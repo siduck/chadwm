@@ -1,0 +1,83 @@
+#!/bin/dash
+
+. ./config
+
+update_timer() {
+  timer_running=$(eww -c . get timer)
+
+  if [ "$timer_running" = false ]; then
+    exit
+  fi
+
+  countdownmin=$(eww -c . get timer_min)
+  old_time=$(eww -c . get old_time)
+
+  paused_elapsed=$(eww -c . get paused_elapsed)
+  currenttime=$(date +%s)
+
+  if [ "$(eww -c . get timer_state)" = "paused" ]; then
+    elapsed=$paused_elapsed
+  else
+    elapsed=$((currenttime - old_time + paused_elapsed))
+  fi
+
+  total=$((countdownmin * 60))
+  remaining=$((total - elapsed))
+
+  if [ "$remaining" -lt 0 ]; then
+    remaining=0
+    finish
+  fi
+
+  mins=$((remaining / 60))
+  secs=$((remaining % 60))
+
+  [ "$mins" -lt 10 ] && mins="0$mins"
+  [ "$secs" -lt 10 ] && secs="0$secs"
+
+  str="$mins:$secs"
+  progress=$((100 - (remaining * 100 / total)))
+  eww -c . update timer_progress=$progress
+  echo "$str"
+}
+
+start() {
+  timer_running=$(eww -c . get timer)
+
+  if [ "$timer_running" = true ]; then
+    currenttime=$(date +%s)
+    old_time=$(eww -c . get old_time)
+    paused_elapsed=$((currenttime - old_time + $(eww -c . get paused_elapsed)))
+    eww -c . update paused_elapsed=$paused_elapsed
+    eww -c . update timer_state='paused'
+    eww -c . update timer=false
+  else
+    eww -c . update timer_state='running'
+    eww -c . update timer=true
+  fi
+
+  old_time=$(date +%s)
+  eww -c . update old_time="$old_time"
+}
+
+restart() {
+  eww -c . update timer=false
+  eww -c . update timer_str=""
+  eww -c . update timer_state=""
+  eww -c . update paused_elapsed=0
+  eww -c . update timer_progress=0
+}
+
+onchange() {
+  per=${1%\%}
+  mins=60
+  result=$((mins * per / 100))
+  eww -c . update timer_min=$result
+}
+
+finish() {
+  restart
+  timer_onfinish
+}
+
+"$@"

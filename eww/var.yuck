@@ -1,36 +1,10 @@
-; system i.e for progress bars
-(defpoll cpu :interval "1s"
-    "scripts/system cpu")
+(defpoll datetime :interval "1s"
+  "date +'%H:%M | %a |   %d %m %y'")
 
-(defpoll ram :interval "1s"
-    "scripts/system ram")
+; (defpoll weather :interval "1000s"
+;   "scripts/system weather")
+;
 
-(defpoll disk :interval "1s"
-    "scripts/system disk")
-
-(defpoll battery :interval "1s"
-    "scripts/system battery")
-
-; date time
-(defpoll time :interval "1s"
-    "date +'%H:%M'")
-
-(defpoll date :interval "1s"
-    "date +'%a, %d %m %y'")
-
-; sliders
-
-; audio 
-(defpoll master_vol :interval "1s"
-  "scripts/audio mastervol")
-
-(defpoll head_vol :interval "1s"
-  "scripts/audio headvol")
-
-(defpoll mic_vol :interval "1h"
-  "scripts/audio micvol")
-
-; backlight 
 (defpoll brightness :interval "1s"
   "scripts/system backlight")
 
@@ -38,9 +12,6 @@
 (defpoll pkgUpdates :interval "1000s"
     "scripts/system pkgUpdates")
 
-; btns
-
-; wifi iwdgtk btn 
 (defpoll wifi :interval "1s"
     "scripts/system wifi")
 
@@ -53,3 +24,17 @@
 
 (defpoll wm :interval '100000s'
   'scripts/fetch wm')
+
+(defvar old_time 0)
+(defvar new_time 0)
+(defvar timer false)
+(defvar timer_min 25)
+(defvar timer_state "")
+(defvar paused_elapsed 0)
+(defvar timer_progress 0)
+
+(defpoll timer_str
+  :interval '1s'
+  :run-while timer
+  'scripts/timer update_timer')
+

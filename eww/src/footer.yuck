@@ -1,21 +1,18 @@
 (defwidget btn [name command class]
-  (box :orientation "v"
-       :class "btnMargin"
     (button :onclick command 
         :class "btn ${class}" 
       name))
-)
 
 (defwidget btns []
   (box :orientation "h"
        :class 'footerBtns'
  
-  (btn :name ""
+  (btn :name ""
   :command "rofi -show drun &"
     :class "restart"
   )
 
-(btn :name "󰌾"
+(btn :name ""
   :command "slock & doas zzz"
   :class "lock"
  )
@@ -30,3 +27,19 @@
     :class "sleep"
   )
 ))
+
+(defwidget footer []
+  (box :orientation "v" :space-evenly false 
+  (box :orientation "h"  :class "brightnessbox" :space-evenly false :spacing 20
+  (label :text '')
+  (scale
+        :class 'brightness'
+        :min 0
+        :max 100
+        :value head_vol
+        :value brightness
+        :onchange "light -S {}%"
+        :hexpand true
+      ))
+  (btns)
+ ))

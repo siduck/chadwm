@@ -1,17 +1,18 @@
-.masterSlider,.headphoneSlider {
-  margin-right: 1rem;
-}
-
-.masterSlider scale trough highlight, .headphoneSlider scale trough highlight , .micSlider scale trough highlight {
-  border-radius: 1rem;
-  min-height: 40px;
-  min-width: 2rem;
-}
-
-.masterSlider scale trough, .headphoneSlider scale trough , .micSlider scale trough {
+.masterSlider {
   background-color: $blackAlt;
   border-radius: 1rem;
-  min-width: 2rem;
+  // border: 2px solid $grey;
+  padding: 1rem;
+}
+
+.masterSlider scale trough highlight {
+  border-radius: 1rem;
+}
+
+.masterSlider scale trough {
+  background-color: $grey;
+  border-radius: 1rem;
+  min-width: 1rem;
   min-height: 100px;
 }
 
@@ -19,20 +20,29 @@
   background-color: $red; 
 }
 
-.headphoneSlider scale trough highlight {
-  background-color: $yellow; 
+.timerSlider {
+  // background-color: $blackAlt;
+  border-radius: 1rem;
+  border: 2px dotted $grey;
+  padding: .5rem;
 }
 
-.micSlider scale trough highlight {
+.timerSlider scale trough {
+  background-color: $grey; 
+  min-width: .5rem;
+  border-radius: 1rem;
+}
+
+.timerSlider scale trough highlight {
   background-color: $blue; 
+  min-width: .3rem;
+  border-radius: 1rem;
 }
 
 .audioIcon {
-  font-family:  'JetbrainsMono Nerd Font Mono';
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  padding: 0.5rem 1.2rem;
-  background-color: $blackAlt;
-  border-radius: 50%;
-  color: $lightGrey;
+  // font-family: 'JetbrainsMono Nerd Font';
+  // font-size: 1.8rem;
+  // padding: 0.5rem 1rem;
+  // background-color: $grey;
+  border-radius: 20%;
 }

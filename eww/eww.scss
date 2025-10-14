@@ -1,4 +1,4 @@
-@import "scss/themes/onedark.scss";
+@import "scss/themes/tundra.scss";
 
 // header
 @import "scss/header/statusBtns.scss";
@@ -16,4 +16,9 @@
   padding: 1rem;
   padding-top: 0;
   background-color: $black;
+  color: $white;
+}
+
+.eww   {
+  // border: 2px solid $grey;
 }

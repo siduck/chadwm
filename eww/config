@@ -1,0 +1,4 @@
+timer_onfinish()  {
+  slock &
+  # doas rtcwake -s 300 -m mem
+}

@@ -1,0 +1,101 @@
+(defwidget time[]
+    (box :class 'time' '${datetime}')
+ )
+
+(defwidget battery[]
+   (box  :class 'batterybox'  :orientation  'v' :hexpand true :spacing 10
+      (label :class 'batteryactive' :style "border-radius: 1rem"
+         :text "  ${round(EWW_BATTERY.total_avg,0)} %" )
+
+      (label :class 'batteryactive' :style "border-radius: 1rem"
+         :text "  ${round(EWW_TEMPS.CORETEMP_CORE_0, 0)}°C" )
+     )
+  )
+
+(defwidget timer[]
+      (box :valign 'fill' :vexpand true :class "timer"  :space-evenly false :spacing 10
+        (box  :hexpand true 
+        (circular-progress :value "${timer_progress}"  
+          :thickness 4 :class "timerprogress" 
+          (label  :text '${timer_state != "" && timer_str != "00:00" ? timer_str: timer_min + ":00"}'))
+        )
+
+        (box :orientation 'v' :spacing 10
+        (box :class "btnbox" :orientation 'h' :space-evnly false :spacing 10
+          (button :onclick "scripts/timer start &" "${timer? "": "" }")
+          (button :onclick "scripts/timer restart &"  '')
+             )
+        
+        (box :class "btnbox" :orientation 'h' :space-evnly false :spacing 10
+          (button :onclick "${EWW_CMD} update timer_min=${timer_min == 60? 60:timer_min + 1}"  "")
+          (button :onclick "${EWW_CMD} update timer_min=${timer_min == 0? 0:timer_min - 1}"  "")
+             )
+)
+
+    (box :orientation 'v' :class 'timerSlider' :space-evenly false :spacing 10
+          (scale 
+        :min 0
+        :max 100
+        :value 30
+        :onchange "scripts/timer onchange {}%"
+        :orientation 'v'
+        :flipped true
+        :round-digits 0
+        :vexpand true
+      ))
+      )
+
+      )
+
+(defwidget audioSliders []
+  (box :space-evenly false :class 'audioSliders' :spacing 10
+
+    ;; Master
+    (box :orientation 'v' :class 'masterSlider' :space-evenly false :spacing 10
+      (label :text '' :class 'audioIcon')
+      (scale 
+        :min 0
+        :max 100
+        :value 30
+          :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%"
+        :orientation 'v'
+        :flipped true
+        :round-digits 0
+        :vexpand true
+      )
+    )
+
+    (box :orientation 'v' :class 'minibomb' :hexpand true :space-evenly false
+      (timer)
+
+    (box :orientation 'h' :class 'netspeed'  :space-evenly false :hexpand true :spacing 0
+      (label :text '   ${pkgUpdates} Updates' )
+    ))
+  )
+)
+
+
+(defwidget radialBars[]
+  (box :class "radialBars" :space-evenly false  :spacing 15 
+    (progressBar
+      :value "${EWW_CPU.avg}" 
+      :text ''
+      :class 'CPU'
+      :boxstyle 'padding:2rem'
+      )
+   (progressBar
+      :value "${EWW_RAM.used_mem_perc}"
+      :text ''
+      :class 'RAM'
+      :boxstyle 'padding:2rem'
+      )
+     (battery)
+     )
+)
+
+
+(defwidget focal []
+  (box :orientation "v" :space-evenly false
+    (time)
+    (radialBars)
+ ))

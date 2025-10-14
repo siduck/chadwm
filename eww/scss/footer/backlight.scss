@@ -5,7 +5,12 @@
 
 .brightness {
   trough highlight {
-    background-color: $red;
+    background-color: $lightGrey;
+    border-radius: 10px;
+  }
+
+  trough highlight:hover {
+    background-color: $white;
     border-radius: 10px;
   }
 }
@@ -13,7 +18,13 @@
 .brightness trough {
   background-color: $grey;
   border-radius: 1rem;
-  min-width: 16rem;
-  min-height: .5rem;
-  margin-bottom: 2rem;
+  min-height: .9rem;
+}
+
+.brightnessbox {
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: $blackAlt;
+  margin-bottom: 1rem;
+  // border: 2px dotted $grey;
 }

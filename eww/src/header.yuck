@@ -18,8 +18,8 @@
 (defwidget hdd[]
   (box :orientation 'v' :class 'hdd'
    (progressBar
-      :value disk 
-      :text 'HDD'
+      :value "${EWW_DISK['/'].used_perc}"
+      :text 'SSD'
       :class 'DISK'
       )
   )
@@ -33,4 +33,17 @@
   (details)
  )
   (hdd)
+))
+
+(defwidget headerBtns[]
+  (box :space-evenly false :valign 'end' :halign 'end' :class 'headerBtns' :spacing 7
+       (button :class 'min' :onclick "${EWW_CMD} close eww" '')
+       (button :class 'close' :onclick "${EWW_CMD} kill"   '󰅙')
+      )
+  )
+
+(defwidget header[]
+  (box :orientation 'v' :space-evenly false
+   (headerBtns)
+   (fetch)
 ))

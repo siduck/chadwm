@@ -1,9 +1,17 @@
 .radialBars {
-  padding: 1.5rem 0.8rem;
+  margin-top: 1rem;
+  // background-color: red;
+  // min-height: 5rem;
+  // padding: 1.5rem 0.8rem;
+  // background-color: blue;
 }
 
 // progress bars
-.CPU, .RAM , .DISK, .battery {
+.CPU,
+.RAM,
+.DISK,
+.TEMP,
+.battery {
   background-color: $blackAlt;
   color: $blue;
   font-size: 3.1rem;
@@ -26,9 +34,9 @@
 
 .time {
   font-family: 'Iosevka';
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   background-color: $blackAlt;
-  border-radius:1rem;
+  border-radius: 1rem;
   padding: 1rem;
   color: $white;
 }
@@ -39,7 +47,7 @@
   color: $green;
   font-family: 'JetBrainsMono Nerd Font Mono ';
   font-size: 3rem;
-  margin:  .8rem ;
+  margin: .8rem;
 }
 
 .mute:hover {
@@ -47,23 +55,80 @@
   color: $white;
 }
 
-.pkgs{
- margin: 1.5rem;
- border-radius: 1rem;
- font-family: 'Comic Mono';
- color: $green;
- background-color: $blackAlt;
- padding: 1rem;
+.netspeed {
+  // background-color: $blackAlt;
+  // border-radius: 1rem;
+  border-top: 2px solid $grey;
 }
 
-.pkgsBox {
-  margin-top: .3rem;
+.minibomb {
+  // background-color: $blackAlt;
+  border: 2px solid $grey;
+  border-radius: 1rem;
 }
 
-.CPUBOX {
-  margin-right: .4rem;
+.minibomb :nth-child(1) {
+  // background-color: red;
 }
 
-.RAMBOX {
-  margin-left: .4rem;
-} 
+
+.timer {
+  margin: 1rem;
+  // margin-left: 0;
+
+  .timerprogress {
+    background-color: $grey;
+    font-size: 1.2rem;
+    font-family: "Iosevka";
+  }
+
+  .btnbox {
+    background: $blackAlt;
+    padding: .5rem;
+    border-radius: 1rem;
+
+    button {
+      background-color: lighten($grey, 3%);
+      padding: 0 .6rem;
+      font-size: 1.3rem;
+      font-family: 'JetBrainsMono Nerd Font Mono';
+      border-radius: 50%;
+
+    }
+
+    button:hover {
+      background: $white;
+      color: $black;
+    }
+  }
+
+}
+
+.netspeed {
+  padding: .6rem 0;
+}
+
+.netspeed :nth-child(1) {
+  color: $red;
+  border-radius: 1rem;
+  margin: 0 1rem;
+}
+
+.netspeed :nth-child(3) {
+  background-color: $grey;
+  padding: 0.3rem 1rem;
+  margin: .6rem;
+  border-radius: 1rem;
+}
+
+.batterybox {
+  background-color: $blackAlt;
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
+
+.batteryactive {
+  background-color: $grey;
+  border-radius: .6rem;
+  padding: .4rem;
+}

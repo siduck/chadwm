@@ -126,8 +126,9 @@ eww open eww
 
 # Patches
 
-- systray
-- barpadding
+- [systray](https://gitlab.com/-/snippets/2184056)
+- systray iconsize
+- barpadding 
 - bottomstack
 - cfacts
 - dragmfact
