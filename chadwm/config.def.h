@@ -89,7 +89,7 @@ static const Rule rules[] = {
     { "Gimp",     NULL,       NULL,       0,            0,           1,           -1 },
     { "Firefox",  NULL,       NULL,       1 << 8,       0,           0,           -1 },
     { "eww",      NULL,       NULL,       0,            0,           1,           -1 },
-    { "Pot",      NULL,       NULL,       0,            0,	     1,           -1 },
+    { "Pot",      NULL,       NULL,       0,            0,	         1,           -1 },
 };
 
 /* layout(s) */
@@ -143,17 +143,14 @@ static const Key keys[] = {
 	{0,             XF86XK_AudioRaiseVolume,    spawn, {.v = upvol}},
 	{0,				XF86XK_MonBrightnessUp,     spawn,	{.v = light_up}},
 	{0,				XF86XK_MonBrightnessDown,   spawn,	{.v = light_down}},
-
-    // screenshot fullscreen and cropped
-    {MODKEY|ControlMask,                XK_u,       spawn,
-        SHCMD("maim | xclip -selection clipboard -t image/png")},
-    {MODKEY,                            XK_u,       spawn,
-        SHCMD("maim --select | xclip -selection clipboard -t image/png")},
-
+    
+    // screen shot
+    { Mod1Mask|ShiftMask,               XK_s,       spawn,          SHCMD("flameshot gui") },
     { MODKEY,                           XK_c,       spawn,          SHCMD("rofi -show drun") },
     { MODKEY,                           XK_Return,  spawn,          SHCMD("alacritty")},
     { MODKEY,                           XK_s,  spawn,          SHCMD("maim -s ~/.cache/com.pot-app.desktop/pot_screenshot_cut.png && curl '127.0.0.1:60828/ocr_translate?screenshot=false'")},
-    { MODKEY|ControlMask,               XK_l,  spawn,          SHCMD("~/.config/scripts/lock") },
+    // lock screen use slock
+    { MODKEY|ControlMask,               XK_l,  spawn,          SHCMD("slock"},
     // toggle stuff
     { MODKEY,                           XK_b,       togglebar,      {0} },
     { MODKEY|ControlMask,               XK_t,       togglegaps,     {0} },

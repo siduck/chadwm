@@ -28,7 +28,7 @@ pkg_updates() {
 }
 
 battery() {
-  get_capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
+  get_capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
   printf "^c$blue^   $get_capacity"
 }
 
@@ -58,5 +58,5 @@ clock() {
 }
 
 while true; do
-  sleep 1 && xsetroot -name "$(cpu) $(mem) $(clock)"
+    sleep 1 && xsetroot -name "$(cpu) $(mem) $(battery) $(clock)"
 done
