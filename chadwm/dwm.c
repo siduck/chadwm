@@ -59,7 +59,6 @@
                                * MAX(0, MIN((y)+(h),(z)->y+(z)->h) - MAX((y),(z)->y)))
 #define ISVISIBLE(C) ((C->tags & C->mon->tagset[C->mon->seltags]))
 #define HIDDEN(C)               ((getstate(C->win) == IconicState))
-#define LENGTH(X) (sizeof X / sizeof X[0])
 #define MOUSEMASK (BUTTONMASK | PointerMotionMask)
 #define WIDTH(X) ((X)->w + 2 * (X)->bw)
 #define HEIGHT(X) ((X)->h + 2 * (X)->bw)
@@ -3386,7 +3385,7 @@ void updatebarpos(Monitor *m) {
     m->by = -bh - m->gappoh;
 }
 
-void updateclientlist() {
+void updateclientlist(void) {
   Client *c;
   Monitor *m;
 
