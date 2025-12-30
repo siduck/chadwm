@@ -130,7 +130,7 @@ eww open eww
 - cfacts
 - dragmfact 
 - dragcfact (took from [bakkeby's build](https://github.com/bakkeby/dwm-flexipatch))
-- fibonacii
+- fibonacci
 - gaplessgrid
 - horizgrid
 - movestack 
