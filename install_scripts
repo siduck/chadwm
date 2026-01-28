@@ -1,0 +1,121 @@
+#!/bin/sh
+
+##################################################################################
+## This is a script which is designed to install chadwm and it's requirements on Fedora Linux
+## By KarlISWright
+##################################################################################
+
+# Declar the only var
+WORKING_DIR=~/.config/chadwm/
+
+# Create the working dir
+# I intend to keep everything in this one directory as much as possible
+mkdir -p $WORKING_DIR
+cd $WORKING_DIR
+
+## Install Requirements
+sudo dnf install -y neovim dash imlib2 imlib2-devel xsetroot picom feh acpi rofi unzip wget
+
+## Install fonts
+mkdir -p ~/.fonts/
+cd ~/.fonts
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Iosevka.zip
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/JetBrainsMono.zip
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/NerdFontsSymbolsOnly.zip
+
+unzip -o Iosevka.zip -d ./Iosevka
+unzip -o JetBrainsMono.zip -d ./JetBrainsMono
+unzip -o NerdFontsSymbolsOnly.zip -d ./NerdFontsSymbolsOnly
+
+# update the font cache
+fc-cache -f
+
+
+# fetch the wallpapers
+mkdir -p $WORKING_DIR/wall/
+curl -o $WORKING_DIR/wall/chad.png https://raw.githubusercontent.com/siduck/chadwm/d3d9f29b0082d0e8d8f3f70bcfec0a7cf227340b/screenshots/chad.png
+curl -o $WORKING_DIR/wall/gruv.png https://raw.githubusercontent.com/siduck/chadwm/d3d9f29b0082d0e8d8f3f70bcfec0a7cf227340b/wall/gruv.png
+curl -o $WORKING_DIR/wall/gruvchad.png https://raw.githubusercontent.com/siduck/chadwm/d3d9f29b0082d0e8d8f3f70bcfec0a7cf227340b/wall/gruvchad.png
+curl -o $WORKING_DIR/wall/onedark.png https://raw.githubusercontent.com/siduck/chadwm/d3d9f29b0082d0e8d8f3f70bcfec0a7cf227340b/wall/onedark.png
+curl -o $WORKING_DIR/wall/magenta-cat.png https://images.pling.com/img/00/00/64/68/85/1707302/magenta-cat.png
+curl -o $WORKING_DIR/wall/dark-cat-rosewater.png https://images.pling.com/img/00/00/64/68/85/1707302/dark-cat-rosewater.png
+curl -o $WORKING_DIR/wall/nord.jpeg https://i.imgur.com/SBKjnxm.jpeg
+
+## chose:
+## 2) customie
+## default host triple (go with default for your system)
+## installation profile: minmal
+## modify PATH var: yes
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+## Install Elkowars Wacky Widgets
+git clone https://github.com/elkowar/eww eww-release
+cd eww-release
+cargo build --release
+cd target/release
+chmod +x ./eww
+cp -vf eww ~/.local/bin/
+
+# Return to working dir
+cd $WORKING_DIR/
+
+## Install Chadwm
+git clone https://github.com/siduck/chadwm --depth 1  $WORKING_DIR
+cd $WORKING_DIR/
+cp -vrf eww ~/.config
+cd chadwm
+make clean && make
+sudo make install
+
+## Add Chadwm Xresources file
+curl -o $WORKING_DIR/.Xresources https://raw.githubusercontent.com/siduck/chadwm/main/.Xresources
+
+## Create Desktop Session Entry so we can chose chadwm from list of installed desktops
+sudo cat <<EOF > /usr/share/xsessions/chadwm.desktop
+[Desktop Entry]
+Name=chadwm
+Comment=dwm made beautiful
+Exec=$HOME/.config/chadwm/scripts/./run.sh
+Type=Application
+EOF
+
+## We changed the path to wallpapers and Xresources so we need to change run.sh.
+cat <<EOF >  $WORKING_DIR/scripts/run.sh
+#!/bin/sh
+
+xrdb merge $WORKING_DIR/.Xresources &
+feh --bg-scale $WORKING_DIR/wall/nord.png &
+xset r rate 200 50 &
+picom --daemon &
+eww daemon &
+
+$WORKING_DIR/scripts/bar.sh &
+while type dwm >/dev/null; do dwm && continue || break; done
+EOF
+
+
+##################################################################################
+##
+## When you want to Change Themes 
+## config.def.h line 43
+## bar.sh line 9
+## eww.scss line 1
+## config.rasi line 15
+##################################################################################
+
+cd $WORKING_DIR
+
+## Add the suckless terminal
+git clone https://git.suckless.org/st
+cd st
+make
+sudo make install
+
+cd ../
+
+## Add the suckless surf browser
+git clone https://git.suckless.org/surf
+cd surf
+make
+sudo make install
