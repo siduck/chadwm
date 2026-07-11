@@ -19,6 +19,7 @@ pkg_updates() {
   #updates=$({ timeout 20 doas xbps-install -un 2>/dev/null || true; } | wc -l) # void
   updates=$({ timeout 20 checkupdates 2>/dev/null || true; } | wc -l) # arch
   # updates=$({ timeout 20 aptitude search '~U' 2>/dev/null || true; } | wc -l)  # apt (ubuntu, debian etc)
+  # updates=$(timeout 20 dnf -q check-upgrade 2>/dev/null | awk 'NF >= 3 { count++ } END { if (count) print count }') # dnf (fedora)
 
   if [ -z "$updates" ]; then
     printf "  ^c$green^    Fully Updated"
